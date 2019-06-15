@@ -8,7 +8,8 @@ from sklearn.metrics import r2_score
 plt.rcParams['font.size'] = 14
 
 
-def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names, figsize=(20, 4), filename=None):
+def plot_true_est_scatter(model, X_test, theta_test, n_samples, 
+                          param_names, figsize=(20, 4), show=True, filename=None):
     """Plots a scatter plot with abline of the estimated posterior means vs true values."""
 
 
@@ -67,13 +68,16 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names, fig
     
     # Adjust spaces
     f.tight_layout()
+
+    if show:
+        plt.show()
     
     # Save if specified
     if filename is not None:
         f.savefig("figures/{}_{}n_scatter.png".format(filename, X_test.shape[1]), dpi=600)
 
 
-def plot_losses(losses, figsize=(15, 5)):
+def plot_losses(losses, figsize=(15, 5), show=True):
     """
     Plots ML loss and decay for a given training session.
     ----------
@@ -81,6 +85,7 @@ def plot_losses(losses, figsize=(15, 5)):
     Arguments:
     losses  : dict -- a dictionary with keys 'ml_loss' and 'decay' containing the portions of the loss.
     figsize : tuple -- the size of the figure to create 
+    show    : bool -- a flag indicating whether to call plt.show() or not
     """
     
     f, axarr = plt.subplots(1, 2, figsize=figsize)
@@ -89,9 +94,12 @@ def plot_losses(losses, figsize=(15, 5)):
     axarr[0].set_title('ML Loss')
     axarr[1].set_title('Decay')
 
+    if show:
+        plt.show()
+
 
 def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_generator=None, 
-                            X_test=None, theta_test=None, figsize=(15, 20), filename=None):
+                            X_test=None, theta_test=None, figsize=(15, 20), show=True, filename=None):
     """
     Plots approximate posteriors.
     """
@@ -135,6 +143,10 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
                 axarr[i, j].legend(fontsize=10)
             
     f.tight_layout()
+
+    # Show, if specified
+    if show:
+        plt.show()
     
     # Save if specified
     if filename is not None:

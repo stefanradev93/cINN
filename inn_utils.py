@@ -10,7 +10,7 @@ def apply_gradients(optimizer, gradients, variables, global_step=None):
 
 
 def train_loop_active(model, optimizer, data_generator, iterations, batch_size, 
-               p_bar=None, clip_value=None, global_step=None, n_smooth=100):
+               p_bar=None, clip_value=None, global_step=None, transform=None, n_smooth=100):
     """
     Utility function to perform the # number of training loops given by the itertations argument.
     ---------
@@ -26,6 +26,7 @@ def train_loop_active(model, optimizer, data_generator, iterations, batch_size,
     clip_value      : float       -- the value used for clipping the gradients
     global_step     : tf.EagerVariavle -- a scalar tensor tracking the number of 
                                           steps and used for learning rate decay  
+    transform       : callable ot None -- a function to transform X and theta, if given
     n_smooth        : int -- a value indicating how many values to use for computing the running ML loss
     ----------
 
@@ -42,9 +43,18 @@ def train_loop_active(model, optimizer, data_generator, iterations, batch_size,
     for it in range(1, iterations+1):
         with tf.GradientTape() as tape:
             # Generate data and parameters
-            X, theta = data_generator(batch_size)
+            X_batch, theta_batch = data_generator(batch_size)
+            # Apply some transformation, if specified
+            if transform:
+                X_batch, theta_batch = transform(X_batch, theta_batch)
+
+            # Sanity check for non-empty tensors
+            if tf.equal(X_batch.shape[0], 0).numpy():
+                print('Iteration produced empty tensor, skipping...')
+                continue
+
             # Forward pass
-            Z, log_det_J = model(theta, X)
+            Z, log_det_J = model(theta_batch, X_batch)
             # Compute total_loss = ML Loss + Regularization loss
             ml_loss = maximum_likelihood_loss(Z, log_det_J)
             decay = tf.add_n(model.losses)
@@ -70,7 +80,7 @@ def train_loop_active(model, optimizer, data_generator, iterations, batch_size,
 
 
 def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_value=None, 
-                       global_step=None, n_smooth=10):
+                       global_step=None, transform=None, n_smooth=10):
     """
     Utility function to perform a single epoch over a given dataset.
     ---------
@@ -81,10 +91,11 @@ def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_v
     optimizer       : tf.train.optimizers.Optimizer -- the optimizer used for backprop
     dataset         : iterable -- tf.data.Dataset yielding (X_batch, y_batch) at each iteration
     batch_size      : int -- the batch_size used for training
-    p_bar           : ProgressBar -- an instance for tracking the training progress
-    clip_value      : float       -- the value used for clipping the gradients
-    global_step     : tf.EagerVariavle -- a scalar tensor tracking the number of 
+    p_bar           : ProgressBar or None -- an instance for tracking the training progress
+    clip_value      : float or None       -- the value used for clipping the gradients
+    global_step     : tf.EagerVariavle or None -- a scalar tensor tracking the number of 
                                           steps and used for learning rate decay  
+    transform       : callable ot None -- a function to transform X and theta, if given
     n_smooth        : int -- a value indicating how many values to use for computing the running ML loss
     ----------
 
@@ -99,6 +110,15 @@ def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_v
     }
     # Loop through data
     for bi, (X_batch, theta_batch) in enumerate(dataset):
+        # Apply transform, if specified
+        if transform is not None:
+            X_batch, theta_batch = transform(X_batch, theta_batch)
+
+        # Sanity check for non-empty tensors
+        if tf.equal(X_batch.shape[0], 0).numpy():
+            print('Iteration produced empty tensor, skipping...')
+            continue
+
         with tf.GradientTape() as tape:
             # Forward pass
             Z, log_det_J = model(theta_batch, X_batch)
@@ -119,7 +139,7 @@ def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_v
 
         # Update progress bar
         running_ml = ml_loss.numpy() if bi < n_smooth else np.mean(losses['ml_loss'][-n_smooth:])
-        p_bar.set_postfix_str("Batch: {0},ML Loss: {1:.3f},Running ML Loss: {2:.3f},Regularization Loss: {3:3f}"
+        p_bar.set_postfix_str("Batch: {0},ML Loss: {1:.3f},Running ML Loss: {2:.3f},Regularization Loss: {3:.3f}"
         .format(bi, ml_loss.numpy(), running_ml, decay.numpy()))
         p_bar.update(1)
 
