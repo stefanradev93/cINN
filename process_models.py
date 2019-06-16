@@ -14,7 +14,7 @@ def simulate_ricker_single(t_obs, r, sigma, phi):
     t_obs : int -- length of the observed time-series
     r     : float -- the r parameter of the Ricker model
     sigma : float -- the sigma parameter of the Ricker model
-    phi   : float -- the phi parameter of the Ricker model          
+    phi   : float -- the phi (rho) parameter of the Ricker model          
     """
     
     x = np.zeros(t_obs)

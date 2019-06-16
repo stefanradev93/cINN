@@ -15,7 +15,7 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples,
     theta_test = theta_test.numpy()
 
     # Determine figure layout
-    if len(param_names) > 6:
+    if len(param_names) >= 6:
         n_col = int(np.ceil(len(param_names) / 2))
         n_row = 2
     else:
@@ -45,17 +45,17 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples,
         # Compute NRMSE
         rmse = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
         nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
-        axarr[j].text(0.2, 0.9, 'NRMSE={:.3f}'.format(nrmse),
-                     horizontalalignment='center',
-                     verticalalignment='left',
+        axarr[j].text(0.1, 0.9, 'NRMSE={:.3f}'.format(nrmse),
+                     horizontalalignment='left',
+                     verticalalignment='center',
                      transform=axarr[j].transAxes,
                      size=10)
         
         # Compute R2
         r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
-        axarr[j].text(0.2, 0.8, '$R^2$={:.3f}'.format(r2),
-                     horizontalalignment='center',
-                     verticalalignment='left',
+        axarr[j].text(0.1, 0.85, '$R^2$={:.3f}'.format(r2),
+                     horizontalalignment='left',
+                     verticalalignment='center',
                      transform=axarr[j].transAxes, 
                      size=10)
         
@@ -145,11 +145,48 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
                 axarr[i, j].legend(fontsize=10)
             
     f.tight_layout()
-
+    #f.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     # Show, if specified
     if show:
         plt.show()
     
+    # Save if specified
+    if filename is not None:
+        f.savefig("figures/{}_{}n_density.png".format(filename, X_test.shape[1]), dpi=600)
+
+
+
+def plot_sbc(model, n_samples, X_test, theta_test, param_names, figsize=(15, 5), show=True, filename=None):
+    """
+    Plots the simulation-based posterior checking histograms as advocated by Talts et al. (2018).
+    """
+    
+    # Prepare figure
+    if len(param_names) >= 6:
+        n_col = int(np.ceil(len(param_names) / 2))
+        n_row = 2
+    else:
+        n_col = int(len(param_names))
+        n_row = 1
+    # Initialize figure
+    f, axarr = plt.subplots(n_row, n_col, figsize=figsize)
+    if n_row > 1:
+        axarr = axarr.flat
+
+    # Convert theta test to numpy
+    theta_test = theta_test.numpy()
+
+    # Sample from approximate posterior
+    theta_samples = model.sample(X_test, n_samples, to_numpy=True)
+
+    # Compute ranks (using broadcasting)    
+    ranks = np.sum(theta_samples < theta_test, axis=0)
+    for j in range(len(param_names)):
+        sns.distplot(ranks[:, j], kde=False, ax=axarr[j])
+        axarr[j].set_title(param_names[j])
+    # Show, if specified
+    if show:
+        plt.show()
     # Save if specified
     if filename is not None:
         f.savefig("figures/{}_{}n_density.png".format(filename, X_test.shape[1]), dpi=600)
