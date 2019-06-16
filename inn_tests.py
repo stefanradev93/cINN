@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import tensorflow as tf
-from models import *
+from models import CouplingNet, ConditionalInvertibleBlock, DeepConditionalModel
 from losses import maximum_likelihood_loss
 
 
@@ -29,12 +29,12 @@ class InvertiblePermutationTest(unittest.TestCase):
         self.z_sample_size = 100
 
         # Classes to test
-        self.coupling_net_even = CouplingNet(self.meta, n_out=self.x_dim_even // 2)
-        self.cINN_even = ConditionalInvertibleBlock(self.meta, x_dim=self.x_dim_even, permute=True)
-        self.coupling_net_odd = CouplingNet(self.meta, n_out=self.x_dim_odd // 2)
-        self.cINN_odd = ConditionalInvertibleBlock(self.meta, x_dim=self.x_dim_odd, permute=True)
-        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, permute=True)
-        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, permute=True)
+        self.coupling_net_even = CouplingNet(self.meta, self.x_dim_even // 2, self.summary_dim)
+        self.cINN_even = ConditionalInvertibleBlock(self.meta, self.x_dim_even, self.summary_dim, permute=True)
+        self.coupling_net_odd = CouplingNet(self.meta, self.x_dim_odd // 2, self.summary_dim)
+        self.cINN_odd = ConditionalInvertibleBlock(self.meta, self.x_dim_odd, self.summary_dim, permute=True)
+        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, self.summary_dim, permute=True)
+        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, self.summary_dim, permute=True)
 
         # Inputs to test on
         self.x_single_even = tf.random_normal((1, self.x_dim_even))
@@ -329,12 +329,12 @@ class InvertibleTest(unittest.TestCase):
         self.z_sample_size = 100
 
         # Classes to test
-        self.coupling_net_even = CouplingNet(self.meta, n_out=self.x_dim_even // 2)
-        self.cINN_even = ConditionalInvertibleBlock(self.meta, x_dim=self.x_dim_even)
-        self.coupling_net_odd = CouplingNet(self.meta, n_out=self.x_dim_odd // 2)
-        self.cINN_odd = ConditionalInvertibleBlock(self.meta, x_dim=self.x_dim_odd)
-        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even)
-        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd)
+        self.coupling_net_even = CouplingNet(self.meta, self.x_dim_even // 2, self.summary_dim)
+        self.cINN_even = ConditionalInvertibleBlock(self.meta, self.x_dim_even, self.summary_dim, permute=False)
+        self.coupling_net_odd = CouplingNet(self.meta, self.x_dim_odd // 2, self.summary_dim)
+        self.cINN_odd = ConditionalInvertibleBlock(self.meta, self.x_dim_odd, self.summary_dim,permute=False)
+        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, self.summary_dim, permute=False)
+        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, self.summary_dim, permute=False)
 
         # Inputs to test on
         self.x_single_even = tf.random_normal((1, self.x_dim_even))

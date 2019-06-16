@@ -3,7 +3,6 @@ import seaborn as sns
 import numpy as np
 from sklearn.metrics import r2_score
 
-
 # Plot settings
 plt.rcParams['font.size'] = 14
 
@@ -12,7 +11,7 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples,
                           param_names, figsize=(20, 4), show=True, filename=None):
     """Plots a scatter plot with abline of the estimated posterior means vs true values."""
 
-
+    # Convert true parameters to numpy
     theta_test = theta_test.numpy()
 
     # Determine figure layout
@@ -43,10 +42,10 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples,
         axarr[j].set_ylim((lower_lim, upper_lim))
         axarr[j].plot(axarr[j].get_xlim(), axarr[j].get_xlim(), '--', color='black')
         
-        # Compute NRMSD
-        rmsd = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
-        nrmsd = rmsd / (theta_test[:, j].max() - theta_test[:, j].min())
-        axarr[j].text(0.2, 0.9, 'NRMSD={:.3f}'.format(nrmsd),
+        # Compute NRMSE
+        rmse = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
+        nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
+        axarr[j].text(0.2, 0.9, 'NRMSE={:.3f}'.format(nrmse),
                      horizontalalignment='center',
                      verticalalignment='center',
                      transform=axarr[j].transAxes)
