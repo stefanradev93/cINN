@@ -24,6 +24,7 @@ def simulate_ricker_single(t_obs, r, sigma, phi):
         N = r * N * np.exp(-N + np.random.normal(loc=0, scale=sigma))
     return x
 
+
 @jit(nopython=True, cache=True, parallel=True)
 def simulate_ricker_batch(X, params, n_batch, t_obs):
     """
@@ -91,6 +92,7 @@ def deriv_sir(y, N, beta, gamma):
     dRdt = gamma * I
     return dSdt, dIdt, dRdt
 
+
 @jit
 def simulate_sir_single(beta, gamma, N=1000, I0=1, R0=0, t_max=200):
     """Simulates a single SIR scenario by numerical intergatrion."""
@@ -101,6 +103,7 @@ def simulate_sir_single(beta, gamma, N=1000, I0=1, R0=0, t_max=200):
     ret = scipy.integrate.odeint(deriv_sir, y0, t, args=(N, beta, gamma))
     return ret
 
+
 @jit(nopython=True, cache=True, parallel=True)
 def simulate_sir_batch(X, params, n_batch, N=1000, I0=1, R0=0, t_max=200):
     """
@@ -110,6 +113,7 @@ def simulate_sir_batch(X, params, n_batch, N=1000, I0=1, R0=0, t_max=200):
     for i in prange(n_batch):
         X[i] = simulate_sir_single(params[i, 0], params[i, 1], N, I0, R0, t_max)
         
+
 def simulate_sir(batch_size=64, N=1000, low_beta=0.05, high_beta=2., 
                  low_gamma=0.01, I0=1, R0=0, t_max=200, to_tensor=True):
     """

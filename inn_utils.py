@@ -74,7 +74,7 @@ def train_loop_active(model, optimizer, data_generator, iterations, batch_size, 
 
         # Update progress bar
         running_ml = ml_loss.numpy() if it < n_smooth else np.mean(losses['ml_loss'][-n_smooth:])
-        p_bar.set_postfix_str("Iteration: {0},ML Loss: {1:.3f},Running ML Loss: {2:.3f},Regularization Loss: {3:3f}"
+        p_bar.set_postfix_str("Iteration: {0},ML Loss: {1:.3f},Running ML Loss: {2:.3f},Regularization Loss: {3:.3f}"
         .format(it, ml_loss.numpy(), running_ml, decay.numpy()))
         p_bar.update(1)
 

@@ -47,15 +47,17 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples,
         nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
         axarr[j].text(0.2, 0.9, 'NRMSE={:.3f}'.format(nrmse),
                      horizontalalignment='center',
-                     verticalalignment='center',
-                     transform=axarr[j].transAxes)
+                     verticalalignment='left',
+                     transform=axarr[j].transAxes,
+                     size=10)
         
         # Compute R2
         r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
         axarr[j].text(0.2, 0.8, '$R^2$={:.3f}'.format(r2),
                      horizontalalignment='center',
-                     verticalalignment='center',
-                     transform=axarr[j].transAxes)
+                     verticalalignment='left',
+                     transform=axarr[j].transAxes, 
+                     size=10)
         
         if j == 0:
             # Label plot
