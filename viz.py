@@ -92,7 +92,7 @@ def plot_losses(losses, figsize=(15, 5), show=True):
     axarr[1].plot(losses['decay'])
     axarr[0].set_title('ML Loss')
     axarr[1].set_title('Decay')
-    f.set_title('Course of Loss')
+    f.suptitle('Course of Loss')
 
     if show:
         plt.show()
