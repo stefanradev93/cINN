@@ -24,17 +24,17 @@ class InvertiblePermutationTest(unittest.TestCase):
         }
         self.x_dim_even = 6
         self.x_dim_odd = 5
-        self.summary_dim = 128
+        self.summary_dim = 32
         self.batch_size = 64
         self.z_sample_size = 100
 
         # Classes to test
-        self.coupling_net_even = CouplingNet(self.meta, self.x_dim_even // 2, self.summary_dim)
-        self.cINN_even = ConditionalInvertibleBlock(self.meta, self.x_dim_even, self.summary_dim, permute=True)
-        self.coupling_net_odd = CouplingNet(self.meta, self.x_dim_odd // 2, self.summary_dim)
-        self.cINN_odd = ConditionalInvertibleBlock(self.meta, self.x_dim_odd, self.summary_dim, permute=True)
-        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, self.summary_dim, permute=True)
-        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, self.summary_dim, permute=True)
+        self.coupling_net_even = CouplingNet(self.meta, self.x_dim_even // 2)
+        self.cINN_even = ConditionalInvertibleBlock(self.meta, self.x_dim_even, permute=True)
+        self.coupling_net_odd = CouplingNet(self.meta, self.x_dim_odd // 2)
+        self.cINN_odd = ConditionalInvertibleBlock(self.meta, self.x_dim_odd, permute=True)
+        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, permute=True)
+        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, permute=True)
 
         # Inputs to test on
         self.x_single_even = tf.random_normal((1, self.x_dim_even))
@@ -246,7 +246,7 @@ class InvertiblePermutationTest(unittest.TestCase):
         """Test integrity of sampling operation in the invertible chain."""
 
         # Sample single instance
-        samples_single = self.dINN_even.sample(self.z_sample_size, self.y_single)
+        samples_single = self.dINN_even.sample(self.y_single, self.z_sample_size)
 
         self.assertEqual(samples_single.shape[0], self.z_sample_size, "Sample shape mismatch in "
                                                                "DeepInvertibleModel on even single outputs.")
@@ -254,7 +254,7 @@ class InvertiblePermutationTest(unittest.TestCase):
                                                                "DeepInvertibleModel on even single inputs.")
 
         # Sample batch
-        samples_batch = self.dINN_even.sample(self.z_sample_size, self.y_batch)
+        samples_batch = self.dINN_even.sample(self.y_batch, self.z_sample_size)
         self.assertEqual(samples_batch.shape[0], self.z_sample_size, "Sample shape mismatch in "
                                                                       "DeepInvertibleModel on even batch outputs.")
         self.assertEqual(samples_batch.shape[1], self.batch_size, "Sample shape mismatch in "
@@ -265,14 +265,14 @@ class InvertiblePermutationTest(unittest.TestCase):
     def test_diin_sampling_odd(self):
         """Test integrity of sampling operation in the invertible chain."""
 
-        samples = self.dINN_odd.sample(self.z_sample_size, self.y_single)
+        samples = self.dINN_odd.sample(self.y_single, self.z_sample_size)
         self.assertEqual(samples.shape[0], self.z_sample_size,
                          "Sample shape mismatch in DeepInvertibleModel on odd inputs.")
         self.assertEqual(samples.shape[1], self.x_dim_odd,
                          "Sample shape mismatch in DeepInvertibleModel on odd inputs")
 
         # Sample batch
-        samples_batch = self.dINN_odd.sample(self.z_sample_size, self.y_batch)
+        samples_batch = self.dINN_odd.sample(self.y_batch, self.z_sample_size,)
         self.assertEqual(samples_batch.shape[0], self.z_sample_size, "Sample shape mismatch in "
                                                                      "DeepInvertibleModel on odd batch outputs.")
         self.assertEqual(samples_batch.shape[1], self.batch_size, "Sample shape mismatch in "
@@ -324,17 +324,17 @@ class InvertibleTest(unittest.TestCase):
         }
         self.x_dim_even = 6
         self.x_dim_odd = 5
-        self.summary_dim = 128
+        self.summary_dim = 32
         self.batch_size = 64
         self.z_sample_size = 100
 
         # Classes to test
-        self.coupling_net_even = CouplingNet(self.meta, self.x_dim_even // 2, self.summary_dim)
-        self.cINN_even = ConditionalInvertibleBlock(self.meta, self.x_dim_even, self.summary_dim, permute=False)
-        self.coupling_net_odd = CouplingNet(self.meta, self.x_dim_odd // 2, self.summary_dim)
-        self.cINN_odd = ConditionalInvertibleBlock(self.meta, self.x_dim_odd, self.summary_dim,permute=False)
-        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, self.summary_dim, permute=False)
-        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, self.summary_dim, permute=False)
+        self.coupling_net_even = CouplingNet(self.meta, self.x_dim_even // 2)
+        self.cINN_even = ConditionalInvertibleBlock(self.meta, self.x_dim_even, permute=False)
+        self.coupling_net_odd = CouplingNet(self.meta, self.x_dim_odd // 2)
+        self.cINN_odd = ConditionalInvertibleBlock(self.meta, self.x_dim_odd,permute=False)
+        self.dINN_even = DeepConditionalModel(self.meta, 10, self.x_dim_even, permute=False)
+        self.dINN_odd = DeepConditionalModel(self.meta, 10, self.x_dim_odd, permute=False)
 
         # Inputs to test on
         self.x_single_even = tf.random_normal((1, self.x_dim_even))
@@ -546,7 +546,7 @@ class InvertibleTest(unittest.TestCase):
         """Test integrity of sampling operation in the invertible chain."""
 
         # Sample single instance
-        samples_single = self.dINN_even.sample(self.z_sample_size, self.y_single)
+        samples_single = self.dINN_even.sample(self.y_single, self.z_sample_size)
 
         self.assertEqual(samples_single.shape[0], self.z_sample_size, "Sample shape mismatch in "
                                                                "DeepInvertibleModel on even single outputs.")
@@ -554,7 +554,7 @@ class InvertibleTest(unittest.TestCase):
                                                                "DeepInvertibleModel on even single inputs.")
 
         # Sample batch
-        samples_batch = self.dINN_even.sample(self.z_sample_size, self.y_batch)
+        samples_batch = self.dINN_even.sample(self.y_batch, self.z_sample_size)
         self.assertEqual(samples_batch.shape[0], self.z_sample_size, "Sample shape mismatch in "
                                                                       "DeepInvertibleModel on even batch outputs.")
         self.assertEqual(samples_batch.shape[1], self.batch_size, "Sample shape mismatch in "
@@ -565,14 +565,14 @@ class InvertibleTest(unittest.TestCase):
     def test_diin_sampling_odd(self):
         """Test integrity of sampling operation in the invertible chain."""
 
-        samples = self.dINN_odd.sample(self.z_sample_size, self.y_single)
+        samples = self.dINN_odd.sample(self.y_single, self.z_sample_size)
         self.assertEqual(samples.shape[0], self.z_sample_size,
                          "Sample shape mismatch in DeepInvertibleModel on odd inputs.")
         self.assertEqual(samples.shape[1], self.x_dim_odd,
                          "Sample shape mismatch in DeepInvertibleModel on odd inputs")
 
         # Sample batch
-        samples_batch = self.dINN_odd.sample(self.z_sample_size, self.y_batch)
+        samples_batch = self.dINN_odd.sample(self.y_batch, self.z_sample_size)
         self.assertEqual(samples_batch.shape[0], self.z_sample_size, "Sample shape mismatch in "
                                                                      "DeepInvertibleModel on odd batch outputs.")
         self.assertEqual(samples_batch.shape[1], self.batch_size, "Sample shape mismatch in "

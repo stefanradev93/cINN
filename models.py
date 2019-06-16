@@ -37,7 +37,7 @@ class Permutation(tf.layers.Layer):
 class CouplingNet(tf.keras.Model):
     """Implements a conditional version of a sequential network."""
 
-    def __init__(self, meta, n_out, summary_dim):
+    def __init__(self, meta, n_out):
         """
         Creates a conditional coupling net (FC neural network).
         ----------
@@ -46,7 +46,6 @@ class CouplingNet(tf.keras.Model):
         meta  : list -- a list of dictionaries, wherein each dictionary holds parameter - value pairs for a single
                        tf.keras.Dense layer.
         n_out : int  -- number of outputs of the coupling net
-        summary_dim : int -- the number of dimensions of the summary vector
         """
 
         super(CouplingNet, self).__init__()
@@ -54,7 +53,6 @@ class CouplingNet(tf.keras.Model):
         self.dense = tf.keras.Sequential(
             # Hidden layer structure
             [tf.keras.layers.Dense(units,
-                                   input_shape=(summary_dim + n_out, ),
                                    activation=meta['activation'],
                                    kernel_initializer=meta['initializer'],
                                    kernel_regularizer=l2(meta['w_decay']))
@@ -81,7 +79,7 @@ class CouplingNet(tf.keras.Model):
 class ConditionalInvertibleBlock(tf.keras.Model):
     """Implements a conditional version of the INN block."""
 
-    def __init__(self, meta, x_dim, summary_dim, alpha=1.9, permute=False):
+    def __init__(self, meta, x_dim, alpha=1.9, permute=False):
         """
         Creates a conditional invertible block.
         ----------
@@ -90,7 +88,6 @@ class ConditionalInvertibleBlock(tf.keras.Model):
         meta  : list -- a list of dictionaries, wherein each dictionary holds parameter - value pairs for a single
                        tf.keras.Dense layer. All coupling nets are assumed to be equal.
         x_dim : int  -- the number of outputs of the invertible block (eq. the dimensionality of the latent space)
-        summary_dim : int -- the number of dimensions of the summary vector
         alpha : float or None -- used to do soft clamping ot the outputs (loss smoothing)
         """
         super(ConditionalInvertibleBlock, self).__init__()
@@ -102,10 +99,10 @@ class ConditionalInvertibleBlock(tf.keras.Model):
             self.permutation = Permutation(x_dim)
         else:
             self.permutation = None
-        self.s1 = CouplingNet(meta, self.n_out1, summary_dim)
-        self.t1 = CouplingNet(meta, self.n_out1, summary_dim)
-        self.s2 = CouplingNet(meta, self.n_out2, summary_dim)
-        self.t2 = CouplingNet(meta, self.n_out2, summary_dim)
+        self.s1 = CouplingNet(meta, self.n_out1)
+        self.t1 = CouplingNet(meta, self.n_out1)
+        self.s2 = CouplingNet(meta, self.n_out2)
+        self.t2 = CouplingNet(meta, self.n_out2)
 
     def call(self, x, y, inverse=False, log_det_J=True):
         """
@@ -176,7 +173,7 @@ class ConditionalInvertibleBlock(tf.keras.Model):
             u1 = (v1 - self.t1(u2, y)) * tf.exp(-s1)
             u = tf.concat((u1, u2), axis=-1)
 
-            if self.permutation_vec is not None:
+            if self.permutation is not None:
                 u = self.permutation(u, inverse=True)
             return u
 
@@ -184,7 +181,7 @@ class ConditionalInvertibleBlock(tf.keras.Model):
 class DeepConditionalModel(tf.keras.Model):
     """Implements a chain of conditional invertible blocks."""
 
-    def __init__(self, meta, n_blocks, x_dim, summary_dim, summary_net=None, alpha=1.9, permute=False):
+    def __init__(self, meta, n_blocks, x_dim, summary_net=None, alpha=1.9, permute=False):
         """
         Creates a chain of cINN blocks and chains operations.
         ----------
@@ -194,7 +191,6 @@ class DeepConditionalModel(tf.keras.Model):
                                   keras.Dense layer
         n_blocks    : int  -- the number of invertible blocks
         x_dim       : int  -- the dimensionality of the space to be learned
-        summary_dim : int  -- the number of dimensions of the summary vector
         summary_net : tf.keras.Model or None -- an optinal summary network for learning the sumstats of y
         alpha       : float or None -- used to do soft clamping ot the outputs (loss smoothing)
         permute     : bool -- whether to permute the inputs to the cINN
@@ -202,10 +198,9 @@ class DeepConditionalModel(tf.keras.Model):
 
         super(DeepConditionalModel, self).__init__()
         
-        self.cINNs = [ConditionalInvertibleBlock(meta, x_dim, summary_dim, alpha, permute) for _ in range(n_blocks)]
+        self.cINNs = [ConditionalInvertibleBlock(meta, x_dim, alpha, permute) for _ in range(n_blocks)]
         self.summary_net = summary_net
         self.x_dim = x_dim
-        self.summary_dim = summary_dim
 
     def call(self, x, y, inverse=False):
         """
@@ -269,7 +264,7 @@ class DeepConditionalModel(tf.keras.Model):
             y = self.summary_net(y, training=False)
 
         # In case y is a single instance
-        if y.shape[0] == 1:
+        if int(y.shape[0]) == 1:
             z_normal_samples = tf.random_normal(shape=(n_samples, self.x_dim), dtype=tf.float32)
 
             # Sample batch by repeating y over the batch dimension
@@ -278,7 +273,7 @@ class DeepConditionalModel(tf.keras.Model):
         # In case of a batch input, send a 3D tensor through the invertible chain and use tensordot
         # Warning: This tensor could get pretty big if sampling a lot of values for a lot of batch instances!
         else:
-            z_normal_samples = tf.random_normal(shape=(n_samples, y.shape[0], self.x_dim), dtype=tf.float32)
+            z_normal_samples = tf.random_normal(shape=(n_samples, int(y.shape[0]), self.x_dim), dtype=tf.float32)
 
             # Sample batch by repeating y over the batch dimension
             X_samples = self.inverse(z_normal_samples, tf.stack([y] * n_samples))
