@@ -73,62 +73,48 @@ def simulate_ricker(batch_size=64, t_obs_min=100, t_obs_max=500, low_r=1, high_r
     return X[:, :, np.newaxis]
 
 
-@jit(nopython=True)
-def deriv_sir(y, N, beta, gamma):
+def sir(u, beta, gamma, t, N=1000, dt=0.1, iota=0.5):
     """
-    The SIR model differential equations.
-    ----------
-
-    Arguments:
-    y     : tuple (S, I, R) - holding the different # of instances in each compartment
-    N     : int -- the total # of instances in the population
-    beta  : float -- beta parameter of the SIR model
-    gamma : float --- gamma parameter of the SIR model 
+    Implements the stochastic SIR equations.
     """
     
-    S, I, R = y
-    dSdt = -beta * S * I / N
-    dIdt = beta * S * I / N - gamma * I
-    dRdt = gamma * I
-    return dSdt, dIdt, dRdt
+    S, I, R = u
+    lambd = beta *(I+iota)/N
+    ifrac = 1.0 - np.exp(-lambd*dt)
+    rfrac = 1.0 - np.exp(-gamma*dt)
+    infection = np.random.binomial(S, ifrac)
+    recovery = np.random.binomial(I, rfrac)
+    return [S-infection, I+infection-recovery, R+recovery]
 
+def simulate_sir_single(beta, gamma, t_max=500, N=1000):
+    """Simulates a single SIR process."""
+
+    tf = 200
+    t = np.linspace(0, tf, t_max)
+    
+    S = np.zeros(t_max)
+    I = np.zeros(t_max)
+    R = np.zeros(t_max)
+    u = [N-1,1,0]
+    S[0], I[0], R[0] = u
+    for j in range(1, t_max):
+        u = sir(u, beta, gamma, t[j], N)
+        S[j],I[j],R[j] = u
+    return np.array([S, I, R]).T
 
 @jit
-def simulate_sir_single(beta, gamma, N=1000, I0=1, R0=0, t_max=200):
-    """Simulates a single SIR scenario by numerical intergatrion."""
-    
-    t = np.linspace(0, t_max, t_max)
-    S0 = N - I0 - R0
-    y0 = S0, I0, R0 
-    ret = scipy.integrate.odeint(deriv_sir, y0, t, args=(N, beta, gamma))
-    return ret
-
-
-@jit(nopython=True, cache=True, parallel=True)
-def simulate_sir_batch(X, params, n_batch, N=1000, I0=1, R0=0, t_max=200):
-    """
-    Simulates a batch of SIR timeseries in parallel.
-    """
-
-    for i in prange(n_batch):
-        X[i] = simulate_sir_single(params[i, 0], params[i, 1], N, I0, R0, t_max)
-        
-
-def simulate_sir(batch_size=64, N=1000, low_beta=0.05, high_beta=2., 
-                 low_gamma=0.01, I0=1, R0=0, t_max=200, to_tensor=True):
+def simulate_sir(batch_size, low_beta=0.05, high_beta=2., low_gamma=0.01, t_max=500, N=1000, to_tensor=True):
     """
     Simulates and returns a batch of timeseries obtained under the SIR model.
     ----------
 
     Arguments:
     batch_size : int -- number of Ricker processes to simulate
-    N          : int -- the size of the population
     low_beta   : float -- lower bound for the uniform prior on beta
     high_beta  : float -- upper bound for the uniform prior on beta
     low_gamma  : float -- lower bound for the uniform prior on gamma
-    I0         : int -- initial number of infected members
-    R0         : int -- initial number of recovered members
     t_max      : int -- the length of the observed time-series
+    N          : int -- the size of the population
     to_tensor  : bool  -- a flag indicating whether to return numpy arrays or tf tensors
     ----------
 
@@ -138,15 +124,16 @@ def simulate_sir(batch_size=64, N=1000, low_beta=0.05, high_beta=2.,
               a batch or time series generated under a batch of Ricker parameters
     """
     
-    # Draw from priors
+    # Prepare X and theta
+    X = np.zeros((batch_size, t_max, 3))
     beta_samples = np.random.uniform(low=low_beta, high=high_beta, size=batch_size)
     gamma_samples = np.random.uniform(low=low_gamma, high=beta_samples)
     theta = np.c_[beta_samples, gamma_samples]
-
-    # Simulate with drawn parameters
-    X = np.zeros((batch_size, t_max, 3))
-    simulate_sir_batch(X, theta, batch_size, N, I0, R0, t_max)
-
+    
+    # Run the SIR simulator for # batch_size
+    for j in prange(batch_size):
+        X[j] = simulate_sir_single(theta[j, 0], theta[j, 1], t_max=t_max, N=N)
+    
     if to_tensor:
         return tf.convert_to_tensor(X, dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
     return X, theta
