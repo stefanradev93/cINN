@@ -284,7 +284,7 @@ class DeepConditionalModel(tf.keras.Model):
 
 class InvariantModule(tf.keras.Model):
     """Implements an invariant nn module as proposed by Bloem-Reddy and Teh (2019)."""
-    
+
     def __init__(self, h_dim, n_dense=3):
         """
         Creates an invariant function with mean pooling.
@@ -365,7 +365,7 @@ class EquivariantModule(tf.keras.Model):
         return self.module(x)
         
     
-class PermutationInvariantNetwork(tf.keras.Model):
+class InvariantNetwork(tf.keras.Model):
     """
     Implements a network which parameterizes a 
     permutationally invariant function according to Bloem-Reddy and Teh (2019).
@@ -383,7 +383,7 @@ class PermutationInvariantNetwork(tf.keras.Model):
         n_equiv : int -- the number of equivariant modules 
         """
         
-        super(PermutationInvariantNetwork, self).__init__()
+        super(InvariantNetwork, self).__init__()
         
         self.equiv = tf.keras.Sequential([
             EquivariantModule(h_dim, n_dense)
