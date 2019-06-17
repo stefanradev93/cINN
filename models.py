@@ -284,6 +284,7 @@ class DeepConditionalModel(tf.keras.Model):
 
 class InvariantModule(tf.keras.Model):
     """Implements an invariant nn module as proposed by Bloem-Reddy and Teh (2019)."""
+    
     def __init__(self, h_dim, n_dense=3):
         """
         Creates an invariant function with mean pooling.
@@ -314,7 +315,7 @@ class InvariantModule(tf.keras.Model):
         Returns:
         out : tf.Tensor of shape (batch_size, h_dim) -- the pooled and invariant representation of the input
         """
-        
+
         x = self.module(x)
         x = tf.reduce_mean(x, axis=1)
         return x
