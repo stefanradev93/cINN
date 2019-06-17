@@ -280,3 +280,132 @@ class DeepConditionalModel(tf.keras.Model):
         if to_numpy:
             return X_samples.numpy()
         return X_samples
+
+
+class InvariantModule(tf.keras.Model):
+    """Implements an invariant nn module as proposed by Bloem-Reddy and Teh (2019)."""
+    def __init__(self, h_dim, n_dense=3):
+        """
+        Creates an invariant function with mean pooling.
+        ----------
+
+        Arguments:
+        h_dim   : int -- the number of hidden units in each of the modules
+        n_dense : int -- the number of dense layers of the modules
+        """
+        
+        super(InvariantModule, self).__init__()
+        
+        self.module = tf.keras.Sequential([
+            tf.keras.layers.Dense(h_dim, activation='elu') 
+            for _ in range(n_dense)
+        ])
+        
+    def call(self, x):
+        """
+        Transofrms the input into an invariant representation.
+        ----------
+
+        Arguments:
+        x : tf.Tensor of shape (batch_size, n, m) - the input where n is the 'time' or 'samples' dimensions 
+            over which pooling is performed and m is the input dimensionality
+        ----------
+
+        Returns:
+        out : tf.Tensor of shape (batch_size, h_dim) -- the pooled and invariant representation of the input
+        """
+        
+        x = self.module(x)
+        x = tf.reduce_mean(x, axis=1)
+        return x
+    
+
+class EquivariantModule(tf.keras.Model):
+    """Implements an equivariant nn module as proposed by Bloem-Reddy and Teh (2019)."""
+
+    def __init__(self, h_dim, n_dense=3):
+        """
+        Creates an equivariant neural network consisting of a FC network with
+        equal number of hidden units in each layer and an invariant module
+        with the same FC structure.
+        ----------
+
+        Arguments:
+        h_dim   : int -- the number of hidden units in each of the modules
+        n_dense : int -- the number of dense layers of the modules
+        """
+        
+        super(EquivariantModule, self).__init__()
+        
+        self.module = tf.keras.Sequential([
+            tf.keras.layers.Dense(h_dim, activation='elu') 
+            for _ in range(n_dense)
+        ])
+        
+        self.invariant_module = InvariantModule(h_dim, n_dense)
+        
+    def call(self, x):
+        """
+        Transofrms the input into an equivariant representation.
+        ----------
+
+        Arguments:
+        x : tf.Tensor of shape (batch_size, n, m) - the input where n is the 'time' or 'samples' dimensions 
+            over which pooling is performed and m is the input dimensionality
+        ----------
+
+        Returns:
+        out : tf.Tensor of shape (batch_size, h_dim) -- the pooled and invariant representation of the input
+        """
+
+        x_inv = self.invariant_module(x)
+        x_inv = tf.stack([x_inv] * int(x.shape[1]), axis=1) # Repeat x_inv n times
+        x = tf.concat((x_inv, x), axis=-1)
+        return self.module(x)
+        
+    
+class PermutationInvariantNetwork(tf.keras.Model):
+    """
+    Implements a network which parameterizes a 
+    permutationally invariant function according to Bloem-Reddy and Teh (2019).
+    """
+
+    def __init__(self, h_dim, n_dense=3, n_equiv=2):
+        """
+        Creates a permutationally invariant network 
+        consisting of two equivariant modules and one invariant module.
+        ----------
+
+        Arguments:
+        h_dim   : int -- the number of hidden units in each of the modules
+        n_dense : int -- the number of dense layers of the modules
+        n_equiv : int -- the number of equivariant modules 
+        """
+        
+        super(PermutationInvariantNetwork, self).__init__()
+        
+        self.equiv = tf.keras.Sequential([
+            EquivariantModule(h_dim, n_dense)
+            for _ in range(n_equiv)
+        ])
+        self.inv = InvariantModule(h_dim, n_dense)
+        
+    def call(self, x, **kwargs):
+        """
+        Transofrms the input into a permutationally invariant 
+        representation by first passing it through multiple equivariant 
+        modules in order to increase representational power.
+        ----------
+
+        Arguments:
+        x : tf.Tensor of shape (batch_size, n, m) - the input where n is the 'time' or 
+        'samples' dimensions over which pooling is performed and m is the input dimensionality
+        ----------
+
+        Returns:
+        out : tf.Tensor of shape (batch_size, h_dim) -- the pooled and invariant representation of the input
+        """
+
+        x = self.equiv(x)
+        out = self.inv(x)
+        return out
