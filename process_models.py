@@ -86,6 +86,7 @@ def sir(u, beta, gamma, t, N=1000, dt=0.1, iota=0.5):
     recovery = np.random.binomial(I, rfrac)
     return [S-infection, I+infection-recovery, R+recovery]
 
+
 def simulate_sir_single(beta, gamma, t_max=500, N=1000):
     """Simulates a single SIR process."""
 
