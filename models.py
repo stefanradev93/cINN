@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.regularizers import l2
 
 
-class Permutation(tf.layers.Layer):
+class Permutation(tf.keras.Model):
     """Implements a permutation layer to permute the input dimensions of the cINN block."""
 
     def __init__(self, theta_dim):
@@ -21,10 +21,12 @@ class Permutation(tf.layers.Layer):
         inv_permutation_vec = np.argsort(permutation_vec)
         self.permutation = tf.Variable(initial_value=permutation_vec,
                                        trainable=False, 
-                                       dtype=tf.int32)
+                                       dtype=tf.int32,
+                                       name='permutation')
         self.inv_permutation = tf.Variable(initial_value=inv_permutation_vec,
                                            trainable=False, 
-                                           dtype=tf.int32)
+                                           dtype=tf.int32,
+                                           name='inv_permutation')
 
     def call(self, x, inverse=False):
         """Permutes the bach of an input."""
@@ -369,7 +371,7 @@ class EquivariantModule(tf.keras.Model):
         out = self.module(x)
         return out
     
-    
+
 class InvariantNetwork(tf.keras.Model):
     """
     Implements a network which parameterizes a 
