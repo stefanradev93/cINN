@@ -302,9 +302,7 @@ class InvariantModule(tf.keras.Model):
             for _ in range(n_dense)
         ])
 
-        self.post_pooling_dense = tf.keras.layers.Dense([
-            tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform')   
-        ])
+        self.post_pooling_dense = tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform')   
         
     def call(self, x):
         """
