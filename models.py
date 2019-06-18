@@ -244,7 +244,7 @@ class DeepConditionalModel(tf.keras.Model):
             x = cINN(x, y, inverse=True)
         return x
 
-    def sample(self, y, n_samples, to_numpy=False):
+    def sample(self, y, n_samples, to_numpy=False, training=False):
         """
         Samples from the inverse model given a single instance y or a batch of instances.
         ----------
@@ -253,6 +253,7 @@ class DeepConditionalModel(tf.keras.Model):
         y         : tf.Tensor of shape (batch_size, summary_dim) -- the summarized conditional data of interest y = summary(y)
         n_samples : int -- number of samples to obtain from the approximate posterior
         to_numpy  : bool -- flag indicating whether to return the samples as a np.array or a tf.Tensor
+        training  : bool -- flag used to indicate that samples are drawn are training time (BatchNorm)
         ----------
 
         Returns:
@@ -261,7 +262,7 @@ class DeepConditionalModel(tf.keras.Model):
 
         # Summarize obs data if summary net available
         if self.summary_net is not None:
-            y = self.summary_net(y, training=False)
+            y = self.summary_net(y, training=training)
 
         # In case y is a single instance
         if int(y.shape[0]) == 1:
@@ -367,6 +368,7 @@ class EquivariantModule(tf.keras.Model):
         x = tf.concat((x_inv, x), axis=-1)
         out = self.module(x)
         return out
+    
     
 class InvariantNetwork(tf.keras.Model):
     """

@@ -47,10 +47,15 @@ def simulate_batch_diffusion_p(x, params):
                                          params[i, 4], params[i, 5], params[i, 6], 
                                          params[i, 7], params[i, 8], 0.001, 5000)
 
-def simulate_diffusion(batch_size, n_trials, pbounds, n_cond=2, to_tensor=True, cond_coding=False):
+def simulate_diffusion(batch_size, pbounds, n_trials=None, n_cond=2, 
+                       to_tensor=True, cond_coding=False):
     """Simulates batch_size datasets from the full Ratcliff diffusion model."""
     
-    n_params = len(bounds)
+    # Get number of parameters
+    n_params = len(pbounds)
+
+    if n_trials is None:
+        n_trials = np.random.randint(100, 1001)
 
     # Extract parameter bounds
     lower_bounds = [pbounds['v1'][0], pbounds['v2'][0], pbounds['sv'][0], pbounds['zr'][0],
