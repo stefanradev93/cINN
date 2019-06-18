@@ -298,8 +298,12 @@ class InvariantModule(tf.keras.Model):
         super(InvariantModule, self).__init__()
         
         self.module = tf.keras.Sequential([
-            tf.keras.layers.Dense(h_dim, activation='elu') 
+            tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform') 
             for _ in range(n_dense)
+        ])
+
+        self.post_pooling_dense = tf.keras.layers.Dense([
+            tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform')   
         ])
         
     def call(self, x):
@@ -318,7 +322,8 @@ class InvariantModule(tf.keras.Model):
 
         x = self.module(x)
         x = tf.reduce_mean(x, axis=1)
-        return x
+        out = self.post_pooling_dense(x)
+        return out
     
 
 class EquivariantModule(tf.keras.Model):
@@ -362,8 +367,8 @@ class EquivariantModule(tf.keras.Model):
         x_inv = self.invariant_module(x)
         x_inv = tf.stack([x_inv] * int(x.shape[1]), axis=1) # Repeat x_inv n times
         x = tf.concat((x_inv, x), axis=-1)
-        return self.module(x)
-        
+        out = self.module(x)
+        return out
     
 class InvariantNetwork(tf.keras.Model):
     """
