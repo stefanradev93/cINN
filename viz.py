@@ -184,6 +184,8 @@ def plot_sbc(model, n_samples, X_test, theta_test, param_names, figsize=(15, 5),
     for j in range(len(param_names)):
         sns.distplot(ranks[:, j], kde=False, ax=axarr[j])
         axarr[j].set_title(param_names[j])
+    f.tight_layout()
+    
     # Show, if specified
     if show:
         plt.show()
