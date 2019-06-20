@@ -181,9 +181,14 @@ def plot_sbc(model, n_samples, X_test, theta_test, param_names, figsize=(15, 5),
 
     # Compute ranks (using broadcasting)    
     ranks = np.sum(theta_samples < theta_test, axis=0)
+
+    # Plot hisograms
     for j in range(len(param_names)):
-        sns.distplot(ranks[:, j], kde=False, ax=axarr[j])
+        sns.distplot(ranks[:, j], kde=False, ax=axarr[j], rug=True)
         axarr[j].set_title(param_names[j])
+        axarr[j].spines['right'].set_visible(False)
+        axarr[j].spines['top'].set_visible(False)
+
     f.tight_layout()
     
     # Show, if specified
