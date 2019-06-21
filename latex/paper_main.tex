@@ -6,8 +6,13 @@
 % {pnasmathematics} = Template for a one-column mathematics article
 % {pnasinvited} = Template for a PNAS invited submission
 
-
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{subfig}
 \graphicspath{{figures/}}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \title{Learning complex models with invertible neural networks: a likelihood-free Bayesian approach}
 
@@ -25,7 +30,7 @@
 \leadauthor{Radev} 
 
 % Please add here a significance statement to explain the relevance of your work
-\significancestatement{Authors must submit a 120-word maximum statement about the significance of their research paper written at a level understandable to an undergraduate educated scientist outside their field of speciality. The primary goal of the Significance Statement is to explain the relevance of the work in broad context to a broad readership. The Significance Statement appears in the paper itself and is required for all research papers.}
+\significancestatement{Describing complex stochastic processes with parametric  models lies at the heart of science. Simulating models given a set of parameters is relatively easy with the aid of modern computers, but inferring model parameters from observed data can often be a challenging endeavor. We combine recent advances in deep learning and Bayesian inference into a powerful method for building reusable parameter estimation networks applicable to various types of models and data encountered in different research fields.}
 
 % Please include corresponding author, author contribution and author declaration information
 \authorcontributions{Please provide details of author contributions here.}
@@ -50,19 +55,17 @@ Parametric models of complex processes are ubiquitous throughout the sciences. A
 \thispagestyle{firststyle}
 \ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
 
-\dropcap{M}athematical models are formal descriptions of scientific theories allowing a clear and unambiguous way to formulate and test scientific hypotheses about probabilistic phenomena in a probabilistic world. In their most abstract form, mathematical models are specified by a set of latent parameters $\boldsymbol{\theta}$ and a generative model $q$ mapping parameters to manifest quantities $\boldsymbol{x}$: 
-
+\dropcap{M}athematical models are formal descriptions of scientific theories allowing a clear and unambiguous way to formulate and test scientific hypotheses about probabilistic phenomena in a probabilistic world. In its most abstract form, a mathematical model is specified by a set of parameters $\boldsymbol{\theta}$ and a generative model $q$ mimicking the process by which manifest quantities $\boldsymbol{x}$ arise from latent parameters: 
 \begin{align*}
 \boldsymbol{x}= q(\boldsymbol{\theta}) \numberthis \label{eqn:1} 
 \end{align*}
-
-While $q$ can represent an arbitrarily complex process by an arbitrarily complicated expression, its functional form is usually guided by a well-founded theoretical framework. For instance, it could be a stochastic differential equation describing the dynamics of single neurons in the brain, or a step-by-step mechanism dictating the rate of gene expression in certain cells. Thus, it is only through theoretical embedding that a meaningful interpretation in terms of some mechanism can be attached to the parameters of a mathematical model. Examples of mathematical models can be found in various scientific domains, e.g., genetics \cite{zappia2017splatter, beaumont2002approximate}, cognitive science \cite{palestro2018likelihood, usher2001time}, neuroscience \cite{hwang2018conditional, lueckmann2017flexible}, population dynamics \cite{wood2010statistical}, epidemiology \cite{hethcote2000mathematics}, just to name a few.
+While $q$ can represent an arbitrarily complex process by an arbitrarily complicated expression, its functional form is usually guided by a well-founded theoretical framework. For instance, $q$ can be a stochastic differential equation describing the dynamics of single neurons in the brain, or a step-by-step mechanism dictating the rate of gene expression in certain cells. Thus, it is only through theoretical embedding that a meaningful interpretation in terms of some mechanism can be attached to the parameters of a mathematical model. Examples of mathematical models can be found in various scientific domains, e.g., genetics \cite{zappia2017splatter, beaumont2002approximate}, cognitive science \cite{palestro2018likelihood, usher2001time}, neuroscience \cite{hwang2018conditional, lueckmann2017flexible}, population dynamics \cite{wood2010statistical}, epidemiology \cite{hethcote2000mathematics}, just to name a few.
 
 Once a mathematical model has been formulated, the next step consists of fitting the model to experimental or observational data and recovering the parameters of interest. However, estimating the parameters of a mathematical model can quickly become one of the most tenacious challenges in applications to real-world problems. It is also one of the most important ones to be tackled, since without reliable parameter estimation methods, it is impossible to test the utility of a model, regardless of its sophistication or theoretical appeal. Idealized parameter estimation involves computing the inverse (backward) model $\boldsymbol{\theta} = q^{-1}(\boldsymbol{x})$ exactly. However, due to noise, inherent stochasticity or loss of information, the inverse usually does not exist, so researchers need to resort to the sophisticated frameworks of Bayesian or frequentist inference. 
 
-Moreover, as mathematical models and processes under description become increasingly complex, parameter estimation and model selection can quickly become intractable with standard Bayesian and frequentist method. Complex models specified by a generative stochastic mechanism do not always provide a closed-form solution for the \textit{likelihood function} \cite{palestro2018likelihood, csillery2010approximate, toni2009simulation}. This poses great difficulties for Bayesian and frequentist methods alike, since both depend explicitly on the numerical evaluation of a likelihood function as a proxy for assessing model fit to data. Even if a likelihood function is available, inference could be prohibitively slow for real-world applications. Therefore, the need for powerful and reliable likelihood-free estimation methods arises naturally. 
+However, as mathematical models and processes under description become increasingly complex, parameter estimation and model selection can quickly become intractable with standard Bayesian and frequentist method. Complex models specified by a generative stochastic mechanism do not always provide a closed-form solution for the \textit{likelihood function} \cite{palestro2018likelihood, csillery2010approximate, toni2009simulation}. This poses great difficulties for Bayesian and frequentist methods alike, since both depend explicitly on the numerical evaluation of a likelihood function as a proxy for assessing model fit to data. Even if a likelihood function is available in closed-form, inference may be prohibitively slow for real-world applications. In this case, enforcing simplifying distributional assumptions (i.e., independence or Gaussian assumptions) on the likelihood can increase the speed of inference, but can also lead to model misspecifications and dramatically incorrect estimates. Therefore, the need for powerful and reliable likelihood-free estimation methods arises naturally. 
 
-Likelihood-free methods aim at bypassing the intractability problem by resorting to a simulation-based approach to inference and model selection \cite{palestro2018likelihood}. A subset of likelihood-free methods includes approximate Bayesian computation (ABC) methods, which aim at preserving the advantages of Bayesian data analysis even when the likelihood function is intractable or practically impossible to compute \cite{turner2014generalized, sunnaaker2013approximate}. ABC methods approximate the likelihood function by repeatedly sampling parameters from a pre-specified prior distribution $\pi(\boldsymbol{\theta})$ and then simulating multiple datasets by running the generative model $q(\boldsymbol{\theta})$ using the sampled parameters. Thus, the core ingredients of ABC methods are a prior on $\boldsymbol{\theta}$, and a generative model $q(\boldsymbol{\theta})$, usually specified as a function code in a general-purpose programming language \cite{csillery2010approximate, mertens2018abrox}.
+Likelihood-free methods aim at bypassing the above problems by resorting to a simulation-based approach to parameter estimation and model selection \cite{palestro2018likelihood, turner2014generalized}. A subset of likelihood-free methods includes approximate Bayesian computation (ABC) methods, which aim at preserving the advantages of Bayesian data analysis even when the likelihood function is intractable or practically impossible to compute \cite{turner2014generalized, sunnaaker2013approximate, csillery2010approximate}. ABC methods approximate the likelihood function by repeatedly sampling parameters from a pre-specified prior distribution $\pi(\boldsymbol{\theta})$ and then simulating multiple datasets by running the generative model $q(\boldsymbol{\theta})$ using the sampled parameters. Thus, the core ingredients of ABC methods are a prior on $\boldsymbol{\theta}$, and a generative model $q(\boldsymbol{\theta})$, usually specified as a function code in a general-purpose programming language \cite{csillery2010approximate, mertens2018abrox}.
 
 Performing approximate inference comes at the cost of incurring additional approximation error, which accumulates on top of the irreducible estimation error. Within the context of approximate inference, the most common manifestations of approximation error include: \textit{i)} imprecise form of the posterior; \textit{ii)} imprecise posterior moments; \textit{iii)} under- or overestimation of uncertainty. Different approximation methods usually involve multiple trade-offs between minimizing approximation error and keeping computational time within reasonable bounds \cite{frazier2018asymptotic, palestro2018likelihood}.
 
@@ -74,13 +77,20 @@ The \textit{summary network} is responsible for learning the most informative su
 
 The \textit{invertible network} is responsible for learning the posterior of the model parameters given the observed and summarized data. It is based on the recently developed flow-based architecture \cite{kingma2018glow, grover2018flow, dinh2016density}. Flow-based methods provide exact latent-variable inference and log-likelihood evaluation when operating at optimum. In the \textbf{Methods} section, we show that our method maximizes the posterior over model parameters directly when cast in the context of likelihood-free inference. Furthermore, flow-based methods are capable of approximating very high-dimensional distributions (e.g., images). Once trained with a sufficient amount of simulated data, our invertible network can perform full Bayesian inference on large amounts of real data from a given domain in a single pass. 
 
+\begin{figure}
+    \centering
+    \subfloat[Training phase]{{\includegraphics[width=.99\linewidth]{training.png}}}
+    \newline
+    \subfloat[Inference phase]{{\includegraphics[width=.99\linewidth]{inference.png}}}
+    \caption{A graphic illustration of the two phases of the method. \textbf{(a)} During the training phase, the networks are trained on simulated data from the model; \textbf{(b)} during the inference phase, the posterior is approximated from real data.}
+    \label{fig:first}
+\end{figure}
+
 The joint training of a summary network and an invertible network results in a powerful and universal parameter estimation machine capable of inverting complicated statistical problems in various scientific domains (see Fig.1). Moreover, the method addresses many of the limitations of previous likelihood-free methods. First, it involves no costly MCMC or rejection sampling, which makes the inference phase lightning fast, as we also make use of GPU-accelerated computation. Second, it involves no fixed summary statistics or kernels, but learns the most informative representation of the data in an end-to-end manner. Third, the method is fully Bayesian, as it directly learns the posterior over model parameters and thus allows for the quantification of uncertainty, which is a crucial requirement in parameter estimation \cite{kendall2017uncertainties, gelman2013bayesian}. Last, the trained networks can be shared and reused by multiple researches within a scientific domain, thus removing the need for wasteful computations and fitting a separate model for each and every dataset. This pooling of computational resources across researches is an important step forward in mathematical modeling, as has been recently argued \cite{mestdagh2018prepaid}.
 
 To illustrate the utility of the new method, we first apply it to a toy Bayesian regression model with known posterior. Then, we present applications to intractable models from cognitive science, population dynamics, epidemiology, and genetics and demonstrate state-of-the art parameter recovery. The outline of the remaining manuscript is as follows: The \textbf{Methods} section introduces the main building blocks of the new method and summarizes the main steps as pseudocode. The \textbf{Results} section presents the various applications of the model to real-world research domains. Finally, the \textbf{Discussion} section lists the advantages of the current method, treats some potential pitfalls and explores future research vistas. Python code and data for all applications are freely available as Jupyter notebooks at \href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN} and as a small library based on \textit{TensorFlow} \cite{abadi2016tensorflow} for creating and training custom invertible networks with GPU-support. 
 
-
 \section*{Methods}
-
 
 \subsection*{Notation}
 
@@ -98,13 +108,13 @@ In the current work, we propose to implement and use a conditional invertible ne
 
 The basic building block of a cINN is the affine coupling block (ACB) \cite{ardizzone2018analyzing, kingma2018glow, dinh2016density}. Each ACB consists of four separate fully connected neural networks denoted as $s_{1}(\cdot), s_{2}(\cdot), t_{1}(\cdot), t_{2}(\cdot)$. An ACB is specifically designed to be invertible, which means that in addition to a parametric mapping $f_{\boldsymbol{\phi}_{inv}}: \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ is also learns the inverse mapping $f_{\boldsymbol{\phi}_{inv}}^{-1}: \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ "for free". Denoting the input vector of $f_{\boldsymbol{\phi}_{inv}}$ as $\boldsymbol{u}$ and the output vector as $\boldsymbol{v}$, it follows that $f(\boldsymbol{u}; \boldsymbol{\phi}_{inv}) = \boldsymbol{v}$ and $f^{-1}(\boldsymbol{v}; \boldsymbol{\phi}_{inv}) = \boldsymbol{u}$. Invertibility is achieved by splitting the input vector into two parts $\boldsymbol{u} = (\boldsymbol{u}_{1}, \boldsymbol{u}_{2})$ and performing the following operations on the split input:
 \begin{align*} 
-\boldsymbol{v}_{1} &= \boldsymbol{u}_{1} \odot exp(s_{1}(\boldsymbol{u}_{2})) + t_{1}(\boldsymbol{u}_{2}) \numberthis \label{eqn:2}  \\ 
-\boldsymbol{v}_{2} &= \boldsymbol{u}_{2} \odot exp(s_{1}(\boldsymbol{v}_{1})) + t_{1}(\boldsymbol{v}_{1}) \numberthis \label{eqn:3} 
+\boldsymbol{v}_{1} &= \boldsymbol{u}_{1} \odot \exp(s_{1}(\boldsymbol{u}_{2})) + t_{1}(\boldsymbol{u}_{2}) \numberthis \label{eqn:2}  \\ 
+\boldsymbol{v}_{2} &= \boldsymbol{u}_{2} \odot \exp(s_{1}(\boldsymbol{v}_{1})) + t_{1}(\boldsymbol{v}_{1}) \numberthis \label{eqn:3} 
 \end{align*}
 The outputs $\boldsymbol{v} = (\boldsymbol{v}_{1}, \boldsymbol{v}_{2})$ are then concatenated again and passed to the next ACB. The inverse operation is given by:
 \begin{align*} 
-\boldsymbol{u}_{2} &= (\boldsymbol{v}_{2} - t_{2}(\boldsymbol{v}_{1})) \odot exp(-s_{2}(\boldsymbol{v}_{1})) \numberthis \label{eqn:4}  \\ 
-\boldsymbol{u}_{1} &= (\boldsymbol{v}_{1} - t_{1}(\boldsymbol{u}_{2})) \odot exp(-s_{1}(\boldsymbol{u}_{2})) \numberthis \label{eqn:5} 
+\boldsymbol{u}_{2} &= (\boldsymbol{v}_{2} - t_{2}(\boldsymbol{v}_{1})) \odot \exp(-s_{2}(\boldsymbol{v}_{1})) \numberthis \label{eqn:4}  \\ 
+\boldsymbol{u}_{1} &= (\boldsymbol{v}_{1} - t_{1}(\boldsymbol{u}_{2})) \odot \exp(-s_{1}(\boldsymbol{u}_{2})) \numberthis \label{eqn:5} 
 \end{align*}
 An additional property of this design, which becomes relevant later for optimization, is that the operations of the ACB have tractable, and cheaply computable Jacobians (strictly upper or lower triangular matrices). Furthermore, the internal networks $s_{1}(\cdot), s_{2}(\cdot), t_{1}(\cdot), t_{2}(\cdot)$ can be represented by arbitrarily complex neural networks, which themselves need not be invertible, since they are only ever evaluated in the forward direction during both the forward and the inverse pass through the ACB. To ensure that the model is powerful enough to represent complicated distributions, we chain multiple ACBs, so that the output of each ACB becomes the input of the next. In this way, the whole chain remains invertible from the first input to the last output and can be viewed as a single function parameterized by trainable parameters $\boldsymbol{\phi}_{inv}$.
 
@@ -122,54 +132,83 @@ This process can be interpreted as follows: the forward pass maps data-generatin
 \subsection*{Summary Network}
 Since in practice the conditioning data set $\boldsymbol{x}$ can have variable number of input points (e.g., trial sizes, time points) and exhibit various redundancies, the cINN can profit from some form of dimensionality reduction applied to the data. Ideally, we want to avoid hand-crafted summary statistics, and instead learn the most informative summary statistics directly from data. Therefore, instead of feeding the raw simulated (observed) data to each ACB, we pass the data through an additional summary network to obtain a fixed-sized vector of learned summary statistics $\tilde{\boldsymbol{x}} = h(\boldsymbol{x};\boldsymbol{\phi}_{sum})$ and learn the parameters of the summary network $h$ jointly with those of the cINN chain via backpropagation. Thus, the current method remains completely end-to-end and is capable of generalizing to data sets of variable input size and structure.
 
-\subsection*{Maximum Likelihood Loss}
-Broadly speaking, the goal of maximum likelihood estimation is to find a set of parameters which maximize the probability of the data under a parametric model. In our case, we are interested in maximizing the expectation over possible neural network parameters with respect to the parameters of the mathematical model:
+\subsection*{Learning the Posterior}
+The cINN learns to approximate the posterior of model parameters by optimizing  a maximum likelihood (ML) criterion. Broadly speaking, the goal of ML estimation is to find a set of parameters which maximize the probability of the data under a parametric model. In our case, we are interested in maximizing the expectation over possible neural network parameters with respect to the parameters of the mathematical model:
+\begin{align*} 
+\boldsymbol{\phi}^{*} = \argmax_{\boldsymbol{\phi}}\mathbb{E}_{\boldsymbol{\theta} \sim p(\boldsymbol{\theta}|\boldsymbol{x})}\left[p(\boldsymbol{\phi}|\boldsymbol{\theta},\boldsymbol{x})\right] \numberthis \label{eqn:8}
+\end{align*}
+Applying Bayes' rule to the posterior over all neural network parameters we obtain:
+\begin{align*} 
+p(\boldsymbol{\phi}|\boldsymbol{\theta},\boldsymbol{x}) \propto p(\boldsymbol{\theta}|\boldsymbol{x},\boldsymbol{\phi})p(\boldsymbol{\phi})  \numberthis \label{eqn:9}
+\end{align*}
+Note, that by maximizing eq.\ref{eqn:9} we are maximizing the posterior over model parameters of interest $p(\boldsymbol{\theta}|\boldsymbol{x},\boldsymbol{\phi})$. Thus, it remains to find a tractable expression for eq.\ref{eqn:8} to be minimized by backpropagation given a finite number of simulated samples from the model. To this end, we recall that we can relate the pdf of $\boldsymbol{\theta}$ to that of $\boldsymbol{z}$ via the change of variable theorem:
+\begin{align*} 
+p(\boldsymbol{\theta}|\boldsymbol{x},\boldsymbol{\phi}) &= p(\boldsymbol{z})\left|\det\left(\frac{\partial \boldsymbol{z}}{\partial \boldsymbol{\theta}}\right)\right| \numberthis \label{eqn:10} \\ 
+&= p\left(f(\boldsymbol{\theta};\boldsymbol{x},\boldsymbol{\phi})\right)\left|\det\left(\frac{\partial f}{\partial \boldsymbol{\theta}}\right)\right| \numberthis \label{eqn:11}
+\end{align*}
+where $\partial f/\partial \boldsymbol{\theta} = \boldsymbol{J}_{f}$ is the Jacobian of the learned transformation $f(\boldsymbol{\theta};\boldsymbol{x},\boldsymbol{\phi})$ with respect to the input. Both terms in eq.\ref{eqn:11} are now tractable, since we have previously defined $\boldsymbol{z}$ as following a spherical unit Gaussian, that is, $p(\boldsymbol{z}) = (2\pi)^{-2/d}\exp(\norm{\boldsymbol{z}}_{2}^{2})$ and the log determinant of the Jacobian is easily computed as $s_{1}(\boldsymbol{u}_{2}, \boldsymbol{x}) + s_{2}(\boldsymbol{v}_{1}, \boldsymbol{x})$ due to eqs. \ref{eqn:2} and \ref{eqn:3}. We can now formulate the ML loss as the Monte-Carlo approximation of the negative logarithm of eq.\ref{eqn:8} for a batch of size $m$:
+\begin{align*}
+\mathcal{L}(\boldsymbol{\phi}) &= -\frac{1}{m}\sum_{i=1}^{m}\log\left(p(\boldsymbol{\phi}|\boldsymbol{\theta}^{(i)},\boldsymbol{x}^{(i)})\right) \numberthis \label{eqn:12} \\
+&= -\frac{1}{m}\sum_{i=1}^{m}\log\left(p(\boldsymbol{\theta}^{(i)}|\boldsymbol{x}^{(i)},\boldsymbol{\phi})p(\boldsymbol{\phi})\right) \numberthis \label{eqn:13} \\
+&= -\frac{1}{m}\sum_{i=1}^{m}\left(\frac{\norm{f(\boldsymbol{\theta}^{(i)};\boldsymbol{x}^{(i)},\boldsymbol{\phi})}_{2}^{2}}{2} + \log\left|\det\left(\boldsymbol{J}_{f}^{(i)}\right)\right|\right) + \tau\norm{\boldsymbol{\phi}}_{2}^{2} \numberthis \label{eqn:14}
+\end{align*}
+where we place a Gaussian prior over the neural network parameters with $\tau\equiv 1/\sigma^{2}$, corresponding to a standard $L2$-regularization.
 
+Minimizing eq. \ref{eqn:14} can be interpreted as searching for the optimal neural network parameters $\boldsymbol{\phi}^{*}$ which maximize the probability of model parameters $\boldsymbol{\theta}$ given data $\boldsymbol{x}$. This is exactly the probability we are concerned with in Bayesian inference. Note that our formulation maximizes the posterior of model parameters directly, in contrast to variational methods which optimize a lower bound on the posterior \cite{papamakarios2016fast, kingma2014auto}.
+Once the backpropagation algorithm has settled to a local minimum of the ML loss, one can easily obtain samples from the approximate posterior $p(\boldsymbol{\theta}|\boldsymbol{x}=\boldsymbol{x}_{obs},\boldsymbol{\phi}=\boldsymbol{\phi}^{*})$, based on an observed dataset $\boldsymbol{x}_{obs}$, by repeatedly sampling $\boldsymbol{z}^{(l)} \sim \mathcal{N}_{d}(\boldsymbol{0},\boldsymbol{I})$, and then passing $\boldsymbol{z}^{(l)}$ in reverse to the cINN in order to compute $\boldsymbol{\theta}^{(l)} = f^{-1}(\boldsymbol{z}^{(l)};\boldsymbol{x}_{obs},\boldsymbol{\phi}^{*})$ for $l=1,...,L$. Figure 1b illustrates the inference phase of the method. It is worth noting that sampling a large number of parameter values from the approximate posterior takes a negligible amount of time, since it only requires a single pass through the cINN in reverse.
+ 
+\subsection*{Training the Networks}
+We train all cINNs and summary networks described in this paper jointly via backpropagation. For all following experiments, we use the Adam optimizer  with a starter learning rate of $10^-3$ and an exponential decay rate of $.95$. We set the weight regularization parameter $\tau$ to a value of $10^{-5}$. Note, that we did not perform an extensive search for optimal values of the cINN parameter but stick to a cINN with 10 ACBs for each example in this paper.
+Concerning the data generation step, we use two training approaches. The first follows the classical approximate Bayesian computation approach to create a large “reference table” or grid of the form $\boldsymbol{D} = \{\boldsymbol{x}^{(i)}, \boldsymbol{\theta}^{(i)}\}_{i=1}^{n}$. The reference table is then used as training data for the neural network and training continues for a pre-specified number of epochs through the entire reference table. A separate validation dataset is eventually used to assess the performance of the network. This training approach separates the simulation from the training phase but can incur large memory overhead, as the reference table must be stored on disk and then loaded in chunks or in its entirety into memory. The second approach follows a different strategy, which is used mainly in the field of active learning. Correspondingly, a dataset, or a batch of datasets, is created on the fly and then passed through the neural network. This training regime has the advantage that the network never “experiences” the same input data twice. Moreover, training can continue as long as the network keeps improving (i.e., the loss keeps decreasing), since overfitting in the classical sense is nearly impossible. However, if the simulations are computationally expensive and researchers need to experiment with multiple models, it might be beneficial to switch to the first regime, since simulation and training in the active learning regime are tightly intertwined. TODO - Describe for which!
 
-\subsection*{Submitting Manuscripts}
+\subsection*{Putting It All Together}
 
-All authors must submit their articles at \href{http://www.pnascentral.org/cgi-bin/main.plex}{PNAScentral}. If you are using Overleaf to write your article, you can use the ``Submit to PNAS'' option in the top bar of the editor window. 
+On an abstract level, our method requires three key ingredients: 1) a mathematical process model $q(\boldsymbol{\theta})$ capable of simulating data $\boldsymbol{x}$; 2) a prior distribution over the model parameters $\pi(\boldsymbol{\theta})$ encoding our prior beliefs about plausible parameter values; 3) an invertible neural network $f_{\boldsymbol{\theta}}$ capable of approximating a large enough family of probability distributions (see Figure 2). In practice, a chain of up to 10 ACBs should suffice to learn most distributions encountered in the life sciences, since they tend to be unimodal and relatively simple (in contrast to the distribution of natural images or words in a spoken language). From these three ingredients, a universal and reusable sampler can be designed for likelihood-free Bayesian estimation of both tractable and intractable mathematical models. \textbf{Algorithm} \ref{Algorithm:algo} describes the essential steps of the method using an arbitrary summary network and employing the active learning training regime.
 
-\subsection*{Format}
+\begin{algorithm}
+\caption{Bayesian likelihood-free inference with invertible neural networks}\label{Algorithm:algo}
+\begin{algorithmic}[1]
+\State \emph{Training (via active learning):}
+\Repeat
+\State {Sample a batch of $\{\boldsymbol{\theta}^{(i)}\}_{i=1}^{m}$ from prior $\pi(\boldsymbol{\theta})$}
+\State {Simulate a batch of datasets $\{\boldsymbol{x}^{(i)}\}_{i=1}^{m}$ by running $\boldsymbol{x}^{(i)} = q(\boldsymbol{\theta}^{(i)})$ for $i=1,...,m$}
+\State {Pass $\{\boldsymbol{x}^{(i)}\}_{i=1}^{m}$ through summary network $h(\boldsymbol{x}^{(i)};\boldsymbol{\phi}_{sum})$ to obtain $\{\tilde{\boldsymbol{x}}^{(i)}\}_{i=1}^{m}$}
+\State {Pass $\{\boldsymbol{\theta}^{(i)}\}_{i=1}^{m}$ and $\{\tilde{\boldsymbol{x}}^{(i)}\}_{i=1}^{m}$ through cINN $f(\boldsymbol{\theta}^{(i)};\boldsymbol{x}^{(i)},\boldsymbol{\phi}_{inv})$ to obtain $\{\boldsymbol{z}^{(i)}\}_{i=1}^{m}$}
+\State {Compute ML loss $\mathcal{L}(\boldsymbol{\phi})$ according to eq.\ref{eqn:14}}
+\State {Update neural network parameters $\boldsymbol{\phi}$ via backpropagation}
+\Until {convergence to $\boldsymbol{\phi}^{*}$}
+\State \emph{Inference (given observed or test data $\boldsymbol{x}_{obs}$):}
+\State {Summarize the observed data by computing $\tilde{\boldsymbol{x}}_{obs} = h(\boldsymbol{x}_{obs},\boldsymbol{\phi}_{sum}^{*})$}
+\For{$l = 1,...,L$}
+\State {Sample $\boldsymbol{z}^{(l)} \sim \mathcal{N}_{d}(\boldsymbol{0},\boldsymbol{I})$}
+\State {Compute $\boldsymbol{\theta}^{(l)} = f^{-1}(\boldsymbol{z}^{(l)};\tilde{\boldsymbol{x}}_{obs},\boldsymbol{\phi}_{inv})$}
+\EndFor
+\State {Use $\{\boldsymbol{\theta}^{(l)}\}_{l=1}^{L}$ to approximate the posterior $p(\boldsymbol{\theta}|\boldsymbol{x}_{obs})$}
+\end{algorithmic}
+\end{algorithm}
 
-Many authors find it useful to organize their manuscripts with the following order of sections;  Title, Author Affiliation, Keywords, Abstract, Significance Statement, Results, Discussion, Materials and methods, Acknowledgments, and References. Other orders and headings are permitted.
+The backpropagation algorithm works by computing the gradients of the loss function w.r.t. the parameters of the neural networks and then adjusting the parameters, so as to drive the loss function to a local minimum. We experienced no instability or convergence issues during training with the ML loss. Note, that steps $12-15$ of \textbf{Algorithm} \ref{Algorithm:algo} can be executed in parallel with GPU support. 
 
-\subsection*{Manuscript Length}
+In what follows, we apply the method to a toy Bayesian regression example with conjugate priors, and then use it to estimate the parameters of various intractable models from TODO -which?. Code for reproducing the results on all following examples is freely available at: \href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN}.All examples are implemented in Python using the \textit{TensorFlow} library for automatic differentiation with GPU support.
+
+\section*{Results}
+
+\subsection*{Toy Example}
+
+\subsection*{Example 1}
+
+\subsection*{Example 2}
+
+\subsection*{Example 3}
+
+\subsection*{Example 4}
 
 PNAS generally uses a two-column format averaging 67 characters, including spaces, per line. The maximum length of a Direct Submission research article is six pages and a Direct Submission Plus research article is ten pages including all text, spaces, and the number of characters displaced by figures, tables, and equations.  When submitting tables, figures, and/or equations in addition to text, keep the text for your manuscript under 39,000 characters (including spaces) for Direct Submissions and 72,000 characters (including spaces) for Direct Submission Plus.
 
 
-\subsection*{Data Archival}
-
-PNAS must be able to archive the data essential to a published article. Where such archiving is not possible, deposition of data in public databases, such as GenBank, ArrayExpress, Protein Data Bank, Unidata, and others outlined in the Information for Authors, is acceptable.
 
 \subsection*{Language-Editing Services}
 Prior to submission, authors who believe their manuscripts would benefit from professional editing are encouraged to use a language-editing service (see list at www.pnas.org/site/authors/language-editing.xhtml). PNAS does not take responsibility for or endorse these services, and their use has no bearing on acceptance of a manuscript for publication. 
-
-\begin{figure}%[tbhp]
-\centering
-\includegraphics[scale=0.1]{figure1.png}
-\caption{Placeholder image of a frog with a long example caption to show justification setting.}
-\label{fig:frog}
-\end{figure}
-
-
-\subsection*{Digital Figures}
-
-Only TIFF, EPS, and high-resolution PDF for Mac or PC are allowed for figures that will appear in the main text, and images must be final size. Authors may submit U3D or PRC files for 3D images; these must be accompanied by 2D representations in TIFF, EPS, or high-resolution PDF format.  Color images must be in RGB (red, green, blue) mode. Include the font files for any text. 
-
-Figures and Tables should be labelled and referenced in the standard way using the \verb|\label{}| and \verb|\ref{}| commands.
-
-Figure \ref{fig:frog} shows an example of how to insert a column-wide figure. To insert a figure wider than one column, please use the \verb|\begin{figure*}...\end{figure*}| environment. Figures wider than one column should be sized to 11.4 cm or 17.8 cm wide. Use \verb|\begin{SCfigure*}...\end{SCfigure*}| for a wide figure with side captions.
-
-
-\subsection*{Single column equations}
-
-Authors may use 1- or 2-column equations in their article, according to their preference.
-
-To allow an equation to span both columns, use the \verb|\begin{figure*}...\end{figure*}| environment mentioned above for figures.
-
-
 
 \subsection*{Supporting Information Appendix (SI)}
 
@@ -177,10 +216,25 @@ Authors should submit SI as a single separate PDF file, combining all text, figu
 
 Authors who place detailed materials and methods in an SI Appendix must provide sufficient detail in the main text methods to enable a reader to follow the logic of the procedures and results and also must reference the SI methods. If a paper is fundamentally a study of a new method or technique, then the methods must be described completely in the main text.
 
-\subsubsection*{SI Datasets} 
+\section*{Discussion}
 
-Supply .xlsx, .csv, .txt, .rtf, or .pdf files. This file type will be published in raw format and will not be edited or composed.
+In the current work, we proposed and explored a novel end-to-end likelihood-free method which uses invertible neural networks to perform approximate Bayesian inference on any mathematical process model. We demonstrated the utility of the method by applying it to models from various scientific domains exhibiting various data formats and data-generating mechanisms. Further, we explored two possible training approaches suitable for different simulation scenarios, namely a reference-table approach and an active learning approach. Both training approaches lead to excellent recovery of the true parameters throughout the examples considered in the current work.
 
+Our method combines the universal approximation power of deep learning methods with the important uncertainty quantification assets of Bayesian inference \cite{kendall2017uncertainties, gelman2013bayesian}. Besides being capable of performing rapid Bayesian inference on intractable mathematical models, our method provides a general framework for designing reusable “parameter estimation machines” for various research domains. Moreover, the method is not confined solely to inference on intractable models, but can also prove as a viable alternative in modeling contexts where standard Bayesian or frequentist inference methods are available, but inference is nevertheless prohibitively slow. 
+
+Inspired by previous machine learning approaches to likelihood-free inference \cite{radev2019towards, hwang2018conditional, mestdagh2018prepaid, raynal2018abc, jiang2017learning, lueckmann2017flexible, papamakarios2016fast}, our method shares many of the advantages of these methods and further overcomes some important limitations. 
+
+First, the introduction of separate summary and inference neural network modules renders the invertible inference module independent of the shape or the size of the observed data. This is achieved by learning a fixed-size vector representation of the data through the summary module in an automatic, data-driven manner. This is particularly useful in settings where the most informative summary statistics are not known and thus potential information is lost through the choice of suboptimal summary function. However, if informative or even \textit{sufficient} statistics are available in a given domain, one might dispose with the summary module altogether and feed the summary statistics directly to the cINN. 
+
+Second, we showed that the ML loss optimizes directly the posterior over model parameters of interest, which is in contrast to ELBO-based methods which optimize a lower-bound on the posterior \cite{papamakarios2016fast, kingma2014auto}. Thus, inference is exact when the ML is minimized \cite{kingma2018glow, dinh2016density}. This \textit{optimal performance} claim is confirmed by our toy Bayesian regression example, in which we observe negligibly small deviations of the approximate from the true posterior. Further, researchers are often interested in some summary of the posterior, for instance, the posterior mean or the posterior variance \cite{radev2019towards, raynal2018abc}. We demonstrated that our method exhibits excellent recovery of the posterior means throughout the examples. We also showed that the recovery becomes better with increasing number of observed data points, while the variance of the estimates becomes larger. This is an important and highly desirable property of any parameter estimation method, as it mirrors the increase oin information following increasing number of data points. 
+
+Third, the largest computational cost of our method is paid during training. Once trained, the networks can be used and reused to perform inference on large numbers of datasets within seconds and across a given research domain. Indeed, there are many instances of research domains where a single model is extensively explored and independently fitted by multiple researches (CITATION DIFFUSION MODELLING, POPULATION DYNAMICS, NEUROSCIENCE) to test scientific theories about the modelled process. These research domains are expected to benefit the most from learning the “model universe” once and then inverting the model multiple times for inference on different datasets. In this regard, our method is similar to the recently introduced prepaid method \cite{mestdagh2018prepaid} which uses a database of pre-computed summary statistics and nearest-neighbors for inference. Note, however, that our method does not need to store training data on disk, since the "knowledge" about the relationship between data and parameters is compressed into the networks' weights. Moreover, all computations involved in our method benefit from a high degree of parallelism and can thus utilize the advantages of modern graphical processing units (GPUs).
+
+These advantages notwithstanding, some limitations of the method deserve a mention.  Even though high-level deep learning libraries, such as \textit{TensorFlow} or \textit{Torch}, allow for rapid and relatively straightforward development of various neural network architectures, the implementational burden associated with the current method is still reasonably high. In order to ease the understanding and independent application of the method, we provide fully functioning code to reproduce and study all of the examples tackled in this paper (\href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN}). Moreover, we are currently developing a general user-friendly software, which should abstract away most of the methodological complexities from the user. Another potential shortcoming of the method is the seemingly overwhelming number of hyperparameters that might require fine-tuning by the user for optimal performance on a given task. However, we observe that many of the default values of hyperparameters are sufficient to achieve good performance, and starting with a relatively large default network of $10$ ACBs does not appear to hurt performance or destabilize training. We expect that a single architecture should be able to perform well on almost all models from a given domain (i.e., a single architecture for decision-making models). Future research should investigate the question of generality by applying the method to challenging parameter estimation tasks across different research domains.
+
+\section*{Conclusion}
+
+As formal theories in various scientific disciplines (especially in the younger sciences, such as, neuroscience, cognitive science, computational biology, etc.) become increasingly complex, the need for powerful and universally applicable likelihood-free estimation methods becomes increasingly pressing. In the present work, we addressed this need by introducing a method potentially applicable to \textit{any} modeling scenario in \textit{any} research domain where simulations from the process model can be obtained. We hope that the new method will enable researchers from a variety of fields to accelerate model-based inference and will further prove its utility beyond the examples considered in this paper.
 
 
 \acknow{Please include your acknowledgments here, set in a single paragraph. Please do not include any acknowledgments in the Supporting Information, or anywhere else in the manuscript.}

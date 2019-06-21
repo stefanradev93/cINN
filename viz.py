@@ -53,7 +53,7 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples,
         
         # Compute R2
         r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
-        axarr[j].text(0.1, 0.85, '$R^2$={:.3f}'.format(r2),
+        axarr[j].text(0.1, 0.8, '$R^2$={:.3f}'.format(r2),
                      horizontalalignment='left',
                      verticalalignment='center',
                      transform=axarr[j].transAxes, 
