@@ -1,6 +1,8 @@
 import tensorflow as tf
 import numpy as np
 from losses import maximum_likelihood_loss
+from sklearn.metrics import r2_score
+
 
 def apply_gradients(optimizer, gradients, variables, global_step=None):
     """
@@ -150,3 +152,61 @@ def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_v
         p_bar.update(1)
 
     return losses
+
+
+def compute_metrics(model, param_names, simulate_fun, n_test, 
+                    n_samples_posterior, transform=None, n_min=100, n_max=1000):
+    """
+    Plots a given metric for different numbers of datapoints.
+    ---------
+
+    Arguments:
+    model           : tf.keras.Model -- the invertible chaoin with an optional summary net
+                                        both models are jointly trained
+    param_names     : list of strings -- the names of the parameters
+    simulate_fun    : callable -- the simulate function
+    n_test          : number of test datasets
+    n_samples_posterior : number of samples from the approximate posterior
+    transform       : callable ot None -- a function to transform X and theta, if given
+    n_min           : int -- the minimum number of data points for each dataset
+    n_max           : int -- the maximum number of data points for each dataset
+    ----------
+
+    Returns:
+    ns      : np.array -- the array with time points
+    metrics : dict -- a dictionary with the metrics
+    """
+    
+    #Plot NRMSE for all t
+    ns = np.arange(n_min, n_max+1)
+    metrics = {
+        'nrmse': {k: [] for k in param_names},
+        'r2': {k: [] for k in param_names},
+        'var': {k: [] for k in param_names}
+    }
+    # For each possible number of data points
+    for n_points in ns:
+        # Generate data
+        X_test, theta_test = simulate_fun(n_test, n_trials=n_points)
+        if transform is not None:
+            X_test, theta_test = transform(X_test, theta_test)
+        theta_test = theta_test.numpy()
+
+        # Sample from approx posterior and compute posterior means
+        theta_approx_means = model.sample(X_test, n_samples_posterior, to_numpy=True).mean(axis=0)
+        
+        # --- Plot true vs estimated posterior means on a single row --- #
+        for j, name in enumerate(param_names):
+
+            # Compute NRMSE
+            rmse = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
+            nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
+            # Compute R2
+            r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
+            # Compute posterior variance
+            var = np.var(theta_approx_means[:, j], ddof=1)
+            # Add to dict
+            metrics['nrmse'][name].append(nrmse)
+            metrics['r2'][name].append(r2)
+            metrics['var'][name].append(var)
+    return ns, metrics
