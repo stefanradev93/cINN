@@ -36,6 +36,11 @@ Wood SN (2010) Statistical inference for noisy nonlinear ecological dynamic
   systems.
 \newblock {\em Nature} 466(7310):1102.
 
+\bibitem{keeling2011modeling}
+Keeling MJ, Rohani P (2011) {\em Modeling infectious diseases in humans and
+  animals}.
+\newblock (Princeton University Press).
+
 \bibitem{hethcote2000mathematics}
 Hethcote HW (2000) The mathematics of infectious diseases.
 \newblock {\em SIAM review} 42(4):599--653.
@@ -141,5 +146,25 @@ Abadi M, et~al. (2016) Tensorflow: A system for large-scale machine learning in
 \bibitem{kingma2014auto}
 Kingma DP, Welling M (2014) Auto-encoding variational bayes.
 \newblock {\em stat} 1050:1.
+
+\bibitem{ratcliff2008diffusion}
+Ratcliff R, McKoon G (2008) The diffusion decision model: theory and data for
+  two-choice decision tasks.
+\newblock {\em Neural computation} 20(4):873--922.
+
+\bibitem{miletic2017parameter}
+Mileti{\'c} S, Turner BM, Forstmann BU, van Maanen L (2017) Parameter recovery
+  for the leaky competing accumulator model.
+\newblock {\em Journal of Mathematical Psychology} 76:25--50.
+
+\bibitem{voss2019sequential}
+Voss A, Lerche V, Mertens U, Voss J (2019) Sequential sampling models with
+  variable boundaries and non-normal noise: A comparison of six models.
+\newblock {\em Psychonomic bulletin \& review} pp. 1--20.
+
+\bibitem{sahneh2017gemfsim}
+Sahneh FD, Vajdi A, Shakeri H, Fan F, Scoglio C (2017) Gemfsim: a stochastic
+  simulator for the generalized epidemic modeling framework.
+\newblock {\em Journal of computational science} 22:36--44.
 
 \end{thebibliography}
