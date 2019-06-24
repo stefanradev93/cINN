@@ -48,14 +48,15 @@ def simulate_batch_diffusion_p(x, params):
                                          params[i, 7], params[i, 8], 0.001, 5000)
 
 def simulate_diffusion(batch_size, pbounds, n_trials=None, n_cond=2, 
-                       to_tensor=True, cond_coding=False):
+                       to_tensor=True, cond_coding=False, n_trials_min=100, n_trials_max=1000):
     """Simulates batch_size datasets from the full Ratcliff diffusion model."""
     
     # Get number of parameters
     n_params = len(pbounds)
 
+    # Sample number of trials, if None given
     if n_trials is None:
-        n_trials = np.random.randint(100, 1001)
+        n_trials = np.random.randint(n_trials_min, n_trials_max+1)
 
     # Extract parameter bounds
     lower_bounds = [pbounds['v1'][0], pbounds['v2'][0], pbounds['sv'][0], pbounds['zr'][0],
@@ -71,6 +72,7 @@ def simulate_diffusion(batch_size, pbounds, n_trials=None, n_cond=2,
     X_batch = np.zeros((batch_size, n_trials, n_cond), dtype=np.float32)
     simulate_batch_diffusion_p(X_batch, theta_batch)
 
+    # Return in specified format (condition coding or just stack, tf.Tensor or np.array)
     if cond_coding:
         X_batch = np.stack(([np.c_[X_batch[:, :, 0], X_batch[:, :, 1]], 
                              np.c_[np.zeros((batch_size, n_trials)), np.ones((batch_size, n_trials))]]), axis=-1)

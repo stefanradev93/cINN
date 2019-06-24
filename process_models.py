@@ -34,7 +34,7 @@ def simulate_ricker_batch(X, params, n_batch, t_obs):
         X[i, :] = simulate_ricker_single(t_obs, params[i, 0], params[i, 1], params[i, 2])
     
 
-def simulate_ricker(batch_size=64, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90, 
+def simulate_ricker(batch_size=64, t_obs=None, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90, 
                     low_sigma=0.05, high_sigma=0.7, low_phi=0, high_phi=20, to_tensor=True):
     """
     Simulates and returns a batch of 1D timeseries obtained under the Ricker model.
@@ -58,8 +58,9 @@ def simulate_ricker(batch_size=64, t_obs_min=100, t_obs_max=500, low_r=1, high_r
               a batch or time series generated under a batch of Ricker parameters
     """
     
-    # Sample t_obs
-    t_obs = np.random.randint(low=t_obs_min, high=t_obs_max+1)
+    # Sample t_obs, if None given
+    if t_obs is None:
+        t_obs = np.random.randint(low=t_obs_min, high=t_obs_max+1)
 
     # Prepare placeholders
     theta = np.random.uniform(low=[low_r, low_sigma, low_phi], 
@@ -104,7 +105,7 @@ def simulate_sir_single(beta, gamma, t_max=500, N=1000):
     return np.array([S, I, R]).T
 
 @jit
-def simulate_sir(batch_size, low_beta=0.05, high_beta=2., low_gamma=0.01, t_max=500, N=1000, to_tensor=True):
+def simulate_sir(batch_size, low_beta=0.01, high_beta=1., low_gamma=0.01, t_max=500, N=1000, to_tensor=True):
     """
     Simulates and returns a batch of timeseries obtained under the SIR model.
     ----------
