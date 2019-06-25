@@ -1,6 +1,5 @@
 models/
 __pycache__/
-checkpoints/
 .ipynb_checkpoints/
 playground/
 diffusion_api.h
