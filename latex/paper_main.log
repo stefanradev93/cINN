@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  24 JUN 2019 23:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  25 JUN 2019 12:27
 entering extended mode
 **./paper_main.tex
 (paper_main.tex
@@ -1537,22 +1537,11 @@ yle
 \@float@every@sigstatement=\toks48
 \c@sigstatement=\count352
 )
-("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/subfig\subf
-ig.sty"
-Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count353
-\sf@farskip=\skip147
-\sf@captopadj=\dimen324
-\sf@capskip=\skip148
-\sf@nearskip=\skip149
-\c@subfigure=\count354
-\c@subfigure@save=\count355
-\c@lofdepth=\count356
-\c@subtable=\count357
-\c@subtable@save=\count358
-\c@lotdepth=\count359
-\sf@top=\skip150
-\sf@bottom=\skip151
+("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/caption\sub
+caption.sty"
+Package: subcaption 2018/05/01 v1.1-162 Sub-captions (AR)
+\c@subfigure=\count353
+\c@subtable=\count354
 ) (paper_main.aux)
 \openout1 = `paper_main.aux'.
 
@@ -1587,16 +1576,16 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii
 \supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count360
-\scratchdimen=\dimen325
+\scratchcounter=\count355
+\scratchdimen=\dimen324
 \scratchbox=\box76
-\nofMPsegments=\count361
-\nofMParguments=\count362
+\nofMPsegments=\count356
+\nofMParguments=\count357
 \everyMPshowfont=\toks49
-\MPscratchCnt=\count363
-\MPscratchDim=\dimen326
-\MPnumerator=\count364
-\makeMPintoPDFobject=\count365
+\MPscratchCnt=\count358
+\MPscratchDim=\dimen325
+\MPnumerator=\count359
+\makeMPintoPDFobject=\count360
 \everyMPtoPDFconversion=\toks50
 )
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\ep
@@ -1625,7 +1614,7 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 gettitlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count366
+\c@section@level=\count361
 )
 LaTeX Info: Redefining \ref on input line 52.
 LaTeX Info: Redefining \pageref on input line 52.
@@ -1644,9 +1633,9 @@ Package: draftwatermark 2015/02/19 1.2 Put a gray textual watermark on document
 verypage.sty"
 Package: everypage 2007/06/20 1.1 Hooks to run on every page
 )
-\sc@wm@hcenter=\skip152
-\sc@wm@vcenter=\skip153
-\sc@wm@fontsize=\skip154
+\sc@wm@hcenter=\skip147
+\sc@wm@vcenter=\skip148
+\sc@wm@fontsize=\skip149
 )
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1684,7 +1673,6 @@ Package: everypage 2007/06/20 1.1 Hooks to run on every page
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: sidecap package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package lastpage Info: Please have a look at the pageslts package at
@@ -1701,20 +1689,20 @@ Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
  ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 126.
 )
-\CenteringLeftskip=\skip155
-\RaggedLeftLeftskip=\skip156
-\RaggedRightLeftskip=\skip157
-\CenteringRightskip=\skip158
-\RaggedLeftRightskip=\skip159
-\RaggedRightRightskip=\skip160
-\CenteringParfillskip=\skip161
-\RaggedLeftParfillskip=\skip162
-\RaggedRightParfillskip=\skip163
-\JustifyingParfillskip=\skip164
-\CenteringParindent=\skip165
-\RaggedLeftParindent=\skip166
-\RaggedRightParindent=\skip167
-\JustifyingParindent=\skip168
+\CenteringLeftskip=\skip150
+\RaggedLeftLeftskip=\skip151
+\RaggedRightLeftskip=\skip152
+\CenteringRightskip=\skip153
+\RaggedLeftRightskip=\skip154
+\RaggedRightRightskip=\skip155
+\CenteringParfillskip=\skip156
+\RaggedLeftParfillskip=\skip157
+\RaggedRightParfillskip=\skip158
+\JustifyingParfillskip=\skip159
+\CenteringParindent=\skip160
+\RaggedLeftParindent=\skip161
+\RaggedRightParindent=\skip162
+\JustifyingParindent=\skip163
 )
 LaTeX Info: Redefining \microtypecontext on input line 52.
 Package microtype Info: Generating PDF output.
@@ -1867,49 +1855,69 @@ LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 
 
 ]
-<figures/training.png, id=72, 843.15pt x 421.575pt>
+<figures/training.png, id=73, 843.15pt x 481.8pt>
 File: figures/training.png Graphic file (type png)
 <use figures/training.png>
-Package pdftex.def Info: figures/training.png  used on input line 82.
-(pdftex.def)             Requested size: 500.63957pt x 250.3224pt.
-<figures/inference.png, id=73, 804.606pt x 421.575pt>
+Package pdftex.def Info: figures/training.png  used on input line 81.
+(pdftex.def)             Requested size: 505.69374pt x 288.97194pt.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 7.59998pt on input line 82.
+<figures/inference.png, id=74, 843.15pt x 481.8pt>
 File: figures/inference.png Graphic file (type png)
 <use figures/inference.png>
-Package pdftex.def Info: figures/inference.png  used on input line 84.
-(pdftex.def)             Requested size: 500.63957pt x 262.31296pt.
+Package pdftex.def Info: figures/inference.png  used on input line 87.
+(pdftex.def)             Requested size: 505.69374pt x 288.97194pt.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 92.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 97.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 6.64998pt on input line 92.
- [2] [3 <./figures/training.png> <./figures/inference.png>] [4]
-[5]
+(Font)              scaled to size 6.64998pt on input line 97.
+ [2] [3 <./figures/training.png> <./figures/inference.png>]
+<figures/acb.png, id=124, 2409.0pt x 1355.0625pt>
+File: figures/acb.png Graphic file (type png)
+<use figures/acb.png>
+Package pdftex.def Info: figures/acb.png  used on input line 139.
+(pdftex.def)             Requested size: 252.84686pt x 142.2134pt.
+<figures/acbchain.png, id=126, 963.6pt x 542.025pt>
+File: figures/acbchain.png Graphic file (type png)
+<use figures/acbchain.png>
+Package pdftex.def Info: figures/acbchain.png  used on input line 145.
+(pdftex.def)             Requested size: 252.84686pt x 142.22165pt.
+
+Overfull \hbox (2.05553pt too wide) in paragraph at lines 138--149
+[][] [] 
+ []
+
+[4] [5 <./figures/acb.png> <./figures/acbchain.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 169.
- [6] [7] [8] (paper_main.bbl
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 1.
+put line 189.
+ [6] [7] [8] [9]
+(paper_main.bbl
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <6> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 6.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 (Font)              scaled to size 5.69998pt on input line 6.
- [9]) 
+) 
 AED: lastpage setting LastPage
 [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 301.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 301.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 321.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 321.
  (paper_main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 301.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 301.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 321.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 321.
 Package rerunfilecheck Info: File `paper_main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 301.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 321.
  ) 
 Here is how much of TeX's memory you used:
- 35319 strings out of 492895
- 662271 string characters out of 3120464
- 758879 words of memory out of 3000000
- 38327 multiletter control sequences out of 15000+200000
- 654864 words of font info for 204 fonts, out of 3000000 for 9000
+ 35248 strings out of 492895
+ 661096 string characters out of 3120464
+ 757253 words of memory out of 3000000
+ 38250 multiletter control sequences out of 15000+200000
+ 655181 words of font info for 208 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,16n,73p,1584b,1179s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
@@ -1944,9 +1952,9 @@ blic/amsfonts/symbols/msbm10.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/
 MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Stefan Radev/AppData/L
 ocal/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Stefan R
 adev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on paper_main.pdf (10 pages, 1074010 bytes).
+Output written on paper_main.pdf (10 pages, 1233992 bytes).
 PDF statistics:
- 328 PDF objects out of 1000 (max. 8388607)
- 77 named destinations out of 1000 (max. 500000)
- 45079 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 338 PDF objects out of 1000 (max. 8388607)
+ 76 named destinations out of 1000 (max. 500000)
+ 45089 words of extra memory for PDF output out of 51595 (max. 10000000)
 
