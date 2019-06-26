@@ -35,7 +35,7 @@ def simulate_ricker_batch(X, params, n_batch, t_obs):
     
 
 def simulate_ricker(batch_size=64, t_obs=None, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90, 
-                    low_sigma=0.05, high_sigma=0.7, low_phi=0, high_phi=20, to_tensor=True):
+                    low_sigma=0.05, high_sigma=0.7, low_phi=0, high_phi=15, to_tensor=True):
     """
     Simulates and returns a batch of 1D timeseries obtained under the Ricker model.
     ----------

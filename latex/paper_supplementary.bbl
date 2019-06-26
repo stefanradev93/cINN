@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{hershey2007approximating}
+Hershey JR, Olsen PA (2007) Approximating the kullback leibler divergence
+  between gaussian mixture models in {\em 2007 IEEE International Conference on
+  Acoustics, Speech and Signal Processing-ICASSP'07}.
+\newblock (IEEE), Vol.{}~4, pp. IV--317.
+
+\bibitem{talts2018validating}
+Talts S, Betancourt M, Simpson D, Vehtari A, Gelman A (2018) Validating
+  bayesian inference algorithms with simulation-based calibration.
+\newblock {\em arXiv preprint arXiv:1804.06788}.
+
+\end{thebibliography}

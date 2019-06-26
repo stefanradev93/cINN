@@ -147,6 +147,17 @@ Abadi M, et~al. (2016) Tensorflow: A system for large-scale machine learning in
 Kingma DP, Welling M (2014) Auto-encoding variational bayes.
 \newblock {\em stat} 1050:1.
 
+\bibitem{hershey2007approximating}
+Hershey JR, Olsen PA (2007) Approximating the kullback leibler divergence
+  between gaussian mixture models in {\em 2007 IEEE International Conference on
+  Acoustics, Speech and Signal Processing-ICASSP'07}.
+\newblock (IEEE), Vol.{}~4, pp. IV--317.
+
+\bibitem{talts2018validating}
+Talts S, Betancourt M, Simpson D, Vehtari A, Gelman A (2018) Validating
+  bayesian inference algorithms with simulation-based calibration.
+\newblock {\em arXiv preprint arXiv:1804.06788}.
+
 \bibitem{ratcliff2008diffusion}
 Ratcliff R, McKoon G (2008) The diffusion decision model: theory and data for
   two-choice decision tasks.
@@ -166,5 +177,10 @@ Voss A, Lerche V, Mertens U, Voss J (2019) Sequential sampling models with
 Sahneh FD, Vajdi A, Shakeri H, Fan F, Scoglio C (2017) Gemfsim: a stochastic
   simulator for the generalized epidemic modeling framework.
 \newblock {\em Journal of computational science} 22:36--44.
+
+\bibitem{ozsolak2011rna}
+Ozsolak F, Milos PM (2011) Rna sequencing: advances, challenges and
+  opportunities.
+\newblock {\em Nature reviews genetics} 12(2):87.
 
 \end{thebibliography}
