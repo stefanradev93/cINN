@@ -236,7 +236,7 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
                 axarr[i, j].set_title(param_names[j])       
             
             if i == 0 and j == 0:
-                f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.02), shadow=True, ncol=3, fontsize=10, borderaxespad=1)
+                f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.03), shadow=True, ncol=3, fontsize=10, borderaxespad=1)
                 #axarr[i, j].legend(fontsize=10)
                 
     if tight:

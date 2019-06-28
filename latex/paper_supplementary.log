@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  27 JUN 2019 23:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  28 JUN 2019 22:50
 entering extended mode
 **./paper_supplementary.tex
 (paper_supplementary.tex
@@ -1561,32 +1561,40 @@ Package: xpatch 2012/10/02 v0.3 Extending etoolbox patching commands
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/placeins\pl
 aceins.sty"
 Package: placeins 2005/04/18  v 2.2
-)) (paper_supplementary.aux)
+))
+("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bbm\bbm.sty
+"
+Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
+LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
+(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
+(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
+) (paper_supplementary.aux)
 \openout1 = `paper_supplementary.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 17.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr
 .fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 16.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 17.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmr.fd
 "
@@ -1623,7 +1631,7 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 ) ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box77
-Package hyperref Info: Link coloring ON on input line 16.
+Package hyperref Info: Link coloring ON on input line 17.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\na
 meref.sty"
@@ -1635,9 +1643,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count368
 )
-LaTeX Info: Redefining \ref on input line 16.
-LaTeX Info: Redefining \pageref on input line 16.
-LaTeX Info: Redefining \nameref on input line 16.
+LaTeX Info: Redefining \ref on input line 17.
+LaTeX Info: Redefining \pageref on input line 17.
+LaTeX Info: Redefining \nameref on input line 17.
  (paper_supplementary.out) (paper_supplementary.out)
 \@outlinefile=\write4
 \openout4 = `paper_supplementary.out'.
@@ -1683,7 +1691,7 @@ Package caption Info: sidecap package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 16.
+(lastpage)             ! on input line 17.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ms\ragged2e
 .sty"
@@ -1710,7 +1718,7 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \RaggedRightParindent=\skip159
 \JustifyingParindent=\skip160
 )
-LaTeX Info: Redefining \microtypecontext on input line 16.
+LaTeX Info: Redefining \microtypecontext on input line 17.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1729,81 +1737,81 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 <pnas-logo.png, id=6, 281.853pt x 134.4222pt>
 File: pnas-logo.png Graphic file (type png)
 <use pnas-logo.png>
-Package pdftex.def Info: pnas-logo.png  used on input line 19.
+Package pdftex.def Info: pnas-logo.png  used on input line 20.
 (pdftex.def)             Requested size: 283.10483pt x 135.02283pt.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 19.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 20.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1ph
 v.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 4.74998pt on input line 19.
+(Font)              scaled to size 4.74998pt on input line 20.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `phv' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 16.41594pt on input line 19.
+(Font)              scaled to size 16.41594pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 16.41594pt on input line 19.
+(Font)              scaled to size 16.41594pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 19.
+(Font)              scaled to size 11.39996pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 19.
+(Font)              scaled to size 11.39996pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 19.
+(Font)              scaled to size 8.54997pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 19.
+(Font)              scaled to size 8.54997pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 19.
+(Font)              scaled to size 9.49997pt on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 19.
+(Font)              scaled to size 9.49997pt on input line 20.
  [1
 
 
 {C:/Users/Stefan Radev/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./pn
 as-logo.png>]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 32.
+(Font)              scaled to size 7.59998pt on input line 33.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 32.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 33.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 7.59998pt on input line 32.
+(Font)              scaled to size 7.59998pt on input line 33.
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 32.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 33.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 32.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 33.
 LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
-(Font)              scaled to size 7.59998pt on input line 32.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 33.
+(Font)              scaled to size 7.59998pt on input line 33.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 34.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmr.f
 d"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 33.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 34.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omllmm.f
 d"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 33.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 34.
 
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omslmsy.
 fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 33.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 34.
 
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omxlmex.
@@ -1811,12 +1819,12 @@ fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 33.
+(Font)              <9> on input line 34.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 33.
+(Font)              <6> on input line 34.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 33.
-LaTeX Font Info:    Try loading font information for U+msa on input line 33.
+(Font)              <5> on input line 34.
+LaTeX Font Info:    Try loading font information for U+msa on input line 34.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\um
 sa.fd"
@@ -1826,7 +1834,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 t-msa.cfg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 33.
+LaTeX Font Info:    Try loading font information for U+msb on input line 34.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\um
 sb.fd"
@@ -1837,68 +1845,77 @@ t-msb.cfg"
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 69.
- [2
+put line 70.
+LaTeX Font Info:    Try loading font information for U+bbm on input line 76.
+
+("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bbm\ubbm.fd
+"
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+) [2
 
 ] [3]
-<figures/acb.png, id=58, 2409.0pt x 1355.0625pt>
+<figures/acb.png, id=64, 2409.0pt x 1355.0625pt>
 File: figures/acb.png Graphic file (type png)
 <use figures/acb.png>
-Package pdftex.def Info: figures/acb.png  used on input line 109.
+Package pdftex.def Info: figures/acb.png  used on input line 120.
 (pdftex.def)             Requested size: 505.69374pt x 284.44746pt.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 110.
+(Font)              scaled to size 6.64998pt on input line 121.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 110.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 121.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 6.64998pt on input line 110.
+(Font)              scaled to size 6.64998pt on input line 121.
  [4] [5 <./figures/acb.png>] (paper_supplementary.bbl)
 
 AED: lastpage setting LastPage
 [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 129.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 129.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 140.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 140.
  (paper_supplementary.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 129.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 129.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 140.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 140.
 Package rerunfilecheck Info: File `paper_supplementary.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 129.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 140.
  ) 
 Here is how much of TeX's memory you used:
- 34741 strings out of 492895
- 651270 string characters out of 3120464
- 752005 words of memory out of 3000000
- 37954 multiletter control sequences out of 15000+200000
- 616805 words of font info for 112 fonts, out of 3000000 for 9000
+ 34789 strings out of 492895
+ 652438 string characters out of 3120464
+ 754211 words of memory out of 3000000
+ 37991 multiletter control sequences out of 15000+200000
+ 617201 words of font info for 115 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,15n,67p,624b,459s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
-m-ec.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvi
-ps/lm/lm-mathit.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fo
-nts/enc/dvips/lm/lm-rm.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX
- 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Stefan Radev/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/Stefan Radev/AppData
-/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Stefan Radev/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx9.pfb><C:/Users/Stef
-an Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb><C:
-/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmm
-i6.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/lm/lmmi9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/lm/lmmib10.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Users/Stefan Radev/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Users/Stefan Radev/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Users/Stefan Radev/
-AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri9.pfb><C:/Users/Ste
-fan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmsy6.pfb><C:
-/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lms
-y9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw
-/helvetic/uhvb8a.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/Stefan Radev/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on paper_supplementary.pdf (6 pages, 333424 bytes).
+m-mathit.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc
+/dvips/lm/lm-rm.enc} <C:\Users\Stefan Radev\AppData\Local\MiKTeX\2.9\fonts/pk/l
+jfour/public/bbm/dpi600\bbm9.pk>{C:/Users/Stefan Radev/AppData/Local/Programs/M
+iKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Stefan Radev/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Stefan Radev/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/Stefan R
+adev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/St
+efan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx9.pfb><C
+:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lm
+ex10.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/lm/lmmi5.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/lm/lmmi6.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/lm/lmmi9.pfb><C:/Users/Stefan Radev/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Stefan Radev/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr5.pfb><C:/Users/Stefan Ra
+dev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Users/
+Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><
+C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/l
+mr9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
+blic/lm/lmri9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/lm/lmsy6.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/lm/lmsy9.pfb><C:/Users/Stefan Radev/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Stefan Radev/AppD
+ata/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/St
+efan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pf
+b>
+Output written on paper_supplementary.pdf (6 pages, 351994 bytes).
 PDF statistics:
- 150 PDF objects out of 1000 (max. 8388607)
+ 166 PDF objects out of 1000 (max. 8388607)
  35 named destinations out of 1000 (max. 500000)
  30231 words of extra memory for PDF output out of 35830 (max. 10000000)
 

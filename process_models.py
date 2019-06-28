@@ -105,7 +105,8 @@ def simulate_sir_single(beta, gamma, t_max=500, N=1000):
     return np.array([S, I, R]).T
 
 @jit
-def simulate_sir(batch_size, low_beta=0.01, high_beta=1., low_gamma=0.01, t_max=500, N=1000, to_tensor=True):
+def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gamma=0., 
+                 t_min=200, t_max=500, N=1000, to_tensor=True):
     """
     Simulates and returns a batch of timeseries obtained under the SIR model.
     ----------
@@ -125,16 +126,20 @@ def simulate_sir(batch_size, low_beta=0.01, high_beta=1., low_gamma=0.01, t_max=
               (tf.Tensor of shape (batch_size, t_obs, 1), tf.Tensor of shape (batch_size, 3)) --
               a batch or time series generated under a batch of Ricker parameters
     """
+
+    # Select T
+    if n_points is None:
+        n_points = np.random.randint(low=t_min, high=t_max+1)
     
     # Prepare X and theta
-    X = np.zeros((batch_size, t_max, 3))
+    X = np.zeros((batch_size, n_points, 3))
     beta_samples = np.random.uniform(low=low_beta, high=high_beta, size=batch_size)
     gamma_samples = np.random.uniform(low=low_gamma, high=beta_samples)
     theta = np.c_[beta_samples, gamma_samples]
     
     # Run the SIR simulator for # batch_size
     for j in prange(batch_size):
-        X[j] = simulate_sir_single(theta[j, 0], theta[j, 1], t_max=t_max, N=N)
+        X[j] = simulate_sir_single(theta[j, 0], theta[j, 1], t_max=n_points, N=N)
     
     if to_tensor:
         return tf.convert_to_tensor(X, dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)

@@ -4,6 +4,7 @@
 \templatetype{pnassupportinginfo}
 % \readytosubmit %% Uncomment this line before submitting, so that the instruction page is removed.
 
+\usepackage{bbm}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \graphicspath{{figures/}}
@@ -63,15 +64,24 @@ p(\theta) &= \int p(\theta,\tilde{\theta},\tilde{x})d\tilde{x}d\tilde{\theta} \n
 &= \int p(\theta,\tilde{x}|\tilde{\theta})p(\tilde{\theta})d\tilde{x}d\tilde{\theta} \numberthis \label{eqn:7} \\
 &= \int p(\theta|\tilde{x})p(\tilde{x}|\tilde{\theta})p(\tilde{\theta})d\tilde{x}d\tilde{\theta} \numberthis \label{eqn:8}
 \end{align*}
-If the Bayesian sampling method produces samples from the exact posterior, the equality implied by Eq.\ref{eqn:8} should hold regardless of the particular form of the posterior. Thus, any violation of this equality indicates some error incurred by the sampling method. The authors of \cite{talts2018validating} propose the following algorithm relying on rank-statistics for visually detecting such violations:
+If the Bayesian sampling method produces samples from the exact posterior, the equality implied by Eq.\ref{eqn:8} should hold regardless of the particular form of the posterior. Thus, any violation of this equality indicates some error incurred by the sampling method. The authors of \cite{talts2018validating} propose \textbf{Algorithm} \ref{alg:1} for visually detecting such violations:
 
 \begin{algorithm}
-\caption{Simulation-based calibration}\label{alg:1}
+\caption{Simulation-based calibration (SBC) for a single parameter $\theta$ }\label{alg:1}
 \begin{algorithmic}[1]
-\State {Lol}
-
+\For{$i = 1,...,n$}
+\State {Sample $\tilde{\theta}^{(i)} \sim p(\theta)$}
+\State {Simulate a dataset $\boldsymbol{x}^{(i)} = q(\tilde{\theta}^{(i)})$}
+\State {Draw posterior samples $\{\theta^{(l)}\}_{l=1}^{L} \sim p(\theta|\boldsymbol{x}^{(i)})$} 
+\State {Compute rank statistic $r^{(i)} = \sum_{l=1}^{L}\mathbbm{1}_{[\theta^{(l)}<\tilde{\theta}^{(i)}]}$}
+\State {Store $r^{(i)}$}
+\EndFor
+\State {\textbf{end for}}
+\State {Analyze the histogram for uniformity}
 \end{algorithmic}
-\end{algorithm}
+\end{algorithm} 
+
+\textbf{Algorithm} \ref{alg:1} is justified, since Eq.\ref{eqn:8} implies that the rank statistic defined in line $5$ should be uniformly distributed. Hence, any deviations from uniformity indicate some error in the approximate posterior.
 
 \subsection*{Model details}
 
