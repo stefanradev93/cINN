@@ -34,7 +34,7 @@ def simulate_ricker_batch(X, params, n_batch, t_obs):
         X[i, :] = simulate_ricker_single(t_obs, params[i, 0], params[i, 1], params[i, 2])
     
 
-def simulate_ricker(batch_size=64, t_obs=None, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90, 
+def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90, 
                     low_sigma=0.05, high_sigma=0.7, low_phi=0, high_phi=15, to_tensor=True):
     """
     Simulates and returns a batch of 1D timeseries obtained under the Ricker model.
@@ -42,7 +42,7 @@ def simulate_ricker(batch_size=64, t_obs=None, t_obs_min=100, t_obs_max=500, low
 
     Arguments:
     batch_size : int -- number of Ricker processes to simulate
-    t_obs      : int -- length of the observed time-series
+    n_points   : int -- length of the observed time-series
     low_r      : float -- lower bound for the uniform prior on r
     high_r     : float -- upper bound for the uniform prior on r
     low_sigma  : float -- lower bound for the uniform prior on sigma
@@ -59,16 +59,16 @@ def simulate_ricker(batch_size=64, t_obs=None, t_obs_min=100, t_obs_max=500, low
     """
     
     # Sample t_obs, if None given
-    if t_obs is None:
-        t_obs = np.random.randint(low=t_obs_min, high=t_obs_max+1)
+    if n_points is None:
+        n_points = np.random.randint(low=t_obs_min, high=t_obs_max+1)
 
     # Prepare placeholders
     theta = np.random.uniform(low=[low_r, low_sigma, low_phi], 
                           high=[high_r, high_sigma, high_phi], size=(batch_size, 3))
-    X = np.zeros((batch_size, t_obs))
+    X = np.zeros((batch_size, n_points))
 
     # Simulate a batch from the Ricker model
-    simulate_ricker_batch(X, theta, batch_size, t_obs)
+    simulate_ricker_batch(X, theta, batch_size, n_points)
     if to_tensor:
         return tf.convert_to_tensor(X[:, :, np.newaxis], dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
     return X[:, :, np.newaxis]

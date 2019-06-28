@@ -92,7 +92,7 @@ The \textit{invertible network} is responsible for learning the posterior of the
 \end{figure}
 The joint training of a summary network and an invertible network results in a powerful and universal parameter estimation machine capable of inverting complicated statistical problems in various scientific domains (\autoref{fig:Fig.1}). Moreover, the method addresses many of the limitations of previous likelihood-free methods. First, it involves no costly MCMC or rejection sampling, which makes the inference phase lightning fast, as we also make use of GPU-accelerated computation. Second, it involves no fixed summary statistics or kernels, but learns the most informative representation of the data in an end-to-end manner. Third, the method is fully Bayesian, as it directly learns the posterior over model parameters and thus allows for the quantification of uncertainty, which is a crucial requirement in parameter estimation \cite{kendall2017uncertainties, gelman2013bayesian}. Last, the trained networks can be shared and reused by multiple researches within a scientific domain, thus removing the need for wasteful computations and fitting a separate model for each and every dataset. This pooling of computational resources across researches is an important step forward in mathematical modeling, as has been recently argued \cite{mestdagh2018prepaid}.
 
-To illustrate the utility of the new method, we first apply it to a toy Bayesian regression model with known posterior. Then, we present applications to intractable models from cognitive science, population dynamics, epidemiology, and genetics and demonstrate state-of-the art parameter recovery. The outline of the remaining manuscript is as follows: The \textbf{Methods} section introduces the main building blocks of the new method and summarizes the main steps as pseudocode. The \textbf{Results} section presents the various applications of the model to real-world research domains. Finally, the \textbf{Discussion} section lists the advantages of the current method, treats some potential pitfalls and explores future research vistas. Python code and data for all applications are freely available as Jupyter notebooks at \href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN} and as a small library based on \textit{TensorFlow} \cite{abadi2016tensorflow} for creating and training custom invertible networks with GPU-support. 
+To illustrate the utility of the new method, we first apply it to a toy Bayesian regression model with known posterior. Then, we present applications to intractable models from cognitive science, population dynamics, epidemiology, and genetics and demonstrate state-of-the art parameter recovery. Across the examples, we introduce multiple tools to validate the performance of our method. The outline of the remaining manuscript is as follows: The \textbf{Methods} section introduces the main building blocks of the new method and summarizes the main steps as pseudocode. The \textbf{Results} section presents the various applications of the model to real-world research domains. Finally, the \textbf{Discussion} section lists the advantages of the current method, treats some potential pitfalls and explores future research vistas. Python code and simulation scripts for all current applications are freely available as Jupyter notebooks at \href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN} and as a small library based on \textit{TensorFlow} \cite{abadi2016tensorflow} for creating and training custom invertible networks with GPU support, along with some validation tools. 
 
 \section*{Methods}
 
@@ -135,13 +135,13 @@ This process can be interpreted as follows: the forward pass maps data-generatin
 
 % Figures ACB and ACB chain
 \begin{figure}
-  \begin{subfigure}[b]{0.5\textwidth}
+  \begin{subfigure}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{acb.png}
     \caption{The cACB}
     \label{fig:Fig.2a}
   \end{subfigure}
   %
-  \begin{subfigure}[b]{0.5\textwidth}
+  \begin{subfigure}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{acbchain.png}
     \caption{A chain of cACBs}
     \label{fig:Fig.2b}
@@ -183,7 +183,7 @@ Concerning the data generation step, we use two training approaches. The first f
 
 \subsection*{Putting It All Together}
 
-On an abstract level, our method requires three key ingredients: 1) a mathematical process model $q(\boldsymbol{\theta})$ capable of simulating data $\boldsymbol{x}$; 2) a prior distribution over the model parameters $p(\boldsymbol{\theta})$ encoding our prior beliefs about plausible parameter values; 3) an invertible neural network $f_{\boldsymbol{\theta}}$ capable of approximating a large enough family of probability distributions (see Figure 2). In practice, a chain of up to 10 ACBs should suffice to learn most distributions encountered in the life sciences, since they tend to be unimodal and relatively simple (in contrast to the distribution of natural images or words in a spoken language). From these three ingredients, a universal and reusable sampler can be designed for likelihood-free Bayesian estimation of both tractable and intractable mathematical models. \textbf{Algorithm} \ref{alg:1} describes the essential steps of the method using an arbitrary summary network and employing the active learning training regime.
+On an abstract level, our method requires three key ingredients: 1) a mathematical process model $q(\boldsymbol{\theta})$ capable of simulating data $\boldsymbol{x}$; 2) a prior distribution over the model parameters $p(\boldsymbol{\theta})$ encoding our prior beliefs about plausible parameter values; 3) an invertible neural network $f_{\boldsymbol{\phi}}$ capable of approximating a large enough family of probability distributions (see Figure 2). In practice, a chain of up to 10 ACBs should suffice to learn most distributions encountered in the life sciences, since they tend to be unimodal and relatively simple (in contrast to the distribution of natural images or words in a spoken language). From these three ingredients, a universal and reusable sampler can be designed for likelihood-free Bayesian estimation of both tractable and intractable mathematical models. \textbf{Algorithm} \ref{alg:1} describes the essential steps of the method using an arbitrary summary network and employing the active learning training regime.
 
 \begin{algorithm}
 \caption{Bayesian likelihood-free inference with invertible neural networks}\label{alg:1}
@@ -210,12 +210,11 @@ On an abstract level, our method requires three key ingredients: 1) a mathematic
 
 The backpropagation algorithm works by computing the gradients of the loss function w.r.t. the parameters of the neural networks and then adjusting the parameters, so as to drive the loss function to a local minimum. We experienced no instability or convergence issues during training with the ML loss. Note, that steps $12-15$ of \textbf{Algorithm} \ref{alg:1} can be executed in parallel with GPU support. 
 
-In what follows, we apply the method to a toy Bayesian regression example with conjugate priors, and then use it to estimate the parameters of challenging models from population dynamics, cognitive science, epidemiology, and genetics. Code for reproducing the results on all following examples is freely available at: \href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN}.All examples are implemented in Python using the \textit{TensorFlow} library for automatic differentiation with GPU support.
+In what follows, we apply the method to a toy Bayesian regression example with conjugate priors, and then use it to estimate the parameters of challenging models from population dynamics, cognitive science, epidemiology, and genetics. Code for reproducing the results on all following examples is freely available at: \href{https://github.com/stefanradev93/cINN}{https://github.com/stefanradev93/cINN}.All examples are implemented in Python using the \textit{TensorFlow} library.
 
 \section*{Results}
 
 We consider a number of metrics for determining the performance of our method. To assess the goodness of parameter recovery, we compute the normalized root mean squared error (NRMSE) and the coefficient of determination ($R^{2}$) metrics of the parameter estimates. To assess the recovery of the full posterior, we compute the Kullback-Leibler (KL) divergence \cite{hershey2007approximating} between the true and the approximate distributions for the toy example, and use simulation-based calibration (SBC, \cite{talts2018validating}) for the other examples where the analytic posterior is not available in closed-form. Details for computing the $NRMSE$, $R^2$, and SCB can be found in the \textbf{SI}.
-
 
 \subsection*{Toy Example – Bayesian Regression}
 
@@ -236,8 +235,39 @@ Thus, for known $a$ and $b$, the posterior can be easily computed. Even though i
 
 For the following application, we set $d=4$, and $a=b=1$. The design matrices for each iteration contain a variable number $n$ of \textit{i.i.d.} data points drawn from a unit Gaussian $\mathcal{N}_{4}(\boldsymbol{0},\boldsymbol{I})$. The number of trials is drawn from a uniform distribution $n \sim \mathcal{U}(50, 500)$ at each training iteration (Lines $2$-$9$ of \textbf{Algorithm} \ref{alg:1}).
 
-The results on the toy example are depicted in Figure.XXX. The approximate posterior means show negligible deviations from the analytic posterior means as quantified by very small $NRMSE$s (as small as XXX) and very high $R^{2}$ (as high as $1.0$) over all numbers of data points used for training. This suggests near-perfect reconstruction of the true posterior means.
-  
+The results on the toy Bayesian regression are depicted in \autoref{fig:Fig.3}. The approximate posterior means show negligible deviations from the analytic posterior means as quantified by very small NRMSEs (as small as $0.002$) and very high $R^{2}$ (as high as $1.0$) over all $n$ sampled during training. This suggests near-perfect estimation of the true posterior means. Further, the estimates become increasingly more accurate, as the number of data points $n$ increases. An inspection of the posterior variances over the different $n$ reveals that the estimated variance follows closely the decrease in analytic variance with increasing $n$. However, the analytic variance is slightly underestimated at smaller $n$ and slightly overestimated at larger $n$. This pattern is also revealed by the KL divergence plot (see \textbf{SI}). This result might be attributable to an underexpressive summary network; another possibility is that the networks need to be trained longer with smaller learning rate decay. 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+    \includegraphics[width=\textwidth]{Regression_joint.png}
+    \caption{Analytic vs. estimated means joint plot ($n=500$)}
+    \label{fig:Fig.3a}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+	\begin{subfigure}{.95\textwidth}
+ 		\includegraphics[width=\textwidth]{Regression_density.png}
+    	\caption{Full analytic vs. estimated posteriors ($n=500$)}
+    \label{fig:Fig.3b}
+	\end{subfigure}
+	\begin{subfigure}{.95\textwidth}
+ 		\includegraphics[width=\textwidth]{Regression_scatter.png}
+    	\caption{Analytic means recovery ($n=500$)}
+    \label{fig:Fig.3c}
+	\end{subfigure}
+\end{subfigure}
+\begin{subfigure}{.47\textwidth}
+ 		\includegraphics[width=\textwidth]{Regression_metrics.png}
+    	\caption{Performance over all $n$}
+    \label{fig:Fig.3d}
+\end{subfigure}
+\begin{subfigure}{.52\textwidth}
+ 		\includegraphics[width=\textwidth]{Regression_variance.png}
+    	\caption{Analytic vs. estimated variance over all $n$}
+    \label{fig:Fig.3e}
+\end{subfigure}
+\caption[short]{Results on the Bayesian toy regression example. \textbf{(a)} Analytic vs. estimated posterior means on the validation sample. We observe a near-perfect overlap between analytic and estimated posterior means and no spurious covariances; \textbf{(b)} Some example draws from the estimated posteriors. Visual inspections reveals a close match between analytic and estimated posteriors; \textbf{(c)} Posterior mean recovery is almost perfect at $n=500$; \textbf{(d)} NRMSE and $R^{2}$ over all $n$. Performance improves with increasing number of data points; \textbf{(e)} Analytic vs. estimated variance over all $n$. The analytic variance is slightly underestimated at lower $n$ and slightly overestimated at higher $n$.} \label{fig:Fig.3}
+\end{figure}
+
 \subsection*{Example 1 - The Ricker Model}
 Discrete population dynamics models describe how the number of individuals in a population changes over discrete units of time \cite{wood2010statistical}. In particular, the Ricker model describes the number of individuals $x_{t+1}$ in generation $t+1$ as a function of the number of individuals in the previous generation $t$ by the following non-linear equation:
 \begin{align*}
@@ -246,9 +276,38 @@ x_{t} &\sim Pois(\rho N_{t}) \numberthis
 \end{align*}
 for $t = 1,...,T$ where $N_{t}$ is the expected number of individuals at time $t$, $r$ is the growth rate, $\rho$ is a scaling parameter and $\epsilon_{t} \sim \mathcal{N}(0, \sigma^{2})$ is random Gaussian noise \cite{mestdagh2018prepaid}. The Ricker model has no known likelihood function and is thus a suitable candidate for likelihood-free inference. The parameter estimation task is thus to recover $\boldsymbol{\theta}=(\rho,r,\sigma)$ from the observed one-dimensional time-series data $\boldsymbol{x}=(x_{1},x_{2},...,x_{T})$ where each $x_{t} \in \mathbb{N}$.
 
-During training of the networks, we simulate time-series from the Ricker model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(100, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation).
+During training of the networks, we simulate time-series from the Ricker model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(100, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). What if the data does not contain information about a given parameter? In this case, any good estimation method should detect this, and return the prior of the particular parameter. To test this, we add a random uniform variable $u \sim \mathcal{U}(0, 1)$ to the parameter vector $\boldsymbol{\theta}$ and train the model with this additional dummy variable. Then, we inspect the posterior of $u$ for uniformity. 
 
-The results on the Ricker model are depicted in Figure XXX... TODO
+The results on the Ricker model are depicted in \autoref{fig:Fig.3}. As evident from the graphics, the parameter recovery becomes better when more time points with data are available (\autoref{fig:Fig.4c}). At $T=500$, the NRMSEs range between $0.015$ and $0.063$, and the $R^{2}$ metrics between $0.997$ and $0.952$, indicating very good recovery of the posterior means (\autoref{fig:Fig.4a}). The parameter $\sigma$ seems to be hardest to recover. Inspecting the full posteriors, we further see that the posterior distribution of the dummy noise variable $u$ closely resembles the prior, as expected due to the complete lack of mutual information between the data $x$ and $u$ (\autoref{fig:Fig.4b}). Finally, the plots of the rank statistic computed for SCB suggest no systematic distortions of the posterior across all parameters (\autoref{fig:Fig.4d}). Interpreting deviations from uniformity according to \cite{talts2018validating}, the approximate posteriors of $r$ and $\rho$ slightly underestimate the true posterior means, whereas the approximate posterior of $\sigma$ tends to overestimate the true posterior variance. These deviations appear to be due to the fact that recovery worsens at extreme values of the parameters. This is unsurprising, as the data generated with these parameters is highly implausible, which in some cases might even render a model unidentifiable.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Ricker_scatter.png}
+    \caption{Parameter recovery ($T=500$)}
+    \label{fig:Fig.4a}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Ricker_density.png}
+    \caption{Example posterior samples ($T=500$)}
+    \label{fig:Fig.4b}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Ricker_metrics.png}
+    \caption{Performance over all $T$s}
+    \label{fig:Fig.4c}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Ricker_sbc.png}
+    \caption{Simulation-based calibration (SBC)}
+    \label{fig:Fig.4d}
+\end{subfigure}
+\caption[short]{Results on the Ricker model. \textbf{(a)} Parameter recovery for the maximum number of generations used during training ($T=500$); \textbf{(b)} Example posteriors for three test datasets. We observe that the posterior of the uniform noise variable $u$ is equal to the prior, i.e., the method detects that no information is present in data for this variable; \textbf{(c)} NRMSE and $R^{2}$ performance metrics over all $T$s used in training. We observe that the recovery remains good over all $T$s, and becomes progressively better as more data is available; \textbf{(d)} Plots of the rank statistics indicative of the accuracy of the full posterior. Accordingly, the approximate posteriors of $r$ and $\rho$ slightly underestimate the true posterior means, whereas the approximate posterior of $\sigma$ tends to overestimate the true posterior variance.} \label{fig:Fig.4}
+\end{figure}
 
 \subsection*{Example 2 - The Lévy-Flight Model}
 Evidence accumulator models (EAMs) describe (perceptual) decision making by a set of neurocognitively motivated parameters \cite{ratcliff2008diffusion}. EAMs are most often applied to choice reaction times (RT) data to obtain an estimate of the neurocognitive processes governing observed RT distributions in human and animal participants. Most EAM variants share four underlying assumptions: \textit{i)} information about a stimulus (response option) is accumulated continuously through time; \textit{ii)} stochasticity in the form of noisy accumulation ensures variability; \textit{iii)} empirical response times can be decomposed into a decision time component and a non-decision time component accounting for pre-decisional perceptual (encoding time) and post-decisional motor processes (response execution); and \textit{iv)} a decision is met when the activation of an accumulator exceeds a threshold. In its most general formulation, the forward model of EAMs takes the form of a stochastic differential equation given by \cite{usher2001time}:
@@ -266,7 +325,36 @@ The LFM has three additional parameters: a threshold $a$ determining the amount 
 
 During training of the networks, we simulate RT data from two experimental conditions with two different drift rates (see \textbf{SI} for details of the simulation). The parameter estimation task is thus to recover the parameters $\boldsymbol{\theta} = (v_{0}, v_{1}, a, t_{0}, zr, \alpha)$ from two-dimensional \textit{i.i.d.} RT data $\boldsymbol{X} = (\boldsymbol{x}_{1},\boldsymbol{x}_{2},...,\boldsymbol{x}_{n})$ containing variable number or RT trials. The number of trials is drawn from a uniform distribution $n \sim \mathcal{U}(100, 1000)$ at each training iteration.
 
-The results on the LFM model are depicted in Figure XXX. First, we note that our method achieves state-of-the art parameter recovery, with all $R^{2}$ values above $.97$ and $NRMSE$ below... Some of the parameters are almost perfectly reconstructed. Describe other stuff... 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Levy_scatter.png}
+    \caption{Parameter recovery ($n=1000$)}
+    \label{fig:Fig.5a}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Levy_density.png}
+    \caption{Example posterior samples ($n=1000$)}
+    \label{fig:Fig.5b}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Levy_metrics.png}
+    \caption{Performance over all trial numbers}
+    \label{fig:Fig.5c}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Levy_sbc.png}
+    \caption{Simulation-based calibration (SBC)}
+    \label{fig:Fig.5d}
+\end{subfigure}
+\caption[short]{Results on the LFM model. \textbf{(a)} Parameter recovery for the maximum number of trials used during training ($n=1000$); \textbf{(b)} Example posteriors for three test datasets; \textbf{(c)} NRMSE and $R^{2}$ performance metrics over all $n$ trials used during training. Again, we observe that the recovery remains good over overall, and becomes progressively better as more data is available; \textbf{(d)} Plots of the rank statistics indicative of the accuracy of the full posterior. Accordingly, the approximate posteriors tend to overestimate the true posterior variance.} \label{fig:Fig.5}
+\end{figure}
+
+The results on the LFM model are depicted in \autoref{fig:Fig.4}.
 
 
 \subsection*{Example 3 – The Stochastic SIR Model}
@@ -292,15 +380,9 @@ As a last example for our method, we use simulations from the \textit{Splat} mod
 
 Figure XXX depicts the results...
 
-\subsection*{Supporting Information Appendix (SI)}
-
-Authors should submit SI as a single separate PDF file, combining all text, figures, tables, movie legends, and SI references.  PNAS will publish SI uncomposed, as the authors have provided it.  Additional details can be found here: \href{https://www.pnas.org/page/authors/submission}{policy on SI}.  For SI formatting instructions click \href{https://www.pnascentral.org/cgi-bin/main.plex?form_type=display_auth_si_instructions}{here}.  The PNAS Overleaf SI template can be found \href{https://www.overleaf.com/latex/templates/pnas-template-for-supplementary-information/wqfsfqwyjtsd}{here}.  Refer to the SI Appendix in the manuscript at an appropriate point in the text. Number supporting figures and tables starting with S1, S2, etc.
-
-Authors who place detailed materials and methods in an SI Appendix must provide sufficient detail in the main text methods to enable a reader to follow the logic of the procedures and results and also must reference the SI methods. If a paper is fundamentally a study of a new method or technique, then the methods must be described completely in the main text.
-
 \section*{Discussion}
 
-In the current work, we proposed and explored a novel end-to-end likelihood-free method which uses invertible neural networks to perform approximate Bayesian inference on any mathematical process model. We demonstrated the utility of the method by applying it to models from various scientific domains exhibiting various data formats and data-generating mechanisms. Further, we explored two possible training approaches suitable for different simulation scenarios, namely a reference-table approach and an active learning approach. Both training approaches lead to excellent recovery of the true parameters throughout the examples considered in the current work.
+In the current work, we proposed and explored a novel end-to-end likelihood-free method which uses invertible neural networks to perform approximate Bayesian inference on any mathematical process model. We demonstrated the utility of the method by applying it to models from various scientific domains exhibiting various data formats and data-generating mechanisms. Further, we explored two possible training approaches suitable for different simulation scenarios, namely an active learning approach, and a reference-table approach. Both training approaches lead to excellent recovery of the true parameters throughout the examples considered in the current work.
 
 Our method combines the universal approximation power of deep learning methods with the important uncertainty quantification assets of Bayesian inference \cite{kendall2017uncertainties, gelman2013bayesian}. Besides being capable of performing rapid Bayesian inference on intractable mathematical models, our method provides a general framework for designing reusable “parameter estimation machines” for various research domains. Moreover, the method is not confined solely to inference on intractable models, but can also prove as a viable alternative in modeling contexts where standard Bayesian or frequentist inference methods are available, but inference is nevertheless prohibitively slow. 
 

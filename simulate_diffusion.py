@@ -47,7 +47,7 @@ def simulate_batch_diffusion_p(x, params):
                                          params[i, 4], params[i, 5], params[i, 6], 
                                          params[i, 7], params[i, 8], 0.001, 5000)
 
-def simulate_diffusion(batch_size, pbounds, n_trials=None, n_cond=2, 
+def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2, 
                        to_tensor=True, cond_coding=False, n_trials_min=100, n_trials_max=1000):
     """Simulates batch_size datasets from the full Ratcliff diffusion model."""
     
@@ -55,8 +55,8 @@ def simulate_diffusion(batch_size, pbounds, n_trials=None, n_cond=2,
     n_params = len(pbounds)
 
     # Sample number of trials, if None given
-    if n_trials is None:
-        n_trials = np.random.randint(n_trials_min, n_trials_max+1)
+    if n_points is None:
+        n_points = np.random.randint(n_trials_min, n_trials_max+1)
 
     # Extract parameter bounds
     lower_bounds = [pbounds['v1'][0], pbounds['v2'][0], pbounds['sv'][0], pbounds['zr'][0],
@@ -69,29 +69,13 @@ def simulate_diffusion(batch_size, pbounds, n_trials=None, n_cond=2,
 
     # Draw from priors
     theta_batch  = np.random.uniform(low=lower_bounds, high=upper_bounds,  size=(batch_size, n_params)).astype(np.float32)
-    X_batch = np.zeros((batch_size, n_trials, n_cond), dtype=np.float32)
+    X_batch = np.zeros((batch_size, n_points, n_cond), dtype=np.float32)
     simulate_batch_diffusion_p(X_batch, theta_batch)
 
     # Return in specified format (condition coding or just stack, tf.Tensor or np.array)
     if cond_coding:
         X_batch = np.stack(([np.c_[X_batch[:, :, 0], X_batch[:, :, 1]], 
-                             np.c_[np.zeros((batch_size, n_trials)), np.ones((batch_size, n_trials))]]), axis=-1)
+                             np.c_[np.zeros((batch_size, n_points)), np.ones((batch_size, n_points))]]), axis=-1)
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
     return X_batch, theta_batch
-
-
-
-if __name__ == "__main__":
-
-    bounds = {
-        'v1': [0.0, 6.0],
-        'v2': [-6.0, 0.0],
-        'sv': [0.0, 2.0],
-        'zr': [0.3, 0.7],
-        'szr': [0.0, 0.6],
-        'a': [0.6, 3.0],
-        'ndt': [0.3, 1.0],
-        'sndt': [0.0, 0.6],
-        'alpha': [2.0, 2.0],
-    }

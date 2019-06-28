@@ -154,8 +154,8 @@ def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_v
     return losses
 
 
-def compute_metrics(model, param_names, simulate_fun, n_test, 
-                    n_samples_posterior, transform=None, n_min=100, n_max=1000):
+def compute_metrics(model, param_names, simulate_fun, n_test, n_samples_posterior, 
+                    p_bar=None, transform=None, n_min=100, n_max=1000):
     """
     Plots a given metric for different numbers of datapoints.
     ---------
@@ -187,13 +187,15 @@ def compute_metrics(model, param_names, simulate_fun, n_test,
     # For each possible number of data points
     for n_points in ns:
         # Generate data
-        X_test, theta_test = simulate_fun(n_test, n_trials=n_points)
+        X_test, theta_test = simulate_fun(n_test, n_points=n_points)
         if transform is not None:
             X_test, theta_test = transform(X_test, theta_test)
         theta_test = theta_test.numpy()
 
         # Sample from approx posterior and compute posterior means
-        theta_approx_means = model.sample(X_test, n_samples_posterior, to_numpy=True).mean(axis=0)
+        theta_approx = model.sample(X_test, n_samples_posterior, to_numpy=True)
+        theta_approx_means = np.mean(theta_approx, axis=0)
+        theta_approx_vars = np.var(theta_approx, axis=0, ddof=1)
         
         # --- Plot true vs estimated posterior means on a single row --- #
         for j, name in enumerate(param_names):
@@ -204,9 +206,12 @@ def compute_metrics(model, param_names, simulate_fun, n_test,
             # Compute R2
             r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
             # Compute posterior variance
-            var = np.var(theta_approx_means[:, j], ddof=1)
+            var = np.mean(theta_approx_vars[:, j])
             # Add to dict
             metrics['nrmse'][name].append(nrmse)
             metrics['r2'][name].append(r2)
             metrics['var'][name].append(var)
+            
+        if p_bar is not None:
+            p_bar.update(1)
     return ns, metrics
