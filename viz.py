@@ -227,7 +227,7 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
             axarr[i, j].axvline(theta_test[i, j], color='#e55e5e', label='True')
             axarr[i, j].spines['right'].set_visible(False)
             axarr[i, j].spines['top'].set_visible(False)
-            axarr[i, j].xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+            axarr[i, j].xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
             axarr[i, j].get_yaxis().set_ticks([])
             
             

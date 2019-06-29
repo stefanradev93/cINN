@@ -41,6 +41,9 @@
 \citation{kendall2017uncertainties,gelman2013bayesian}
 \citation{mestdagh2018prepaid}
 \citation{abadi2016tensorflow}
+\citation{bloem2019probabilistic,kingma2018glow,ardizzone2018analyzing,kingma2014auto}
+\citation{ardizzone2018analyzing}
+\citation{ardizzone2018analyzing,kingma2018glow,dinh2016density}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:Fig.1a}{{1a}{3}{Training phase\relax }{figure.caption.3}{}}
 \newlabel{fig:Fig.1a@cref}{{[subfigure][1][1]1a}{[1][2][]3}}
@@ -53,130 +56,158 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Graphical illustration of the method. \textbf  {(a)} During the training phase, the summary and the invertible network are trained on simulated data from the model and updated after each batch of simulations; \textbf  {(b)} During the inference phase, the true posterior of the model parameters is approximated from real data using the trained networks. Thus, knowledge about the relationship between parameters and data (the mathematical model) is compactly encoded within the weights of the two networks. The trained networks can then be shared and used across researchers working on the same model.\relax }}{3}{figure.caption.3}\protected@file@percent }
 \newlabel{fig:Fig.1}{{1}{3}{Graphical illustration of the method. \textbf {(a)} During the training phase, the summary and the invertible network are trained on simulated data from the model and updated after each batch of simulations; \textbf {(b)} During the inference phase, the true posterior of the model parameters is approximated from real data using the trained networks. Thus, knowledge about the relationship between parameters and data (the mathematical model) is compactly encoded within the weights of the two networks. The trained networks can then be shared and used across researchers working on the same model.\relax }{figure.caption.3}{}}
 \newlabel{fig:Fig.1@cref}{{[figure][1][]1}{[1][2][]3}}
-\citation{bloem2019probabilistic,kingma2018glow,ardizzone2018analyzing,kingma2014auto}
-\citation{ardizzone2018analyzing}
-\citation{ardizzone2018analyzing,kingma2018glow,dinh2016density}
-\newlabel{eqn:2}{{{2}}{4}{}{AMS.6}{}}
-\newlabel{eqn:2@cref}{{[equation][2147483647][]{2}}{[1][4][]4}}
-\newlabel{eqn:3}{{{3}}{4}{}{AMS.7}{}}
-\newlabel{eqn:3@cref}{{[equation][2147483647][]{3}}{[1][4][]4}}
+\newlabel{eqn:2}{{{2}}{3}{}{AMS.6}{}}
+\newlabel{eqn:2@cref}{{[equation][2147483647][]{2}}{[1][3][]3}}
+\newlabel{eqn:3}{{{3}}{3}{}{AMS.7}{}}
+\newlabel{eqn:3@cref}{{[equation][2147483647][]{3}}{[1][3][]3}}
+\newlabel{fig:Fig.2a}{{2a}{4}{The cACB\relax }{figure.caption.16}{}}
+\newlabel{fig:Fig.2a@cref}{{[subfigure][1][2]2a}{[1][4][]4}}
+\newlabel{sub@fig:Fig.2a}{{a}{4}{The cACB\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:Fig.2a@cref}{{[subfigure][1][2]2a}{[1][4][]4}}
+\newlabel{fig:Fig.2b}{{2b}{4}{A chain of cACBs\relax }{figure.caption.16}{}}
+\newlabel{fig:Fig.2b@cref}{{[subfigure][2][2]2b}{[1][4][]4}}
+\newlabel{sub@fig:Fig.2b}{{b}{4}{A chain of cACBs\relax }{figure.caption.16}{}}
+\newlabel{sub@fig:Fig.2b@cref}{{[subfigure][2][2]2b}{[1][4][]4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A diagram of the conditional version of the affine coupling block (cACB). \textbf  {(a)} Each cABC consists of four internal networks performing the invertible operations described in the text; \textbf  {(b)} In practice, we chain multiple cACBs to obtain higher representational capacity. Each cACB layer uses a fixed permutation to ensure that information about each parameter is encoded in each latent dimension of $\boldsymbol  {z}$.\relax }}{4}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:Fig.2}{{2}{4}{A diagram of the conditional version of the affine coupling block (cACB). \textbf {(a)} Each cABC consists of four internal networks performing the invertible operations described in the text; \textbf {(b)} In practice, we chain multiple cACBs to obtain higher representational capacity. Each cACB layer uses a fixed permutation to ensure that information about each parameter is encoded in each latent dimension of $\boldsymbol {z}$.\relax }{figure.caption.16}{}}
+\newlabel{fig:Fig.2@cref}{{[figure][2][]2}{[1][4][]4}}
 \newlabel{eqn:4}{{{4}}{4}{}{AMS.10}{}}
-\newlabel{eqn:4@cref}{{[equation][2147483647][]{4}}{[1][4][]4}}
+\newlabel{eqn:4@cref}{{[equation][2147483647][]{4}}{[1][3][]4}}
 \newlabel{eqn:5}{{{5}}{4}{}{AMS.11}{}}
-\newlabel{eqn:5@cref}{{[equation][2147483647][]{5}}{[1][4][]4}}
+\newlabel{eqn:5@cref}{{[equation][2147483647][]{5}}{[1][3][]4}}
 \newlabel{eqn:6}{{{6}}{4}{}{AMS.13}{}}
 \newlabel{eqn:6@cref}{{[equation][2147483647][]{6}}{[1][4][]4}}
 \newlabel{eqn:7}{{{7}}{4}{}{AMS.15}{}}
 \newlabel{eqn:7@cref}{{[equation][2147483647][]{7}}{[1][4][]4}}
-\newlabel{fig:Fig.2a}{{2a}{5}{The cACB\relax }{figure.caption.16}{}}
-\newlabel{fig:Fig.2a@cref}{{[subfigure][1][2]2a}{[1][5][]5}}
-\newlabel{sub@fig:Fig.2a}{{a}{5}{The cACB\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:Fig.2a@cref}{{[subfigure][1][2]2a}{[1][5][]5}}
-\newlabel{fig:Fig.2b}{{2b}{5}{A chain of cACBs\relax }{figure.caption.16}{}}
-\newlabel{fig:Fig.2b@cref}{{[subfigure][2][2]2b}{[1][5][]5}}
-\newlabel{sub@fig:Fig.2b}{{b}{5}{A chain of cACBs\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:Fig.2b@cref}{{[subfigure][2][2]2b}{[1][5][]5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A diagram of the conditional version of the affine coupling block (cACB). \textbf  {(a)} Each cABC consists of four internal networks performing the invertible operations described in the text; \textbf  {(b)} In practice, we chain multiple cACBs to obtain higher representational capacity. Each cACB layer uses a fixed permutation to ensure that information about each parameter is encoded in each latent dimension of $\boldsymbol  {z}$.\relax }}{5}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:Fig.2}{{2}{5}{A diagram of the conditional version of the affine coupling block (cACB). \textbf {(a)} Each cABC consists of four internal networks performing the invertible operations described in the text; \textbf {(b)} In practice, we chain multiple cACBs to obtain higher representational capacity. Each cACB layer uses a fixed permutation to ensure that information about each parameter is encoded in each latent dimension of $\boldsymbol {z}$.\relax }{figure.caption.16}{}}
-\newlabel{fig:Fig.2@cref}{{[figure][2][]2}{[1][5][]5}}
-\newlabel{eqn:8}{{{8}}{5}{}{AMS.18}{}}
-\newlabel{eqn:8@cref}{{[equation][2147483647][]{8}}{[1][5][]5}}
-\newlabel{eqn:9}{{{9}}{5}{}{AMS.20}{}}
-\newlabel{eqn:9@cref}{{[equation][2147483647][]{9}}{[1][5][]5}}
+\newlabel{eqn:8}{{{8}}{4}{}{AMS.18}{}}
+\newlabel{eqn:8@cref}{{[equation][2147483647][]{8}}{[1][4][]4}}
+\newlabel{eqn:9}{{{9}}{4}{}{AMS.20}{}}
+\newlabel{eqn:9@cref}{{[equation][2147483647][]{9}}{[1][4][]4}}
+\citation{papamakarios2016fast,kingma2014auto}
 \newlabel{eqn:10}{{{10}}{5}{}{AMS.23}{}}
-\newlabel{eqn:10@cref}{{[equation][2147483647][]{10}}{[1][5][]5}}
+\newlabel{eqn:10@cref}{{[equation][2147483647][]{10}}{[1][4][]5}}
 \newlabel{eqn:11}{{{11}}{5}{}{AMS.24}{}}
-\newlabel{eqn:11@cref}{{[equation][2147483647][]{11}}{[1][5][]5}}
+\newlabel{eqn:11@cref}{{[equation][2147483647][]{11}}{[1][4][]5}}
 \newlabel{eqn:12}{{{12}}{5}{}{AMS.28}{}}
 \newlabel{eqn:12@cref}{{[equation][2147483647][]{12}}{[1][5][]5}}
 \newlabel{eqn:13}{{{13}}{5}{}{AMS.29}{}}
 \newlabel{eqn:13@cref}{{[equation][2147483647][]{13}}{[1][5][]5}}
 \newlabel{eqn:14}{{{14}}{5}{}{AMS.30}{}}
 \newlabel{eqn:14@cref}{{[equation][2147483647][]{14}}{[1][5][]5}}
-\citation{papamakarios2016fast,kingma2014auto}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Bayesian likelihood-free inference with invertible neural networks\relax }}{6}{algorithm.1}\protected@file@percent }
-\newlabel{alg:1}{{1}{6}{Bayesian likelihood-free inference with invertible neural networks\relax }{algorithm.1}{}}
-\newlabel{alg:1@cref}{{[algorithm][1][]1}{[1][6][]6}}
 \citation{hershey2007approximating}
 \citation{talts2018validating}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Bayesian likelihood-free inference with invertible neural networks\relax }}{6}{algorithm.1}\protected@file@percent }
+\newlabel{alg:1}{{1}{6}{Bayesian likelihood-free inference with invertible neural networks\relax }{algorithm.1}{}}
+\newlabel{alg:1@cref}{{[algorithm][1][]1}{[1][5][]6}}
 \citation{wood2010statistical}
 \citation{mestdagh2018prepaid}
 \citation{talts2018validating}
-\newlabel{fig:Fig.3a}{{3a}{8}{Analytic vs. estimated means joint plot ($n=500$)\relax }{figure.caption.39}{}}
-\newlabel{fig:Fig.3a@cref}{{[subfigure][1][3]3a}{[1][7][]8}}
-\newlabel{sub@fig:Fig.3a}{{a}{8}{Analytic vs. estimated means joint plot ($n=500$)\relax }{figure.caption.39}{}}
-\newlabel{sub@fig:Fig.3a@cref}{{[subfigure][1][3]3a}{[1][7][]8}}
-\newlabel{fig:Fig.3b}{{3b}{8}{Full analytic vs. estimated posteriors ($n=500$)\relax }{figure.caption.39}{}}
-\newlabel{fig:Fig.3b@cref}{{[subfigure][2][3]3b}{[1][7][]8}}
-\newlabel{sub@fig:Fig.3b}{{b}{8}{Full analytic vs. estimated posteriors ($n=500$)\relax }{figure.caption.39}{}}
-\newlabel{sub@fig:Fig.3b@cref}{{[subfigure][2][3]3b}{[1][7][]8}}
-\newlabel{fig:Fig.3c}{{3c}{8}{Analytic means recovery ($n=500$)\relax }{figure.caption.39}{}}
-\newlabel{fig:Fig.3c@cref}{{[subfigure][3][3]3c}{[1][7][]8}}
-\newlabel{sub@fig:Fig.3c}{{c}{8}{Analytic means recovery ($n=500$)\relax }{figure.caption.39}{}}
-\newlabel{sub@fig:Fig.3c@cref}{{[subfigure][3][3]3c}{[1][7][]8}}
-\newlabel{fig:Fig.3d}{{3d}{8}{Performance over all $n$\relax }{figure.caption.39}{}}
-\newlabel{fig:Fig.3d@cref}{{[subfigure][4][3]3d}{[1][7][]8}}
-\newlabel{sub@fig:Fig.3d}{{d}{8}{Performance over all $n$\relax }{figure.caption.39}{}}
-\newlabel{sub@fig:Fig.3d@cref}{{[subfigure][4][3]3d}{[1][7][]8}}
-\newlabel{fig:Fig.3e}{{3e}{8}{Analytic vs. estimated variance over all $n$\relax }{figure.caption.39}{}}
-\newlabel{fig:Fig.3e@cref}{{[subfigure][5][3]3e}{[1][7][]8}}
-\newlabel{sub@fig:Fig.3e}{{e}{8}{Analytic vs. estimated variance over all $n$\relax }{figure.caption.39}{}}
-\newlabel{sub@fig:Fig.3e@cref}{{[subfigure][5][3]3e}{[1][7][]8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces short}}{8}{figure.caption.39}\protected@file@percent }
-\newlabel{fig:Fig.3}{{3}{8}{short}{figure.caption.39}{}}
-\newlabel{fig:Fig.3@cref}{{[figure][3][]3}{[1][7][]8}}
+\newlabel{fig:Fig.3a}{{3a}{7}{Analytic vs. estimated means joint plot ($n=500$)\relax }{figure.caption.39}{}}
+\newlabel{fig:Fig.3a@cref}{{[subfigure][1][3]3a}{[1][6][]7}}
+\newlabel{sub@fig:Fig.3a}{{a}{7}{Analytic vs. estimated means joint plot ($n=500$)\relax }{figure.caption.39}{}}
+\newlabel{sub@fig:Fig.3a@cref}{{[subfigure][1][3]3a}{[1][6][]7}}
+\newlabel{fig:Fig.3b}{{3b}{7}{Full analytic vs. estimated posteriors ($n=500$)\relax }{figure.caption.39}{}}
+\newlabel{fig:Fig.3b@cref}{{[subfigure][2][3]3b}{[1][6][]7}}
+\newlabel{sub@fig:Fig.3b}{{b}{7}{Full analytic vs. estimated posteriors ($n=500$)\relax }{figure.caption.39}{}}
+\newlabel{sub@fig:Fig.3b@cref}{{[subfigure][2][3]3b}{[1][6][]7}}
+\newlabel{fig:Fig.3c}{{3c}{7}{Analytic means recovery ($n=500$)\relax }{figure.caption.39}{}}
+\newlabel{fig:Fig.3c@cref}{{[subfigure][3][3]3c}{[1][6][]7}}
+\newlabel{sub@fig:Fig.3c}{{c}{7}{Analytic means recovery ($n=500$)\relax }{figure.caption.39}{}}
+\newlabel{sub@fig:Fig.3c@cref}{{[subfigure][3][3]3c}{[1][6][]7}}
+\newlabel{fig:Fig.3d}{{3d}{7}{Performance over all $n$\relax }{figure.caption.39}{}}
+\newlabel{fig:Fig.3d@cref}{{[subfigure][4][3]3d}{[1][6][]7}}
+\newlabel{sub@fig:Fig.3d}{{d}{7}{Performance over all $n$\relax }{figure.caption.39}{}}
+\newlabel{sub@fig:Fig.3d@cref}{{[subfigure][4][3]3d}{[1][6][]7}}
+\newlabel{fig:Fig.3e}{{3e}{7}{Analytic vs. estimated variance over all $n$\relax }{figure.caption.39}{}}
+\newlabel{fig:Fig.3e@cref}{{[subfigure][5][3]3e}{[1][6][]7}}
+\newlabel{sub@fig:Fig.3e}{{e}{7}{Analytic vs. estimated variance over all $n$\relax }{figure.caption.39}{}}
+\newlabel{sub@fig:Fig.3e@cref}{{[subfigure][5][3]3e}{[1][6][]7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces short}}{7}{figure.caption.39}\protected@file@percent }
+\newlabel{fig:Fig.3}{{3}{7}{short}{figure.caption.39}{}}
+\newlabel{fig:Fig.3@cref}{{[figure][3][]3}{[1][6][]7}}
 \citation{ratcliff2008diffusion}
 \citation{usher2001time}
 \citation{miletic2017parameter}
 \citation{voss2019sequential}
-\newlabel{fig:Fig.4a}{{4a}{9}{Parameter recovery ($T=500$)\relax }{figure.caption.44}{}}
-\newlabel{fig:Fig.4a@cref}{{[subfigure][1][4]4a}{[1][8][]9}}
-\newlabel{sub@fig:Fig.4a}{{a}{9}{Parameter recovery ($T=500$)\relax }{figure.caption.44}{}}
-\newlabel{sub@fig:Fig.4a@cref}{{[subfigure][1][4]4a}{[1][8][]9}}
-\newlabel{fig:Fig.4b}{{4b}{9}{Example posterior samples ($T=500$)\relax }{figure.caption.44}{}}
-\newlabel{fig:Fig.4b@cref}{{[subfigure][2][4]4b}{[1][8][]9}}
-\newlabel{sub@fig:Fig.4b}{{b}{9}{Example posterior samples ($T=500$)\relax }{figure.caption.44}{}}
-\newlabel{sub@fig:Fig.4b@cref}{{[subfigure][2][4]4b}{[1][8][]9}}
-\newlabel{fig:Fig.4c}{{4c}{9}{Performance over all $T$s\relax }{figure.caption.44}{}}
-\newlabel{fig:Fig.4c@cref}{{[subfigure][3][4]4c}{[1][8][]9}}
-\newlabel{sub@fig:Fig.4c}{{c}{9}{Performance over all $T$s\relax }{figure.caption.44}{}}
-\newlabel{sub@fig:Fig.4c@cref}{{[subfigure][3][4]4c}{[1][8][]9}}
-\newlabel{fig:Fig.4d}{{4d}{9}{Simulation-based calibration (SBC)\relax }{figure.caption.44}{}}
-\newlabel{fig:Fig.4d@cref}{{[subfigure][4][4]4d}{[1][8][]9}}
-\newlabel{sub@fig:Fig.4d}{{d}{9}{Simulation-based calibration (SBC)\relax }{figure.caption.44}{}}
-\newlabel{sub@fig:Fig.4d@cref}{{[subfigure][4][4]4d}{[1][8][]9}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces short}}{9}{figure.caption.44}\protected@file@percent }
-\newlabel{fig:Fig.4}{{4}{9}{short}{figure.caption.44}{}}
-\newlabel{fig:Fig.4@cref}{{[figure][4][]4}{[1][8][]9}}
-\newlabel{eqn:stillno}{{{21}}{9}{}{AMS.46}{}}
-\newlabel{eqn:stillno@cref}{{[equation][2147483647][]{21}}{[1][9][]9}}
-\newlabel{eqn:stillno2}{{{22}}{9}{}{AMS.49}{}}
-\newlabel{eqn:stillno2@cref}{{[equation][2147483647][]{22}}{[1][9][]9}}
-\newlabel{eqn:stillno3}{{{23}}{9}{}{AMS.50}{}}
-\newlabel{eqn:stillno3@cref}{{[equation][2147483647][]{23}}{[1][9][]9}}
+\newlabel{fig:Fig.4a}{{4a}{8}{Parameter recovery ($T=500$)\relax }{figure.caption.44}{}}
+\newlabel{fig:Fig.4a@cref}{{[subfigure][1][4]4a}{[1][8][]8}}
+\newlabel{sub@fig:Fig.4a}{{a}{8}{Parameter recovery ($T=500$)\relax }{figure.caption.44}{}}
+\newlabel{sub@fig:Fig.4a@cref}{{[subfigure][1][4]4a}{[1][8][]8}}
+\newlabel{fig:Fig.4b}{{4b}{8}{Example posterior samples ($T=500$)\relax }{figure.caption.44}{}}
+\newlabel{fig:Fig.4b@cref}{{[subfigure][2][4]4b}{[1][8][]8}}
+\newlabel{sub@fig:Fig.4b}{{b}{8}{Example posterior samples ($T=500$)\relax }{figure.caption.44}{}}
+\newlabel{sub@fig:Fig.4b@cref}{{[subfigure][2][4]4b}{[1][8][]8}}
+\newlabel{fig:Fig.4c}{{4c}{8}{Performance over all $T$s\relax }{figure.caption.44}{}}
+\newlabel{fig:Fig.4c@cref}{{[subfigure][3][4]4c}{[1][8][]8}}
+\newlabel{sub@fig:Fig.4c}{{c}{8}{Performance over all $T$s\relax }{figure.caption.44}{}}
+\newlabel{sub@fig:Fig.4c@cref}{{[subfigure][3][4]4c}{[1][8][]8}}
+\newlabel{fig:Fig.4d}{{4d}{8}{Simulation-based calibration (SBC)\relax }{figure.caption.44}{}}
+\newlabel{fig:Fig.4d@cref}{{[subfigure][4][4]4d}{[1][8][]8}}
+\newlabel{sub@fig:Fig.4d}{{d}{8}{Simulation-based calibration (SBC)\relax }{figure.caption.44}{}}
+\newlabel{sub@fig:Fig.4d@cref}{{[subfigure][4][4]4d}{[1][8][]8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces short}}{8}{figure.caption.44}\protected@file@percent }
+\newlabel{fig:Fig.4}{{4}{8}{short}{figure.caption.44}{}}
+\newlabel{fig:Fig.4@cref}{{[figure][4][]4}{[1][8][]8}}
+\newlabel{eqn:stillno}{{{21}}{8}{}{AMS.46}{}}
+\newlabel{eqn:stillno@cref}{{[equation][2147483647][]{21}}{[1][8][]8}}
+\newlabel{eqn:stillno2}{{{22}}{8}{}{AMS.49}{}}
+\newlabel{eqn:stillno2@cref}{{[equation][2147483647][]{22}}{[1][8][]8}}
+\newlabel{eqn:stillno3}{{{23}}{8}{}{AMS.50}{}}
+\newlabel{eqn:stillno3@cref}{{[equation][2147483647][]{23}}{[1][8][]8}}
 \citation{talts2018validating}
 \citation{sahneh2017gemfsim,keeling2011modeling,hethcote2000mathematics}
-\newlabel{fig:Fig.5a}{{5a}{10}{Parameter recovery ($n=1000$)\relax }{figure.caption.51}{}}
-\newlabel{fig:Fig.5a@cref}{{[subfigure][1][5]5a}{[1][9][]10}}
-\newlabel{sub@fig:Fig.5a}{{a}{10}{Parameter recovery ($n=1000$)\relax }{figure.caption.51}{}}
-\newlabel{sub@fig:Fig.5a@cref}{{[subfigure][1][5]5a}{[1][9][]10}}
-\newlabel{fig:Fig.5b}{{5b}{10}{Example posterior samples ($n=1000$)\relax }{figure.caption.51}{}}
-\newlabel{fig:Fig.5b@cref}{{[subfigure][2][5]5b}{[1][9][]10}}
-\newlabel{sub@fig:Fig.5b}{{b}{10}{Example posterior samples ($n=1000$)\relax }{figure.caption.51}{}}
-\newlabel{sub@fig:Fig.5b@cref}{{[subfigure][2][5]5b}{[1][9][]10}}
-\newlabel{fig:Fig.5c}{{5c}{10}{Performance over all trial numbers\relax }{figure.caption.51}{}}
-\newlabel{fig:Fig.5c@cref}{{[subfigure][3][5]5c}{[1][9][]10}}
-\newlabel{sub@fig:Fig.5c}{{c}{10}{Performance over all trial numbers\relax }{figure.caption.51}{}}
-\newlabel{sub@fig:Fig.5c@cref}{{[subfigure][3][5]5c}{[1][9][]10}}
-\newlabel{fig:Fig.5d}{{5d}{10}{Simulation-based calibration (SBC)\relax }{figure.caption.51}{}}
-\newlabel{fig:Fig.5d@cref}{{[subfigure][4][5]5d}{[1][9][]10}}
-\newlabel{sub@fig:Fig.5d}{{d}{10}{Simulation-based calibration (SBC)\relax }{figure.caption.51}{}}
-\newlabel{sub@fig:Fig.5d@cref}{{[subfigure][4][5]5d}{[1][9][]10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces short}}{10}{figure.caption.51}\protected@file@percent }
-\newlabel{fig:Fig.5}{{5}{10}{short}{figure.caption.51}{}}
-\newlabel{fig:Fig.5@cref}{{[figure][5][]5}{[1][9][]10}}
+\newlabel{fig:Fig.5a}{{5a}{9}{Parameter recovery ($n=1000$)\relax }{figure.caption.51}{}}
+\newlabel{fig:Fig.5a@cref}{{[subfigure][1][5]5a}{[1][9][]9}}
+\newlabel{sub@fig:Fig.5a}{{a}{9}{Parameter recovery ($n=1000$)\relax }{figure.caption.51}{}}
+\newlabel{sub@fig:Fig.5a@cref}{{[subfigure][1][5]5a}{[1][9][]9}}
+\newlabel{fig:Fig.5b}{{5b}{9}{Example posterior samples ($n=1000$)\relax }{figure.caption.51}{}}
+\newlabel{fig:Fig.5b@cref}{{[subfigure][2][5]5b}{[1][9][]9}}
+\newlabel{sub@fig:Fig.5b}{{b}{9}{Example posterior samples ($n=1000$)\relax }{figure.caption.51}{}}
+\newlabel{sub@fig:Fig.5b@cref}{{[subfigure][2][5]5b}{[1][9][]9}}
+\newlabel{fig:Fig.5c}{{5c}{9}{Performance over all trial numbers\relax }{figure.caption.51}{}}
+\newlabel{fig:Fig.5c@cref}{{[subfigure][3][5]5c}{[1][9][]9}}
+\newlabel{sub@fig:Fig.5c}{{c}{9}{Performance over all trial numbers\relax }{figure.caption.51}{}}
+\newlabel{sub@fig:Fig.5c@cref}{{[subfigure][3][5]5c}{[1][9][]9}}
+\newlabel{fig:Fig.5d}{{5d}{9}{Simulation-based calibration (SBC)\relax }{figure.caption.51}{}}
+\newlabel{fig:Fig.5d@cref}{{[subfigure][4][5]5d}{[1][9][]9}}
+\newlabel{sub@fig:Fig.5d}{{d}{9}{Simulation-based calibration (SBC)\relax }{figure.caption.51}{}}
+\newlabel{sub@fig:Fig.5d@cref}{{[subfigure][4][5]5d}{[1][9][]9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces short}}{9}{figure.caption.51}\protected@file@percent }
+\newlabel{fig:Fig.5}{{5}{9}{short}{figure.caption.51}{}}
+\newlabel{fig:Fig.5@cref}{{[figure][5][]5}{[1][9][]9}}
 \citation{zappia2017splatter,ozsolak2011rna}
 \citation{zappia2017splatter}
+\newlabel{fig:Fig.6a}{{6a}{10}{Example SIR timeseries with $\beta =0.5$ and $\gamma =0.2$\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6a@cref}{{[subfigure][1][6]6a}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6a}{{a}{10}{Example SIR timeseries with $\beta =0.5$ and $\gamma =0.2$\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6a@cref}{{[subfigure][1][6]6a}{[1][10][]10}}
+\newlabel{fig:Fig.6b}{{6b}{10}{State-transition diagram of the SIR model\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6b@cref}{{[subfigure][2][6]6b}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6b}{{b}{10}{State-transition diagram of the SIR model\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6b@cref}{{[subfigure][2][6]6b}{[1][10][]10}}
+\newlabel{fig:Fig.6c}{{6c}{10}{Parameter recovery ($T=500$)\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6c@cref}{{[subfigure][3][6]6c}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6c}{{c}{10}{Parameter recovery ($T=500$)\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6c@cref}{{[subfigure][3][6]6c}{[1][10][]10}}
+\newlabel{fig:Fig.6d}{{6d}{10}{Performance over all $T$s\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6d@cref}{{[subfigure][4][6]6d}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6d}{{d}{10}{Performance over all $T$s\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6d@cref}{{[subfigure][4][6]6d}{[1][10][]10}}
+\newlabel{fig:Fig.6e}{{6e}{10}{Posterior variance over all $Ts$\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6e@cref}{{[subfigure][5][6]6e}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6e}{{e}{10}{Posterior variance over all $Ts$\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6e@cref}{{[subfigure][5][6]6e}{[1][10][]10}}
+\newlabel{fig:Fig.6f}{{6f}{10}{Example posterior samples ($T=500$\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6f@cref}{{[subfigure][6][6]6f}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6f}{{f}{10}{Example posterior samples ($T=500$\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6f@cref}{{[subfigure][6][6]6f}{[1][10][]10}}
+\newlabel{fig:Fig.6f}{{6g}{10}{Simulation-based calibration (SBC)\relax }{figure.caption.62}{}}
+\newlabel{fig:Fig.6f@cref}{{[subfigure][7][6]6g}{[1][10][]10}}
+\newlabel{sub@fig:Fig.6f}{{g}{10}{Simulation-based calibration (SBC)\relax }{figure.caption.62}{}}
+\newlabel{sub@fig:Fig.6f@cref}{{[subfigure][7][6]6g}{[1][10][]10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces short}}{10}{figure.caption.62}\protected@file@percent }
+\newlabel{fig:Fig.6}{{6}{10}{short}{figure.caption.62}{}}
+\newlabel{fig:Fig.6@cref}{{[figure][6][]6}{[1][10][]10}}
 \citation{kendall2017uncertainties,gelman2013bayesian}
 \citation{radev2019towards,hwang2018conditional,mestdagh2018prepaid,raynal2018abc,jiang2017learning,lueckmann2017flexible,papamakarios2016fast}
 \citation{papamakarios2016fast,kingma2014auto}

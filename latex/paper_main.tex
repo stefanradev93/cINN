@@ -77,13 +77,12 @@ The \textit{summary network} is responsible for learning the most informative su
 
 The \textit{invertible network} is responsible for learning the posterior of the model parameters given the observed and summarized data. It is based on the recently developed flow-based architecture \cite{kingma2018glow, grover2018flow, dinh2016density}. Flow-based methods provide exact latent-variable inference and log-likelihood evaluation when operating at optimum. In the \textbf{Methods} section, we show that our method maximizes the posterior over model parameters directly when cast in the context of likelihood-free inference. Furthermore, flow-based methods are capable of approximating very high-dimensional distributions (e.g., the pixels of an image). Once trained with a sufficient amount of simulated data, our invertible network can perform full Bayesian inference on large amounts of real data from a given domain in a single pass. 
 \begin{figure}
-  \begin{subfigure}[b]{1.0\textwidth}
+  \begin{subfigure}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{training.png}
     \caption{Training phase}
     \label{fig:Fig.1a}
   \end{subfigure}
-  %
-  \begin{subfigure}[b]{1.0\textwidth}
+  \begin{subfigure}[b]{0.49\textwidth}
     \includegraphics[width=\textwidth]{inference.png}
     \caption{Inference phase}
     \label{fig:Fig.1b}
@@ -277,7 +276,7 @@ Discrete population dynamics models describe how the number of individuals in a 
 x_{t} &\sim Pois(\rho N_{t}) \numberthis \\
 N_{t+1} &= rN_{t}e^{-N_{t} + \epsilon_{t}} \numberthis 
 \end{align*}
-for $t = 1,...,T$ where $N_{t}$ is the expected number of individuals at time $t$, $r$ is the growth rate, $\rho$ is a scaling parameter and $\epsilon_{t} \sim \mathcal{N}(0, \sigma^{2})$ is random Gaussian noise \cite{mestdagh2018prepaid}. The Ricker model has no known likelihood function and is thus a suitable candidate for likelihood-free inference. The parameter estimation task is thus to recover $\boldsymbol{\theta}=(\rho,r,\sigma)$ from the observed one-dimensional time-series data $\boldsymbol{x}=(x_{1},x_{2},...,x_{T})$ where each $x_{t} \in \mathbb{N}$.
+for $t = 1,...,T$ where $N_{t}$ is the expected number of individuals at time $t$, $r$ is the growth rate, $\rho$ is a scaling parameter and $\epsilon_{t} \sim \mathcal{N}(0, \sigma^{2})$ is random Gaussian noise \cite{mestdagh2018prepaid}. The likelihood function for the Ricker model is not available in closed-form, and the model is known to exhibit chaotic behavior. Thus, it is a suitable candidate for likelihood-free inference.  The parameter estimation task is thus to recover $\boldsymbol{\theta}=(\rho,r,\sigma)$ from the observed one-dimensional time-series data $\boldsymbol{x}=(x_{1},x_{2},...,x_{T})$ where each $x_{t} \in \mathbb{N}$.
 
 During training of the networks, we simulate time-series from the Ricker model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(100, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). 
 
@@ -355,10 +354,10 @@ During training of the networks, we simulate RT data from two experimental condi
     \caption{Simulation-based calibration (SBC)}
     \label{fig:Fig.5d}
 \end{subfigure}
-\caption[short]{Results on the LFM model. \textbf{(a)} Parameter recovery for the maximum number of trials used during training ($n=1000$); \textbf{(b)} Example posteriors for three test datasets; \textbf{(c)} NRMSE and $R^{2}$ performance metrics over all $n$ trials used during training. Again, we observe that the recovery remains good over overall, and becomes progressively better as more data is available; \textbf{(d)} Plots of the rank statistics indicative of the accuracy of the full posterior. Accordingly, the approximate posteriors tend to overestimate the true posterior variance.} \label{fig:Fig.5}
+\caption[short]{Results on the LFM model. \textbf{(a)} Parameter recovery for the maximum number of trials used during training ($n=1000$); \textbf{(b)} Example posteriors for three test datasets; \textbf{(c)} NRMSE and $R^{2}$ performance metrics over all $n$ trials used during training. Again, we observe that the recovery remains overall very good, and becomes progressively better as more data is available; \textbf{(d)} Plots of the rank statistics indicative of the accuracy of the full posterior. Accordingly, the approximate posteriors tend to overestimate the true posterior variance.} \label{fig:Fig.5}
 \end{figure}
 
-The results on the LFM model are depicted in \autoref{fig:Fig.4}. To our knowledge, this is the first Bayesian treatment of the LFM, as its intractability makes traditional methods prohibitively slow. We observe state-of-the art recovery of all LFM parameters with NRMSEs ranging between $0.008$ and $0.048$ and $R^{(2)}$ between $0.972$ and $0.999$. Further, estimation remains very good across all trial sizes, with goodness increasing as more trials become available. The parameter $\alpha$ appears to be most challenging to estimate, requiring more data for good estimation, whereas the non-decision time parameter $t_{0}$ is almost perfectly reconstructed for all trial sizes. Last, inspecting the SCB plots, we notice that the histograms tend to be slightly peaked, indicating a slight overestimation of the posterior variance \cite{talts2018validating}.
+The results on the LFM model are depicted in \autoref{fig:Fig.4}. To our knowledge, this is the first Bayesian treatment of the LFM, as its intractability makes traditional methods prohibitively slow. We observe state-of-the art recovery of all LFM parameters with NRMSEs ranging between $0.008$ and $0.048$ and $R^{2}$ between $0.972$ and $0.999$. Further, estimation remains very good across all trial sizes, with goodness increasing as more trials become available. The parameter $\alpha$ appears to be most challenging to estimate, requiring more data for good estimation, whereas the non-decision time parameter $t_{0}$ is almost perfectly reconstructed for all trial sizes. Last, inspecting the SCB plots, we notice that the histograms tend to be slightly peaked, indicating a slight overestimation of the posterior variance \cite{talts2018validating}.
 
 \subsection*{Example 3 – The Stochastic SIR Model}
 Compartmental models in epidemiology are used to describe the stochastic dynamics of infectious diseases as they spread over a population of individuals \cite{sahneh2017gemfsim,keeling2011modeling, hethcote2000mathematics}. The parameters of compartmental models encode important characteristics of diseases, such as the rates of infection or recovery from the disease. The stochastic SIR model describes the transition dynamics of $N$ individuals between three discrete states: susceptible ($S$), infected ($I$), and recovered ($R$). The transition dynamics are given by the following equations:
@@ -369,17 +368,60 @@ Compartmental models in epidemiology are used to describe the stochastic dynamic
 \triangle N_{SI} &\sim Binomial(S, 1 - \exp\left(-\beta\frac{I}{N}\triangle t \right)) \numberthis \\
 \triangle N_{IR} &\sim Binomial(I, 1 - \exp\left(-\gamma\triangle t \right)) \numberthis 
 \end{align*}
-where $S + I + R = N$ give the number of susceptible, infected, and recovered individuals, respectively. The parameter $\beta$ controls the transition rate from being susceptible to infected, and $\gamma$ controls the transition rate from being infected to recovered. The number of individuals moving from $S$ to $I$, given by $\triangle N_{SI}$, and the number of people moving from $I$ to $R$, given by $\triangle N_{IR}$, over a time interval $\triangle t$ are modeled as binomial random variables. The above listed stochastic system has no known analytic solution and thus requires numerical simulation methods for finding optimal parameter values. Cast as a parameter estimation task, the challenge is to recover $\boldsymbol{\theta} = \{\beta,\gamma\}$ from three dimensional time-series data $\boldsymbol{X} = (\boldsymbol{x}_{1},\boldsymbol{x}_{2},...,\boldsymbol{x}_{T})$ where each $\boldsymbol{x}_{t} \in \mathbb{N}^{3}$ is a triple containing the number of susceptible ($S$), number of infected ($I$), and recovered ($R$) individuals at time $t$. 
+where $S + I + R = N$ give the number of susceptible, infected, and recovered individuals, respectively. The parameter $\beta$ controls the transition rate from being susceptible to infected, and $\gamma$ controls the transition rate from being infected to recovered (see \autoref{fig:Fig.6}). The number of individuals moving from $S$ to $I$, given by $\triangle N_{SI}$, and the number of people moving from $I$ to $R$, given by $\triangle N_{IR}$, over a time interval $\triangle t$ are modeled as binomial random variables. The above listed stochastic system has no known analytic solution and thus requires numerical simulation methods for finding optimal parameter values. Cast as a parameter estimation task, the challenge is to recover $\boldsymbol{\theta} = \{\beta,\gamma\}$ from three dimensional time-series data $\boldsymbol{X} = (\boldsymbol{x}_{1},\boldsymbol{x}_{2},...,\boldsymbol{x}_{T})$ where each $\boldsymbol{x}_{t} \in \mathbb{N}^{3}$ is a triple containing the number of susceptible ($S$), number of infected ($I$), and recovered ($R$) individuals at time $t$. 
 
-During training of the networks, we simulate time-series from the stochastic SIR model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(100, 200)$ at each training iteration (see the \textbf{SI} for more details about the simulation). This range is chosen since we observed that the system reaches an equilibrium in almost all parameter settings after $T > 200$.
+During training of the networks, we simulate time-series from the stochastic SIR model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(200, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). Usually, at lower $T$s, the system has not converged to an equilibrium (i.e., not all individuals have moved from being $I$ to $R$). Thus, it is especially interesting to see if our method can recover the parameters, even if the process dynamics are still unfolding over time. 
 
-The results on the SIR model are depicted in Figure XXX. 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+    \includegraphics[width=\textwidth]{SIR_plot.png}
+    \caption{Example SIR timeseries with $\beta=0.5$ and $\gamma=0.2$}
+    \label{fig:Fig.6a}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \includegraphics[width=\textwidth]{SIR_states.png}
+    \caption{State-transition diagram of the SIR model}
+    \label{fig:Fig.6b}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \includegraphics[width=\textwidth]{SIR_scatter.png}
+    \caption{Parameter recovery ($T=500$)}
+    \label{fig:Fig.6c}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \begin{subfigure}{.49\textwidth}
+    	\includegraphics[width=\textwidth]{SIR_metrics.png}
+    	\caption{Performance over all $T$s}
+    	\label{fig:Fig.6d}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+    	\includegraphics[width=\textwidth]{SIR_variance.png}
+    	\caption{Posterior variance over all $Ts$}
+    	\label{fig:Fig.6e}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+    	\includegraphics[width=\textwidth]{SIR_density.png}
+    	\caption{Example posterior samples ($T=500$}
+    	\label{fig:Fig.6f}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+    	\includegraphics[width=\textwidth]{SIR_sbc.png}
+    	\caption{Simulation-based calibration (SBC)}
+    	\label{fig:Fig.6f}
+	\end{subfigure}
+\end{subfigure}
+\caption[short]{Results on the stochastic SIR model. \textbf{(a)} Example SIR timeseries generated with $\beta=0.5$ and $\gamma=0.2$; \textbf{(b)} State transition diagram of the SIR model; \textbf{(c)} Parameter recovery depicting also NRMSE and $R^{2}$ metrics; \textbf{(d)} NRMSE and $R^{2}$ performance over all $T$s seen by the networks during training. We observe similar patterns as in the previous examples; \textbf{(e)} Posterior variances of the SIR parameters over all $T$s; \textbf{(e)} Example full posteriors of the parameters recovered from three test datasets; \textbf{(f)} Plots of the rank statistic, according to which the posterior of $\beta$ slightly overestimates the true mean.} \label{fig:Fig.6}
+\end{figure}
+
+The results on the SIR model are depicted in \autoref{fig:Fig.6}. Similar to the previous examples, we observe very good recovery of the true parameters, with NRMSE at $T=500$ around $0.04$, and $R^{2}$s around $0.98$. Further, we observe decent performance even at smaller $T$s, with performance increasing as $T$ increases. Conversely, the estimated posterior variance drops as $T$ increases, capturing the fact that more information becomes available to the networks. Finally, the SCB plots indicate a slight underestimation of the true posterior means by the estimated posterior means. This trend is visible when $\beta$ and $\gamma$ both assume very similar values, and the generated timeseries are far from equilibrium at the final time point $T$. Thus, such datasets contain very little information about the parameters given the considered time range of $T_{max}=500$.
 
 \subsection*{Example 4 - Single-Cell RNA Sequencing}
 Single-cell RNA sequencing (scRNA-seq) is a method to uncover the dynamics of gene expression within single cells \cite{zappia2017splatter, ozsolak2011rna}. Simulation models for scRNA-seq attempt to mimic the process of sequencing real data samples by combining statistical and algorithmic procedures. The recently developed \textit{Splat} simulation model \cite{zappia2017splatter} implements a hierarchical model where the mean expression levels for multiple genes are samples from a Gamma distribution, and the number of times a gene has been sequenced in a cell is then sampled from a Poisson distribution. The output of the \textit{Splat} simulation is thus a matrix $\boldsymbol{X}$ of \textit{Gene x Cell} counts. Figure XXX depicts the \textit{Splat} algorithm for simulating scRNA-seq data.
 
 
-As a last example for our method, we use simulations from the \textit{Splat} model and attempt to recover the data-generating parameters. We simulate $250000$  \textit{Gene x Cell} count matrices with different parameter settings (see \textbf{SI} for details of the simulation) and discard implausible simulations (e.g., matrices where more than $90\%$ of the counts are $0$). We train the networks for 100 epochs through the entire dataset and evaluate the performance on a separate validation set or matrices.
+As a last example for our method, we use simulations from the \textit{Splat} model and attempt to recover the data-generating parameters. We simulate $500000$  \textit{Gene x Cell} count matrices with different parameter settings (see \textbf{SI} for details of the simulation) and discard implausible simulations (e.g., matrices where more than $90\%$ of the counts are $0$). We train the networks for 100 epochs through the entire dataset and evaluate the performance on a separate validation set or matrices.
 
 Figure XXX depicts the results...
 

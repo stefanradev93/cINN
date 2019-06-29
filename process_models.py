@@ -1,5 +1,7 @@
 from numba import jit, prange
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 import scipy
 import tensorflow as tf
 
@@ -106,6 +108,7 @@ def simulate_sir_single(beta, gamma, t_max=500, N=1000):
 
 @jit
 def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gamma=0., 
+
                  t_min=200, t_max=500, N=1000, normalize=True, to_tensor=True):
     """
     Simulates and returns a batch of timeseries obtained under the SIR model.
@@ -146,3 +149,28 @@ def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gam
     if to_tensor:
         return tf.convert_to_tensor(X, dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
     return X, theta
+
+def plot_sir(beta, gamma, n_points=500, figsize=(8, 4), N=1000, filename=None):
+    """
+    Simulates a single SIR process.
+    """
+
+    # Generate SIR dataframes
+    X = simulate_sir_single(beta, gamma, t_max=n_points, N=N)
+    t = np.arange(1, n_points+1)
+
+    # Prepare figure
+    f, ax = plt.subplots(1, 1, figsize=figsize)
+    sns.lineplot(t, X[:, 0], ax=ax, label='Susceptible')
+    sns.lineplot(t, X[:, 1], ax=ax, label='Infected')
+    sns.lineplot(t, X[:, 2], ax=ax, label='Recovered')
+
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.set_xlabel(r'Number of time points ($T$)', fontsize=12)
+    ax.set_ylabel('Number of individuals', fontsize=12)
+    ax.legend(fontsize=10)
+
+    # Save if specified
+    if filename is not None:
+        f.savefig("figures/{}_plot.png".format(filename), dpi=600)

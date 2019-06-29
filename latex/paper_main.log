@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  29 JUN 2019 00:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  30 JUN 2019 00:27
 entering extended mode
 **./paper_main.tex
 (paper_main.tex
@@ -1558,7 +1558,20 @@ LaTeX Info: Redefining \Cpagerefrange on input line 2370.
 LaTeX Info: Redefining \labelcref on input line 2370.
 LaTeX Info: Redefining \labelcpageref on input line 2370.
 Package cleveref Info: `algorithmicx' support loaded on input line 3120.
-) (paper_main.aux)
+) (paper_main.aux
+
+LaTeX Warning: Label `fig:Fig.6f' multiply defined.
+
+
+LaTeX Warning: Label `fig:Fig.6f@cref' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:Fig.6f' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:Fig.6f@cref' multiply defined.
+
+)
 \openout1 = `paper_main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
@@ -1875,125 +1888,161 @@ LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 File: figures/training.png Graphic file (type png)
 <use figures/training.png>
 Package pdftex.def Info: figures/training.png  used on input line 81.
-(pdftex.def)             Requested size: 505.69374pt x 288.97194pt.
+(pdftex.def)             Requested size: 247.79271pt x 141.5931pt.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 82.
 <figures/inference.png, id=74, 843.15pt x 481.8pt>
 File: figures/inference.png Graphic file (type png)
 <use figures/inference.png>
-Package pdftex.def Info: figures/inference.png  used on input line 87.
-(pdftex.def)             Requested size: 505.69374pt x 288.97194pt.
+Package pdftex.def Info: figures/inference.png  used on input line 86.
+(pdftex.def)             Requested size: 247.79271pt x 141.5931pt.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 96.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 95.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 6.64998pt on input line 96.
- [2] [3 <./figures/training.png> <./figures/inference.png>] [4]
-<figures/acb.png, id=141, 2409.0pt x 1355.0625pt>
+(Font)              scaled to size 6.64998pt on input line 95.
+ [2] [3 <./figures/training.png> <./figures/inference.png>]
+<figures/acb.png, id=131, 2313.8445pt x 897.3525pt>
 File: figures/acb.png Graphic file (type png)
 <use figures/acb.png>
-Package pdftex.def Info: figures/acb.png  used on input line 139.
-(pdftex.def)             Requested size: 247.79271pt x 139.3807pt.
-<figures/acbchain.png, id=143, 963.6pt x 542.025pt>
+Package pdftex.def Info: figures/acb.png  used on input line 138.
+(pdftex.def)             Requested size: 247.79271pt x 96.09381pt.
+<figures/acbchain.png, id=133, 686.3241pt x 220.6644pt>
 File: figures/acbchain.png Graphic file (type png)
 <use figures/acbchain.png>
-Package pdftex.def Info: figures/acbchain.png  used on input line 145.
-(pdftex.def)             Requested size: 247.79271pt x 139.37656pt.
-
-[5 <./figures/acb.png> <./figures/acbchain.png>]
+Package pdftex.def Info: figures/acbchain.png  used on input line 144.
+(pdftex.def)             Requested size: 247.79271pt x 79.66808pt.
+ [4 <./figures/acb.png> <./figures/acbchain.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 192.
- [6]
-<figures/Regression_joint.png, id=196, 717.03885pt x 505.89pt>
+put line 191.
+ [5]
+<figures/Regression_joint.png, id=174, 717.03885pt x 505.89pt>
 File: figures/Regression_joint.png Graphic file (type png)
 <use figures/Regression_joint.png>
-Package pdftex.def Info: figures/Regression_joint.png  used on input line 245.
+Package pdftex.def Info: figures/Regression_joint.png  used on input line 244.
 (pdftex.def)             Requested size: 247.79271pt x 174.82556pt.
-<figures/Regression_density.png, id=197, 578.16pt x 216.81pt>
+<figures/Regression_density.png, id=175, 578.16pt x 216.81pt>
 File: figures/Regression_density.png Graphic file (type png)
 <use figures/Regression_density.png>
-Package pdftex.def Info: figures/Regression_density.png  used on input line 251
+Package pdftex.def Info: figures/Regression_density.png  used on input line 250
 .
 (pdftex.def)             Requested size: 235.40231pt x 88.27402pt.
-<figures/Regression_scatter.png, id=198, 722.7pt x 216.81pt>
+<figures/Regression_scatter.png, id=176, 722.7pt x 216.81pt>
 File: figures/Regression_scatter.png Graphic file (type png)
 <use figures/Regression_scatter.png>
-Package pdftex.def Info: figures/Regression_scatter.png  used on input line 256
+Package pdftex.def Info: figures/Regression_scatter.png  used on input line 255
 .
 (pdftex.def)             Requested size: 235.40231pt x 70.6212pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 250--260
+Underfull \hbox (badness 10000) in paragraph at lines 249--259
 []$[]$
  []
 
-<figures/Regression_metrics.png, id=199, 707.0415pt x 195.8517pt>
+<figures/Regression_metrics.png, id=177, 707.0415pt x 195.8517pt>
 File: figures/Regression_metrics.png Graphic file (type png)
 <use figures/Regression_metrics.png>
-Package pdftex.def Info: figures/Regression_metrics.png  used on input line 262
+Package pdftex.def Info: figures/Regression_metrics.png  used on input line 261
 .
 (pdftex.def)             Requested size: 237.67667pt x 65.8356pt.
-<figures/Regression_variance.png, id=200, 779.3115pt x 197.2971pt>
+<figures/Regression_variance.png, id=178, 779.3115pt x 197.2971pt>
 File: figures/Regression_variance.png Graphic file (type png)
 <use figures/Regression_variance.png>
 Package pdftex.def Info: figures/Regression_variance.png  used on input line 26
-7.
+6.
 (pdftex.def)             Requested size: 262.96289pt x 66.57436pt.
-
-Underfull \vbox (badness 4454) has occurred while \output is active []
-
- [7]
-<figures/Ricker_scatter.png, id=221, 722.7pt x 289.08pt>
+[6] [7 <./figures/Regression_joint.png> <./figures/Regression_density.png> <./f
+igures/Regression_scatter.png> <./figures/Regression_metrics.png> <./figures/Re
+gression_variance.png>]
+<figures/Ricker_scatter.png, id=231, 722.7pt x 289.08pt>
 File: figures/Ricker_scatter.png Graphic file (type png)
 <use figures/Ricker_scatter.png>
-Package pdftex.def Info: figures/Ricker_scatter.png  used on input line 292.
+Package pdftex.def Info: figures/Ricker_scatter.png  used on input line 291.
 (pdftex.def)             Requested size: 247.79271pt x 99.11516pt.
-<figures/Ricker_density.png, id=222, 697.8873pt x 289.08pt>
+<figures/Ricker_density.png, id=232, 697.8873pt x 289.08pt>
 File: figures/Ricker_density.png Graphic file (type png)
 <use figures/Ricker_density.png>
-Package pdftex.def Info: figures/Ricker_density.png  used on input line 298.
+Package pdftex.def Info: figures/Ricker_density.png  used on input line 297.
 (pdftex.def)             Requested size: 247.79271pt x 102.63954pt.
-<figures/Ricker_metrics.png, id=223, 703.9098pt x 265.35135pt>
+<figures/Ricker_metrics.png, id=233, 703.9098pt x 265.35135pt>
 File: figures/Ricker_metrics.png Graphic file (type png)
 <use figures/Ricker_metrics.png>
-Package pdftex.def Info: figures/Ricker_metrics.png  used on input line 304.
+Package pdftex.def Info: figures/Ricker_metrics.png  used on input line 303.
 (pdftex.def)             Requested size: 247.79271pt x 93.40881pt.
-<figures/Ricker_sbc.png, id=224, 722.7pt x 289.08pt>
+<figures/Ricker_sbc.png, id=234, 722.7pt x 289.08pt>
 File: figures/Ricker_sbc.png Graphic file (type png)
 <use figures/Ricker_sbc.png>
-Package pdftex.def Info: figures/Ricker_sbc.png  used on input line 310.
+Package pdftex.def Info: figures/Ricker_sbc.png  used on input line 309.
 (pdftex.def)             Requested size: 247.79271pt x 99.11516pt.
-
-[8 <./figures/Regression_joint.png> <./figures/Regression_density.png> <./figur
-es/Regression_scatter.png> <./figures/Regression_metrics.png> <./figures/Regres
-sion_variance.png>]
-<figures/Levy_scatter.png, id=245, 722.7pt x 433.62pt>
+ [8 <./figures/Ricker_scatter.png> <./figures/Ricker_density.png> <./figures/Ri
+cker_metrics.png> <./figures/Ricker_sbc.png>]
+<figures/Levy_scatter.png, id=255, 722.7pt x 433.62pt>
 File: figures/Levy_scatter.png Graphic file (type png)
 <use figures/Levy_scatter.png>
-Package pdftex.def Info: figures/Levy_scatter.png  used on input line 336.
+Package pdftex.def Info: figures/Levy_scatter.png  used on input line 335.
 (pdftex.def)             Requested size: 247.79271pt x 148.67274pt.
-<figures/Levy_density.png, id=246, 852.5451pt x 432.53595pt>
+<figures/Levy_density.png, id=256, 852.5451pt x 432.53595pt>
 File: figures/Levy_density.png Graphic file (type png)
 <use figures/Levy_density.png>
-Package pdftex.def Info: figures/Levy_density.png  used on input line 342.
+Package pdftex.def Info: figures/Levy_density.png  used on input line 341.
 (pdftex.def)             Requested size: 247.79271pt x 125.716pt.
-<figures/Levy_metrics.png, id=247, 851.3406pt x 416.2752pt>
+<figures/Levy_metrics.png, id=257, 851.3406pt x 416.2752pt>
 File: figures/Levy_metrics.png Graphic file (type png)
 <use figures/Levy_metrics.png>
-Package pdftex.def Info: figures/Levy_metrics.png  used on input line 348.
+Package pdftex.def Info: figures/Levy_metrics.png  used on input line 347.
 (pdftex.def)             Requested size: 247.79271pt x 121.16135pt.
-<figures/Levy_sbc.png, id=248, 867.24pt x 433.62pt>
+<figures/Levy_sbc.png, id=258, 867.24pt x 433.62pt>
 File: figures/Levy_sbc.png Graphic file (type png)
 <use figures/Levy_sbc.png>
-Package pdftex.def Info: figures/Levy_sbc.png  used on input line 354.
+Package pdftex.def Info: figures/Levy_sbc.png  used on input line 353.
 (pdftex.def)             Requested size: 247.79271pt x 123.89395pt.
- [9 <./figures/Ricker_scatter.png> <./figures/Ricker_density.png> <./figures/Ri
-cker_metrics.png> <./figures/Ricker_sbc.png>] [10 <./figures/Levy_scatter.png> 
-<./figures/Levy_density.png> <./figures/Levy_metrics.png> <./figures/Levy_sbc.p
-ng>]
+ [9 <./figures/Levy_scatter.png> <./figures/Levy_density.png> <./figures/Levy_m
+etrics.png> <./figures/Levy_sbc.png>]
+<figures/SIR_plot.png, id=280, 433.62pt x 216.81pt>
+File: figures/SIR_plot.png Graphic file (type png)
+<use figures/SIR_plot.png>
+Package pdftex.def Info: figures/SIR_plot.png  used on input line 378.
+(pdftex.def)             Requested size: 247.79271pt x 123.89726pt.
+<figures/SIR_states.png, id=281, 481.8pt x 144.54pt>
+File: figures/SIR_states.png Graphic file (type png)
+<use figures/SIR_states.png>
+Package pdftex.def Info: figures/SIR_states.png  used on input line 383.
+(pdftex.def)             Requested size: 247.79271pt x 74.33636pt.
+<figures/SIR_scatter.png, id=282, 578.16pt x 289.08pt>
+File: figures/SIR_scatter.png Graphic file (type png)
+<use figures/SIR_scatter.png>
+Package pdftex.def Info: figures/SIR_scatter.png  used on input line 388.
+(pdftex.def)             Requested size: 247.79271pt x 123.89615pt.
+<figures/SIR_metrics.png, id=283, 566.71725pt x 274.626pt>
+File: figures/SIR_metrics.png Graphic file (type png)
+<use figures/SIR_metrics.png>
+Package pdftex.def Info: figures/SIR_metrics.png  used on input line 395.
+(pdftex.def)             Requested size: 121.41978pt x 58.8381pt.
+<figures/SIR_variance.png, id=284, 566.71725pt x 275.95094pt>
+File: figures/SIR_variance.png Graphic file (type png)
+<use figures/SIR_variance.png>
+Package pdftex.def Info: figures/SIR_variance.png  used on input line 400.
+(pdftex.def)             Requested size: 121.41978pt x 59.12196pt.
+<figures/SIR_density.png, id=285, 564.30824pt x 288.23685pt>
+File: figures/SIR_density.png Graphic file (type png)
+<use figures/SIR_density.png>
+Package pdftex.def Info: figures/SIR_density.png  used on input line 405.
+(pdftex.def)             Requested size: 121.41978pt x 62.01808pt.
+<figures/SIR_sbc.png, id=286, 578.16pt x 289.08pt>
+File: figures/SIR_sbc.png Graphic file (type png)
+<use figures/SIR_sbc.png>
+Package pdftex.def Info: figures/SIR_sbc.png  used on input line 410.
+(pdftex.def)             Requested size: 121.41978pt x 60.70859pt.
+ [10 <./figures/SIR_plot.png> <./figures/SIR_states.png> <./figures/SIR_scatter
+.png> <./figures/SIR_metrics.png> <./figures/SIR_variance.png> <./figures/SIR_d
+ensity.png> <./figures/SIR_sbc.png>]
 
 Package natbib Warning: Citation `de2002fitting' on page 11 undefined on input 
-line 398.
+line 440.
 
-[11] (paper_main.bbl
+
+Underfull \vbox (badness 2126) has occurred while \output is active []
+
+ [11]
+(paper_main.bbl
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <6> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 6.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
@@ -2005,23 +2054,27 @@ Package natbib Warning: There were undefined citations.
 
 AED: lastpage setting LastPage
 [12]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 414.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 414.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 456.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 456.
  (paper_main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 414.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 414.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 456.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 456.
 Package rerunfilecheck Info: File `paper_main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 414.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 456.
  ) 
 Here is how much of TeX's memory you used:
- 37030 strings out of 492895
- 702028 string characters out of 3120464
- 807560 words of memory out of 3000000
- 39961 multiletter control sequences out of 15000+200000
- 659941 words of font info for 231 fonts, out of 3000000 for 9000
+ 37102 strings out of 492895
+ 703404 string characters out of 3120464
+ 811561 words of memory out of 3000000
+ 40015 multiletter control sequences out of 15000+200000
+ 660354 words of font info for 237 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,16n,73p,1748b,1179s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 62i,16n,73p,1749b,1179s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
 m-ec.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvi
 ps/lm/lm-rm.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/
@@ -2056,9 +2109,9 @@ s/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Stefan Radev/AppData/Local
 /AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/User
 s/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro
 8a.pfb>
-Output written on paper_main.pdf (12 pages, 10936036 bytes).
+Output written on paper_main.pdf (12 pages, 13414430 bytes).
 PDF statistics:
- 421 PDF objects out of 1000 (max. 8388607)
- 100 named destinations out of 1000 (max. 500000)
- 45666 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 438 PDF objects out of 1000 (max. 8388607)
+ 101 named destinations out of 1000 (max. 500000)
+ 45701 words of extra memory for PDF output out of 51595 (max. 10000000)
 
