@@ -14,7 +14,7 @@
 \DeclareMathOperator*{\argmin}{argmin}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
-\title{Learning complex models with invertible neural networks: a likelihood-free Bayesian approach}
+\title{Learning complex stochastic models with invertible neural networks: a likelihood-free Bayesian approach}
 
 % Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
 \author[1]{Stefan T. Radev}
@@ -409,21 +409,52 @@ During training of the networks, we simulate time-series from the stochastic SIR
 	\begin{subfigure}{.49\textwidth}
     	\includegraphics[width=\textwidth]{SIR_sbc.png}
     	\caption{Simulation-based calibration (SBC)}
-    	\label{fig:Fig.6f}
+    	\label{fig:Fig.6g}
 	\end{subfigure}
 \end{subfigure}
-\caption[short]{Results on the stochastic SIR model. \textbf{(a)} Example SIR timeseries generated with $\beta=0.5$ and $\gamma=0.2$; \textbf{(b)} State transition diagram of the SIR model; \textbf{(c)} Parameter recovery depicting also NRMSE and $R^{2}$ metrics; \textbf{(d)} NRMSE and $R^{2}$ performance over all $T$s seen by the networks during training. We observe similar patterns as in the previous examples; \textbf{(e)} Posterior variances of the SIR parameters over all $T$s; \textbf{(e)} Example full posteriors of the parameters recovered from three test datasets; \textbf{(f)} Plots of the rank statistic, according to which the posterior of $\beta$ slightly overestimates the true mean.} \label{fig:Fig.6}
+\caption[short]{Results on the stochastic SIR model. \textbf{(a)} Example SIR timeseries generated with $\beta=0.5$ and $\gamma=0.2$; \textbf{(b)} State transition diagram of the SIR model; \textbf{(c)} Parameter recovery depicting also NRMSE and $R^{2}$ metrics; \textbf{(d)} NRMSE and $R^{2}$ performance over all $T$s seen by the networks during training. We observe similar patterns as in the previous examples; \textbf{(e)} Posterior variances of the SIR parameters over all $T$s; \textbf{(f)} Example full posteriors of the parameters recovered from three test datasets; \textbf{(g)} Plots of the rank statistic, according to which the posterior of $\beta$ slightly overestimates the true mean.} \label{fig:Fig.6}
 \end{figure}
 
 The results on the SIR model are depicted in \autoref{fig:Fig.6}. Similar to the previous examples, we observe very good recovery of the true parameters, with NRMSE at $T=500$ around $0.04$, and $R^{2}$s around $0.98$. Further, we observe decent performance even at smaller $T$s, with performance increasing as $T$ increases. Conversely, the estimated posterior variance drops as $T$ increases, capturing the fact that more information becomes available to the networks. Finally, the SCB plots indicate a slight underestimation of the true posterior means by the estimated posterior means. This trend is visible when $\beta$ and $\gamma$ both assume very similar values, and the generated timeseries are far from equilibrium at the final time point $T$. Thus, such datasets contain very little information about the parameters given the considered time range of $T_{max}=500$.
 
 \subsection*{Example 4 - Single-Cell RNA Sequencing}
-Single-cell RNA sequencing (scRNA-seq) is a method to uncover the dynamics of gene expression within single cells \cite{zappia2017splatter, ozsolak2011rna}. Simulation models for scRNA-seq attempt to mimic the process of sequencing real data samples by combining statistical and algorithmic procedures. The recently developed \textit{Splat} simulation model \cite{zappia2017splatter} implements a hierarchical model where the mean expression levels for multiple genes are samples from a Gamma distribution, and the number of times a gene has been sequenced in a cell is then sampled from a Poisson distribution. The output of the \textit{Splat} simulation is thus a matrix $\boldsymbol{X}$ of \textit{Gene x Cell} counts. Figure XXX depicts the \textit{Splat} algorithm for simulating scRNA-seq data.
-
-
-As a last example for our method, we use simulations from the \textit{Splat} model and attempt to recover the data-generating parameters. We simulate $500000$  \textit{Gene x Cell} count matrices with different parameter settings (see \textbf{SI} for details of the simulation) and discard implausible simulations (e.g., matrices where more than $90\%$ of the counts are $0$). We train the networks for 100 epochs through the entire dataset and evaluate the performance on a separate validation set or matrices.
-
-Figure XXX depicts the results...
+Single-cell RNA sequencing (scRNA-seq) is a method to uncover the dynamics of gene expression within single cells \cite{zappia2017splatter, ozsolak2011rna}. Simulation models for scRNA-seq attempt to mimic the process of sequencing real data samples by combining statistical and algorithmic procedures. The recently developed \textit{Splat} simulation model \cite{zappia2017splatter} implements a hierarchical model where the mean expression levels for multiple genes are samples from a Gamma distribution, and the number of times a gene has been sequenced in a cell is then sampled from a Poisson distribution. The output of the \textit{Splat} simulation is thus a matrix $\boldsymbol{X}$ of \textit{Gene x Cell} counts. \autoref{fig:Fig.7a} depicts the \textit{Splat} algorithm for simulating scRNA-seq data \cite{zappia2017splatter}.
+\begin{table} 
+\centering
+\caption{Splat target parameters estimated by our method}
+\begin{tabular}{lll}
+Parameter & Name & Description\\
+\midrule
+$\alpha$ & Mean shape & Shape of the mean gene expression gamma distribution \\
+$\beta$ & Mean rate & Rate of the mean gene expression gamma distribution \\
+$\mu^{L}$ & Library size location & Location of the library size log-normal distribution \\
+$\sigma^{L}$ & Library size scale & Scale of the library size log-normal distribution \\
+$\pi^{O}$ & Outlier probability & Probability that a gene is an expression outlier \\
+$\mu^{O}$ & Outlier location & Location of the expression outlier factor log-normal distribution \\
+$\sigma^{O}$ & Outlier scale & Scale of the expression outlier factor log-normal distribution \\
+$\phi$ & Common BCV & Common BCV dispersion across all genes \\
+\bottomrule
+\end{tabular}
+\label{table:Table 1}
+\end{table}
+As a last example for our method, we use simulations from the \textit{Splat} model and attempt to recover the data-generating parameters. We simulate $500000$  \textit{Gene x Cell} count matrices with different parameter settings (see \textbf{SI} for details of the simulation) and discard implausible simulations (e.g., matrices where more than $50\%$ of the counts are $0$). The parameters considered for estimation, along with a short description, are listed in \autoref{table:Table 1}. The parameter estimation task is thus to recover $\boldsymbol{\theta} = (\alpha,\beta,\mu^{L},\sigma^{L},\pi^{O},\mu^{O},\sigma^{O},\phi)$ from an observed count matrix $\boldsymbol{X}$. We train the networks for 50 epochs through the entire dataset and evaluate the performance on a separate validation set of $500$ count matrices.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Splatter_plot.png}
+    \caption{The \textit{Splat} simulation diagram. Adapted after \cite{zappia2017splatter}.}
+    \label{fig:Fig.7a}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Splatter_scatter.png}
+    \caption{Parameter recovery }
+    \label{fig:Fig.7b}
+\end{subfigure}
+\caption[short]{Results on the \textit{Splat} scRNA simulation model. \textbf{(a)} The \textit{Splat} simulation diagram; \textbf{(b)} Parameter recovery.} \label{fig:Fig.7}
+\end{figure}
+The results on the scRNA example are depicted in \autoref{fig:Fig.7}. We observe excellent parameter recovery on the validation set. \textbf{TODO: Train the full method. These results are preliminary}.
 
 \section*{Discussion}
 
