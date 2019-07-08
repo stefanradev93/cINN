@@ -79,6 +79,9 @@ Frazier DT, Martin GM, Robert CP, Rousseau J (2018) Asymptotic properties of
   approximate bayesian computation.
 \newblock {\em Biometrika} 105(3):593--607.
 
+\bibitem{mertens2019deep}
+Mertens UK (2019) Ph.D. thesis.
+
 \bibitem{radev2019towards}
 Radev ST, Mertens UK, Voss A, K{\"o}the U (2019) Towards end-to-end
   likelihood-free inference with convolutional neural networks.
