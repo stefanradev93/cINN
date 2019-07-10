@@ -150,6 +150,7 @@ def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gam
         return tf.convert_to_tensor(X, dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
     return X, theta
 
+
 def plot_sir(beta, gamma, n_points=500, figsize=(8, 4), N=1000, filename=None):
     """
     Simulates a single SIR process.
@@ -170,6 +171,7 @@ def plot_sir(beta, gamma, n_points=500, figsize=(8, 4), N=1000, filename=None):
     ax.set_xlabel(r'Number of time points ($T$)', fontsize=12)
     ax.set_ylabel('Number of individuals', fontsize=12)
     ax.legend(fontsize=10)
+    f.tight_layout()
 
     # Save if specified
     if filename is not None:

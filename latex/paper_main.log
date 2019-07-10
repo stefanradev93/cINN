@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  10 JUL 2019 12:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  10 JUL 2019 13:36
 entering extended mode
 **./paper_main.tex
 (paper_main.tex
@@ -1908,19 +1908,19 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 192.
- [5]
-<figures/Regression_joint.png, id=193, 717.03885pt x 505.89pt>
+ [5] [6]
+<figures/Regression_joint.png, id=221, 717.03885pt x 505.89pt>
 File: figures/Regression_joint.png Graphic file (type png)
 <use figures/Regression_joint.png>
 Package pdftex.def Info: figures/Regression_joint.png  used on input line 245.
 (pdftex.def)             Requested size: 247.79271pt x 174.82556pt.
-<figures/Regression_density.png, id=194, 578.16pt x 216.81pt>
+<figures/Regression_density.png, id=222, 578.16pt x 216.81pt>
 File: figures/Regression_density.png Graphic file (type png)
 <use figures/Regression_density.png>
 Package pdftex.def Info: figures/Regression_density.png  used on input line 251
 .
 (pdftex.def)             Requested size: 235.40231pt x 88.27402pt.
-<figures/Regression_scatter.png, id=195, 722.7pt x 216.81pt>
+<figures/Regression_scatter.png, id=223, 722.7pt x 216.81pt>
 File: figures/Regression_scatter.png Graphic file (type png)
 <use figures/Regression_scatter.png>
 Package pdftex.def Info: figures/Regression_scatter.png  used on input line 256
@@ -1931,21 +1931,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 250--260
 []$[]$
  []
 
-<figures/Regression_metrics.png, id=196, 707.0415pt x 195.8517pt>
+<figures/Regression_metrics.png, id=224, 707.0415pt x 195.8517pt>
 File: figures/Regression_metrics.png Graphic file (type png)
 <use figures/Regression_metrics.png>
 Package pdftex.def Info: figures/Regression_metrics.png  used on input line 262
 .
 (pdftex.def)             Requested size: 237.67667pt x 65.8356pt.
-<figures/Regression_variance.png, id=197, 779.3115pt x 197.2971pt>
+<figures/Regression_variance.png, id=225, 779.3115pt x 197.2971pt>
 File: figures/Regression_variance.png Graphic file (type png)
 <use figures/Regression_variance.png>
 Package pdftex.def Info: figures/Regression_variance.png  used on input line 26
 7.
 (pdftex.def)             Requested size: 262.96289pt x 66.57436pt.
-[6] [7 <./figures/Regression_joint.png> <./figures/Regression_density.png> <./f
-igures/Regression_scatter.png> <./figures/Regression_metrics.png> <./figures/Re
-gression_variance.png>]
+[7 <./figures/Regression_joint.png> <./figures/Regression_density.png> <./figur
+es/Regression_scatter.png> <./figures/Regression_metrics.png> <./figures/Regres
+sion_variance.png>]
 <figures/Ricker_scatter.png, id=250, 722.7pt x 289.08pt>
 File: figures/Ricker_scatter.png Graphic file (type png)
 <use figures/Ricker_scatter.png>
@@ -1994,12 +1994,12 @@ etrics.png> <./figures/Levy_sbc.png>]
 File: figures/SIR_plot.png Graphic file (type png)
 <use figures/SIR_plot.png>
 Package pdftex.def Info: figures/SIR_plot.png  used on input line 379.
-(pdftex.def)             Requested size: 247.79271pt x 123.89726pt.
+(pdftex.def)             Requested size: 222.50647pt x 111.25313pt.
 <figures/SIR_states.png, id=295, 481.8pt x 144.54pt>
 File: figures/SIR_states.png Graphic file (type png)
 <use figures/SIR_states.png>
 Package pdftex.def Info: figures/SIR_states.png  used on input line 384.
-(pdftex.def)             Requested size: 247.79271pt x 74.33636pt.
+(pdftex.def)             Requested size: 278.13309pt x 83.44287pt.
 <figures/SIR_scatter.png, id=296, 578.16pt x 289.08pt>
 File: figures/SIR_scatter.png Graphic file (type png)
 <use figures/SIR_scatter.png>
@@ -2112,7 +2112,7 @@ adev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/
 Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvr8a.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvro8a.pfb>
-Output written on paper_main.pdf (13 pages, 14636750 bytes).
+Output written on paper_main.pdf (13 pages, 14629522 bytes).
 PDF statistics:
  480 PDF objects out of 1000 (max. 8388607)
  108 named destinations out of 1000 (max. 500000)

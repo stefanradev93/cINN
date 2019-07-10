@@ -236,7 +236,7 @@ Therefore, the posterior has the form $p(\boldsymbol{\theta}|\boldsymbol{D}) = \
 \end{align*} 
 Thus, for known $a$ and $b$, the posterior can be easily computed. Even though in real-world applications $a$ is usually not known and a hierarchical model is used instead, the current example is good for testing the utility of our method.
 
-For the following application, we set $d=4$, and $a=b=1$. The design matrices for each iteration contain a variable number $n$ of \textit{i.i.d.} data points drawn from a unit Gaussian $\boldsymbol{x}^{(i)} \sim \mathcal{N}_{4}(\boldsymbol{0},\boldsymbol{I})$ for $i=1,...,n$. The number of trials is drawn from a uniform distribution $n \sim \mathcal{U}(50, 500)$ at each training iteration (Lines $2$-$9$ of \textbf{Algorithm} \ref{alg:1}).
+For the following application, we set $d=4$, and $a=b=1$. The design matrices for each iteration contain a variable number $n$ of \textit{i.i.d.} data points drawn from a unit Gaussian $\boldsymbol{x}^{(i)} \sim \mathcal{N}_{4}(\boldsymbol{0},\boldsymbol{I})$ for $i=1,...,n$. The number of trials is drawn from a uniform distribution $n \sim \mathcal{U}(50, 500)$ at each training iteration (Lines $2$-$9$ of \textbf{Algorithm} \ref{alg:1}). Training the networks took approx. half a day with the active learning approach. Inference on $1000$ datasets with $2000$ posterior samples per parameter took approx. $5.5$ seconds.
 
 The results on the toy Bayesian regression are depicted in \autoref{fig:Fig.3}. The approximate posterior means show negligible deviations from the analytic posterior means as quantified by very small NRMSEs (as small as $0.002$) and very high $R^{2}$ (as high as $1.0$) over all $n$ sampled during training. This suggests near-perfect estimation of the true posterior means. Further, the estimates become increasingly more accurate, as the number of data points $n$ increases. An inspection of the posterior variances over the different $n$ reveals that the estimated variance follows closely the decrease in analytic variance with increasing $n$. However, the analytic variance is slightly underestimated at smaller $n$ and slightly overestimated at larger $n$. This pattern is also revealed by the KL divergence plot (see \textbf{SI}). This result might be attributable to an underexpressive summary network; another possibility is that the networks need to be trained longer with smaller learning rate decay. 
 \begin{figure}[H]
@@ -279,7 +279,7 @@ N_{t+1} &= rN_{t}e^{-N_{t} + \epsilon_{t}} \numberthis
 \end{align*}
 for $t = 1,...,T$ where $N_{t}$ is the expected number of individuals at time $t$, $r$ is the growth rate, $\rho$ is a scaling parameter and $\epsilon_{t} \sim \mathcal{N}(0, \sigma^{2})$ is random Gaussian noise \cite{mestdagh2018prepaid}. The likelihood function for the Ricker model is not available in closed-form, and the model is known to exhibit chaotic behavior. Thus, it is a suitable candidate for likelihood-free inference.  The parameter estimation task is thus to recover $\boldsymbol{\theta}=(\rho,r,\sigma)$ from the observed one-dimensional time-series data $\boldsymbol{x}=(x_{1},x_{2},...,x_{T})$ where each $x_{t} \in \mathbb{N}$.
 
-During training of the networks, we simulate time-series from the Ricker model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(100, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). 
+During training of the networks, we simulate time-series from the Ricker model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(100, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). Training the networks took approx. half a day with the active learning approach. Inference on $1000$ datasets with $2000$ posterior samples per parameter took approx. $6$ seconds.
 
 What if the data does not contain information about a particular parameter? In this case, any good estimation method should detect this, and return the prior of the particular parameter. To test this, we append a random uniform variable $u \sim \mathcal{U}(0, 1)$ to the parameter vector $\boldsymbol{\theta}$ and train the model with this additional dummy parameter. We expect that the networks learn to ignore this dummy parameter, that is, the estimated posterior of $u$ is (approximately) equal to the uniform prior. 
 
@@ -328,7 +328,8 @@ dx &= vdt + \xi dt^{1/\alpha} \numberthis \label{eqn:stillno2} \\
 \end{align*}
 The LFM has three additional parameters: the threshold $a$ determining the amount of evidence needed for the termination of a decision process; a relative starting point, $zr$, determining the amount of starting evidence available to the accumulator before the actual decision alternatives are presented; and an additive non-decision time $t_{0}$. 
 
-During training of the networks, we simulate response times data from two experimental conditions with two different drift rates (see \textbf{SI} for details of the simulation), since this such a design is often encountered in psychological research. The parameter estimation task is thus to recover the parameters $\boldsymbol{\theta} = (v_{0}, v_{1}, a, t_{0}, zr, \alpha)$ from two-dimensional \textit{i.i.d.} RT data $\boldsymbol{X} = (\boldsymbol{x}_{1},\boldsymbol{x}_{2},...,\boldsymbol{x}_{n})$ containing variable number or RT trials. The number of trials is drawn from a uniform distribution $n \sim \mathcal{U}(100, 1000)$ at each training iteration.
+During training of the networks, we simulate response times data from two experimental conditions with two different drift rates (see \textbf{SI} for details of the simulation), since this such a design is often encountered in psychological research. The parameter estimation task is thus to recover the parameters $\boldsymbol{\theta} = (v_{0}, v_{1}, a, t_{0}, zr, \alpha)$ from two-dimensional \textit{i.i.d.} RT data $\boldsymbol{X} = (\boldsymbol{x}_{1},\boldsymbol{x}_{2},...,\boldsymbol{x}_{n})$ containing variable number or RT trials. The number of trials is drawn from a uniform distribution $n \sim \mathcal{U}(100, 1000)$ at each training iteration. Training the networks took a little less than a day with the active learning approach. Inference on $1000$ datasets with $2000$ posterior samples per parameter took approx. $7.39$ seconds. 
+
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.49\textwidth}
@@ -371,16 +372,16 @@ Compartmental models in epidemiology are used to describe the stochastic dynamic
 \end{align*}
 where $S + I + R = N$ give the number of susceptible, infected, and recovered individuals, respectively. The parameter $\beta$ controls the transition rate from being susceptible to infected, and $\gamma$ controls the transition rate from being infected to recovered (see \autoref{fig:Fig.6}). The number of individuals moving from $S$ to $I$, given by $\triangle N_{SI}$, and the number of people moving from $I$ to $R$, given by $\triangle N_{IR}$, over a time interval $\triangle t$ are modeled as binomial random variables. The above listed stochastic system has no known analytic solution and thus requires numerical simulation methods for recovering parameter values from data. Cast as a parameter estimation task, the challenge is to recover $\boldsymbol{\theta} = \{\beta,\gamma\}$ from three dimensional time-series data $\boldsymbol{X} = (\boldsymbol{x}_{1},\boldsymbol{x}_{2},...,\boldsymbol{x}_{T})$ where each $\boldsymbol{x}_{t} \in \mathbb{N}^{3}$ is a triple containing the number of susceptible ($S$), number of infected ($I$), and recovered ($R$) individuals at time $t$. 
 
-During training of the networks, we simulate time-series from the stochastic SIR model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(200, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). Usually, at lower $T$s, the system has not converged to an equilibrium (i.e., not all individuals have transitioned from being $I$ to $R$). Thus, it is especially interesting to see if our method can recover the parameters, even if the process dynamics are still unfolding over time. 
+During training of the networks, we simulate time-series from the stochastic SIR model with varying lengths. The number of time points $T$ is drawn from a uniform distribution $T \sim \mathcal{U}(200, 500)$ at each training iteration (see the \textbf{SI} for more details about the simulation). Usually, at lower $T$s, the system has not converged to an equilibrium (i.e., not all individuals have transitioned from being $I$ to $R$). Thus, it is especially interesting to see if our method can recover the parameters, even if the process dynamics are still unfolding over time. Training the networks took approx. half a day with the active learning approach. Inference on $1000$ datasets with $2000$ posterior samples per parameter took approx. $1.1$ seconds. 
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.49\textwidth}
+\begin{subfigure}{.44\textwidth}
     \includegraphics[width=\textwidth]{SIR_plot.png}
     \caption{Example SIR timeseries with $\beta=0.5$ and $\gamma=0.2$}
     \label{fig:Fig.6a}
 \end{subfigure}
-\begin{subfigure}{.49\textwidth}
+\begin{subfigure}{.55\textwidth}
     \includegraphics[width=\textwidth]{SIR_states.png}
     \caption{State-transition diagram of the SIR model}
     \label{fig:Fig.6b}
