@@ -155,6 +155,10 @@ Abadi M, et~al. (2016) Tensorflow: A system for large-scale machine learning in
 Kingma DP, Welling M (2014) Auto-encoding variational bayes.
 \newblock {\em stat} 1050:1.
 
+\bibitem{mnih2015human}
+Mnih V, et~al. (2015) Human-level control through deep reinforcement learning.
+\newblock {\em Nature} 518(7540):529.
+
 \bibitem{hershey2007approximating}
 Hershey JR, Olsen PA (2007) Approximating the kullback leibler divergence
   between gaussian mixture models in {\em 2007 IEEE International Conference on
