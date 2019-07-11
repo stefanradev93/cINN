@@ -131,6 +131,10 @@ Bloem-Reddy B, Teh YW (2019) Probabilistic symmetry and invariant neural
   networks.
 \newblock {\em arXiv preprint arXiv:1901.06082}.
 
+\bibitem{gers1999learning}
+Gers FA, Schmidhuber J, Cummins F (1999) Learning to forget: Continual
+  prediction with lstm.
+
 \bibitem{goodfellow2016deep}
 Goodfellow I, Bengio Y, Courville A (2016) {\em Deep learning}.
 \newblock (MIT press).

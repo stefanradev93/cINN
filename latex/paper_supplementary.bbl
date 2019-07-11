@@ -11,4 +11,14 @@ Talts S, Betancourt M, Simpson D, Vehtari A, Gelman A (2018) Validating
   bayesian inference algorithms with simulation-based calibration.
 \newblock {\em arXiv preprint arXiv:1804.06788}.
 
+\bibitem{bloem2019probabilistic}
+Bloem-Reddy B, Teh YW (2019) Probabilistic symmetry and invariant neural
+  networks.
+\newblock {\em arXiv preprint arXiv:1901.06082}.
+
+\bibitem{zappia2017splatter}
+Zappia L, Phipson B, Oshlack A (2017) Splatter: simulation of single-cell rna
+  sequencing data.
+\newblock {\em Genome biology} 18(1):174.
+
 \end{thebibliography}
