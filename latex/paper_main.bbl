@@ -135,9 +135,11 @@ Bloem-Reddy B, Teh YW (2019) Probabilistic symmetry and invariant neural
 Gers FA, Schmidhuber J, Cummins F (1999) Learning to forget: Continual
   prediction with lstm.
 
-\bibitem{goodfellow2016deep}
-Goodfellow I, Bengio Y, Courville A (2016) {\em Deep learning}.
-\newblock (MIT press).
+\bibitem{long2015fully}
+Long J, Shelhamer E, Darrell T (2015) Fully convolutional networks for semantic
+  segmentation in {\em Proceedings of the IEEE conference on computer vision
+  and pattern recognition}.
+\newblock pp. 3431--3440.
 
 \bibitem{kendall2017uncertainties}
 Kendall A, Gal Y (2017) What uncertainties do we need in bayesian deep learning
@@ -198,6 +200,10 @@ Sahneh FD, Vajdi A, Shakeri H, Fan F, Scoglio C (2017) Gemfsim: a stochastic
 Ozsolak F, Milos PM (2011) Rna sequencing: advances, challenges and
   opportunities.
 \newblock {\em Nature reviews genetics} 12(2):87.
+
+\bibitem{goodfellow2016deep}
+Goodfellow I, Bengio Y, Courville A (2016) {\em Deep learning}.
+\newblock (MIT press).
 
 \bibitem{de2002fitting}
 De~Valpine P, Hastings A (2002) Fitting population models incorporating process
