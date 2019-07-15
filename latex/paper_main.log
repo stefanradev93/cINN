@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  14 JUL 2019 15:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  15 JUL 2019 22:10
 entering extended mode
 **./paper_main.tex
 (paper_main.tex
@@ -2070,10 +2070,10 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 485.
  ) 
 Here is how much of TeX's memory you used:
  37255 strings out of 492895
- 706509 string characters out of 3120464
- 810563 words of memory out of 3000000
+ 706507 string characters out of 3120464
+ 811563 words of memory out of 3000000
  40126 multiletter control sequences out of 15000+200000
- 676710 words of font info for 268 fonts, out of 3000000 for 9000
+ 676666 words of font info for 268 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,16n,73p,1760b,1179s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
@@ -2112,7 +2112,7 @@ adev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/
 Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvr8a.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvro8a.pfb>
-Output written on paper_main.pdf (13 pages, 14631215 bytes).
+Output written on paper_main.pdf (13 pages, 14631224 bytes).
 PDF statistics:
  485 PDF objects out of 1000 (max. 8388607)
  110 named destinations out of 1000 (max. 500000)

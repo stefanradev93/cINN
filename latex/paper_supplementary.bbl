@@ -16,9 +16,19 @@ Bloem-Reddy B, Teh YW (2019) Probabilistic symmetry and invariant neural
   networks.
 \newblock {\em arXiv preprint arXiv:1901.06082}.
 
-\bibitem{zappia2017splatter}
-Zappia L, Phipson B, Oshlack A (2017) Splatter: simulation of single-cell rna
-  sequencing data.
-\newblock {\em Genome biology} 18(1):174.
+\bibitem{gers1999learning}
+Gers FA, Schmidhuber J, Cummins F (1999) Learning to forget: Continual
+  prediction with lstm.
+
+\bibitem{long2015fully}
+Long J, Shelhamer E, Darrell T (2015) Fully convolutional networks for semantic
+  segmentation in {\em Proceedings of the IEEE conference on computer vision
+  and pattern recognition}.
+\newblock pp. 3431--3440.
+
+\bibitem{vaswani2017attention}
+Vaswani A, et~al. (2017) Attention is all you need in {\em Advances in neural
+  information processing systems}.
+\newblock pp. 5998--6008.
 
 \end{thebibliography}

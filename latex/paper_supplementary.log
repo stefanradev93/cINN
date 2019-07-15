@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  11 JUL 2019 23:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  15 JUL 2019 19:47
 entering extended mode
 **./paper_supplementary.tex
 (paper_supplementary.tex
@@ -1865,30 +1865,32 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 97.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 6.64998pt on input line 97.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 97.
  [4] [5 <./figures/Regression_kl.png>] (paper_supplementary.bbl)
 
 AED: lastpage setting LastPage
 [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 180.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 180.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 172.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 172.
  (paper_supplementary.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 180.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 180.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 172.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 172.
 Package rerunfilecheck Info: File `paper_supplementary.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 180.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 172.
  ) 
 Here is how much of TeX's memory you used:
- 34813 strings out of 492895
- 652836 string characters out of 3120464
- 754241 words of memory out of 3000000
- 37997 multiletter control sequences out of 15000+200000
- 617724 words of font info for 119 fonts, out of 3000000 for 9000
+ 34852 strings out of 492895
+ 653417 string characters out of 3120464
+ 754271 words of memory out of 3000000
+ 38017 multiletter control sequences out of 15000+200000
+ 622681 words of font info for 134 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,15n,67p,624b,459s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base
-/8r.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvip
-s/lm/lm-mathit.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fon
+{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
+m-mathit.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc
+/dvips/base/8r.enc}{C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fon
 ts/enc/dvips/lm/lm-rm.enc} <C:\Users\Stefan Radev\AppData\Local\MiKTeX\2.9\font
 s/pk/ljfour/public/bbm/dpi600\bbm9.pk>{C:/Users/Stefan Radev/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Stefan Radev/AppData/Loc
@@ -1899,23 +1901,24 @@ efan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx9.pfb><C
 ex10.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
 ublic/lm/lmmi5.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fon
 ts/type1/public/lm/lmmi6.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/public/lm/lmmi9.pfb><C:/Users/Stefan Radev/AppData/Local/Pro
-grams/MiKTeX 2.9/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Stefan Radev/AppDa
-ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr5.pfb><C:/Users/Stefan Ra
-dev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Users/
-Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><
-C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/l
-mr9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/lm/lmri9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/public/lm/lmsy6.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/lm/lmsy9.pfb><C:/Users/Stefan Radev/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Stefan Radev/AppD
-ata/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/St
-efan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pf
-b>
-Output written on paper_supplementary.pdf (6 pages, 484311 bytes).
+eX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Users/Stefan Radev/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/lm/lmmi9.pfb><C:/Users/Stefan Radev/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Stefan R
+adev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr5.pfb><C:/Users
+/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb>
+<C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/
+lmr7.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/lm/lmr9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/public/lm/lmri9.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Stefan Radev/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/lm/lmsy9.pfb><C:/Users/Stefan Radev/AppData/
+Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Stefan 
+Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C
+:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic
+/uhvr8a.pfb>
+Output written on paper_supplementary.pdf (6 pages, 489113 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 45 named destinations out of 1000 (max. 500000)
- 30231 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 189 PDF objects out of 1000 (max. 8388607)
+ 43 named destinations out of 1000 (max. 500000)
+ 32279 words of extra memory for PDF output out of 35830 (max. 10000000)
 
