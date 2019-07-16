@@ -251,7 +251,7 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
         f.savefig("figures/{}_{}n_density.png".format(filename, X_test.shape[1]), dpi=600, bbox_inches='tight')
 
 
-def plot_sbc(model, n_samples, X_test, theta_test, param_names, 
+def plot_sbc(model, n_samples, X_test, theta_test, param_names, bins=None,
             figsize=(15, 5), show=True, filename=None, font_size=12):
     """
     Plots the simulation-based posterior checking histograms as advocated by Talts et al. (2018).
@@ -283,7 +283,7 @@ def plot_sbc(model, n_samples, X_test, theta_test, param_names,
 
     # Plot histograms
     for j in range(len(param_names)):
-        sns.distplot(ranks[:, j], kde=False, ax=axarr[j], rug=True, hist_kws=dict(edgecolor="k", linewidth=1))
+        sns.distplot(ranks[:, j], kde=False, ax=axarr[j], rug=True, hist_kws=dict(edgecolor="k", linewidth=1), bins=bins)
         axarr[j].set_title(param_names[j])
         axarr[j].spines['right'].set_visible(False)
         axarr[j].spines['top'].set_visible(False)
