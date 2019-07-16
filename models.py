@@ -417,3 +417,105 @@ class InvariantNetwork(tf.keras.Model):
         x = self.equiv(x)
         out = self.inv(x)
         return out
+
+
+class SelfAttentionHead(tf.keras.Model):
+    """Implements a single self-attention head."""
+
+    def __init__(self, key_dim=64, dense_dim=128):
+        super(SelfAttentionHead, self).__init__()
+        
+        self.Wq = tf.keras.layers.Dense(key_dim, use_bias=False, kernel_initializer='glorot_uniform')
+        self.Wk = tf.keras.layers.Dense(key_dim, use_bias=False, kernel_initializer='glorot_uniform')
+        self.Wv = tf.keras.layers.Dense(key_dim, use_bias=False, kernel_initializer='glorot_uniform')
+        
+        self.dense_part = tf.keras.models.Sequential([
+            tf.keras.layers.Dense(dense_dim, activation='elu', kernel_initializer='glorot_uniform'),
+            tf.keras.layers.Dense(dense_dim, activation='elu', kernel_initializer='glorot_uniform'),
+            tf.keras.layers.Dense(dense_dim, activation='elu', kernel_initializer='glorot_uniform'),
+        ])
+        
+        
+        self.scale = np.sqrt(key_dim)
+              
+    def call(self, x):
+        """
+        Passes the input through an attention head and then through a shared dense layer.
+        ----------
+
+        Arguments:
+        x : tf.Tensor of shape (batch_size, n, m) - the input where n is the 'time' or 'samples' dimensions 
+            over which pooling is performed and m is the input dimensionality
+        ----------
+
+        Returns:
+        out : tf.Tensor of shape (batch_size, n, h_dim) -- the trasnformed representation of the input
+        """
+
+        # Obtain queries, keys, and values
+        queries = self.Wq(x)
+        keys = self.Wk(x)
+        values = self.Wv(x)
+        
+        # Compute self-attention matrices
+        qk_t = tf.einsum('bij,bkj->bik', queries, keys)
+        weights = tf.nn.softmax(qk_t / self.scale, axis=-1)
+        z = tf.einsum('bik,bkj->bij', weights, values)
+        
+        # Pass through final dense
+        out = self.dense_part(z)
+        return out
+
+
+class AttentionNetwork(tf.keras.Model):
+    """
+    Implements a network with multi-head self-attention architecture after Vaswani et al. (2017).
+    """
+
+    def __init__(self, n_heads=8, key_dim=64, dense_dim=128):
+        """
+        Creates aan attention network composed of multiplke heads and a pooling layer
+        consisting of two equivariant modules and one invariant module.
+        ----------
+
+        Arguments:
+        n_heads   : int -- the number of attention heads
+        key_dim   : int -- the dimensionality of the attention keys
+        dense_dim : int -- the number of dense layers for the final part of the network
+        """
+        super(AttentionNetwork, self).__init__()
+        
+        self.Wo = tf.keras.layers.Dense(key_dim, use_bias=False, kernel_initializer='glorot_uniform')
+        self.attention_heads = [SelfAttentionHead(key_dim) for _ in range(n_heads)]
+        
+        self.dense_part = tf.keras.models.Sequential([
+            tf.keras.layers.Dense(dense_dim, activation='elu', kernel_initializer='glorot_uniform'),
+            tf.keras.layers.Dense(dense_dim, activation='elu', kernel_initializer='glorot_uniform'),
+            tf.keras.layers.Dense(dense_dim, activation='elu', kernel_initializer='glorot_uniform'),
+        ])
+        
+    def call(self, x, **args):
+        """
+        Passes the input through multiple attention head, pools the output of the multiple heads 
+        and then passed the pooled output through a dense layer.
+        ----------
+
+        Arguments:
+        x : tf.Tensor of shape (batch_size, n, m) - the input where n is the 'time' or 'samples' dimensions 
+            over which pooling is performed and m is the input dimensionality
+        ----------
+
+        Returns:
+        out : the trasnformed input after attention, pooling and non-linearity
+        """
+
+        # Calculate attention
+        x = tf.concat([head(x) for head in self.attention_heads], axis=-1)
+        x = self.Wo(x)
+        
+        # Pooling
+        x = tf.reduce_sum(x, axis=1)
+        
+        # Non-lineariy after pooling
+        out = self.dense_part(x)
+        return out
