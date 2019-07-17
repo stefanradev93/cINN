@@ -110,7 +110,7 @@ Papamakarios G, Murray I (2016) Fast $\varepsilon$-free inference of simulation
 \bibitem{ardizzone2018analyzing}
 Ardizzone L, et~al. (2018) Analyzing inverse problems with invertible neural
   networks.
-\newblock {\em arXiv preprint arXiv:1808.04730}.
+\newblock {\em Proceedings ICLR 2019}.
 
 \bibitem{kingma2018glow}
 Kingma DP, Dhariwal P (2018) Glow: Generative flow with invertible 1x1
@@ -140,6 +140,11 @@ Long J, Shelhamer E, Darrell T (2015) Fully convolutional networks for semantic
   segmentation in {\em Proceedings of the IEEE conference on computer vision
   and pattern recognition}.
 \newblock pp. 3431--3440.
+
+\bibitem{ardizzone2019guided}
+Ardizzone L, L{\"u}th C, Kruse J, Rother C, K{\"o}the U (2019) Guided image
+  generation with conditional invertible neural networks.
+\newblock {\em arXiv preprint arXiv:1907.02392}.
 
 \bibitem{kendall2017uncertainties}
 Kendall A, Gal Y (2017) What uncertainties do we need in bayesian deep learning

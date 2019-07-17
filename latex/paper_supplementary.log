@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  16 JUL 2019 09:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  16 JUL 2019 20:20
 entering extended mode
 **./paper_supplementary.tex
 (paper_supplementary.tex
@@ -1871,21 +1871,21 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 AED: lastpage setting LastPage
 [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 172.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 172.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 171.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 171.
  (paper_supplementary.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 172.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 172.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 171.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 171.
 Package rerunfilecheck Info: File `paper_supplementary.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 172.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 171.
  ) 
 Here is how much of TeX's memory you used:
- 34852 strings out of 492895
- 653417 string characters out of 3120464
+ 34854 strings out of 492895
+ 653435 string characters out of 3120464
  754271 words of memory out of 3000000
  38017 multiletter control sequences out of 15000+200000
- 622681 words of font info for 134 fonts, out of 3000000 for 9000
+ 622770 words of font info for 135 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,15n,67p,624b,459s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
@@ -1916,7 +1916,7 @@ Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Stefan
 Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C
 :/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic
 /uhvr8a.pfb>
-Output written on paper_supplementary.pdf (6 pages, 489113 bytes).
+Output written on paper_supplementary.pdf (6 pages, 489211 bytes).
 PDF statistics:
  189 PDF objects out of 1000 (max. 8388607)
  43 named destinations out of 1000 (max. 500000)

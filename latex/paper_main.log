@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  16 JUL 2019 12:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7050 64-bit) (preloaded format=pdflatex 2019.6.19)  17 JUL 2019 22:11
 entering extended mode
 **./paper_main.tex
 (paper_main.tex
@@ -1561,29 +1561,29 @@ Package cleveref Info: `algorithmicx' support loaded on input line 3120.
 ) (paper_main.aux)
 \openout1 = `paper_main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 52.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 52.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 49.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 49.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ts1cmr
 .fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 52.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 49.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmr.fd
 "
@@ -1620,7 +1620,7 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 ) ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box77
-Package hyperref Info: Link coloring ON on input line 52.
+Package hyperref Info: Link coloring ON on input line 49.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\na
 meref.sty"
@@ -1632,9 +1632,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count361
 )
-LaTeX Info: Redefining \ref on input line 52.
-LaTeX Info: Redefining \pageref on input line 52.
-LaTeX Info: Redefining \nameref on input line 52.
+LaTeX Info: Redefining \ref on input line 49.
+LaTeX Info: Redefining \pageref on input line 49.
+LaTeX Info: Redefining \nameref on input line 49.
  (paper_main.out) (paper_main.out)
 \@outlinefile=\write4
 \openout4 = `paper_main.out'.
@@ -1693,7 +1693,7 @@ Package caption Info: sidecap package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 52.
+(lastpage)             ! on input line 49.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ms\ragged2e
 .sty"
@@ -1720,7 +1720,7 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \RaggedRightParindent=\skip162
 \JustifyingParindent=\skip163
 )
-LaTeX Info: Redefining \microtypecontext on input line 52.
+LaTeX Info: Redefining \microtypecontext on input line 49.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1736,7 +1736,7 @@ t-cmr.cfg"
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for T1+lmss on input line 54.
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 51.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmss.f
 d"
@@ -1746,42 +1746,42 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 54.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 51.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1ph
 v.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 54.
+(Font)              scaled to size 8.54997pt on input line 51.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `phv' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 54.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 54.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 54.
+(Font)              scaled to size 8.54997pt on input line 51.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 51.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmr.f
 d"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 54.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 51.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omllmm.f
 d"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 54.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 51.
 
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omslmsy.
 fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 54.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 51.
 
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omxlmex.
@@ -1789,12 +1789,12 @@ fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 54.
+(Font)              <9> on input line 51.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 54.
+(Font)              <6> on input line 51.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 54.
-LaTeX Font Info:    Try loading font information for U+msa on input line 54.
+(Font)              <5> on input line 51.
+LaTeX Font Info:    Try loading font information for U+msa on input line 51.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\um
 sa.fd"
@@ -1804,7 +1804,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 t-msa.cfg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 54.
+LaTeX Font Info:    Try loading font information for U+msb on input line 51.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\um
 sb.fd"
@@ -1815,32 +1815,32 @@ t-msb.cfg"
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <6> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 54.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 5.69998pt on input line 54.
+(Font)              scaled to size 5.69998pt on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 54.
+(Font)              scaled to size 6.64998pt on input line 51.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 54.
+(Font)              <7> on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 4.74998pt on input line 54.
+(Font)              scaled to size 4.74998pt on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 54.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 7.59998pt on input line 54.
-Package mdframed Info: mdframed works in twoside mode on input line 54.
+(Font)              scaled to size 7.59998pt on input line 51.
+Package mdframed Info: mdframed works in twoside mode on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 54.
+(Font)              scaled to size 9.49997pt on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 54.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 54.
+(Font)              scaled to size 9.49997pt on input line 51.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 54.
+ mdframed uses option nobreak mdframed on input line 51.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 54.
+ mdframed uses option nobreak mdframed on input line 51.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 5.69998pt on input line 54.
+(Font)              scaled to size 5.69998pt on input line 51.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/9'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -1848,15 +1848,15 @@ Package lettrine.sty Info: Targeted height = 15.69254pt
 (lettrine.sty)             (no accent, loversize=0),
 (lettrine.sty)             Lettrine height = 18.05571pt ({\fontfamily {lmss}\bf
 series \fontsize {26pt}{28pt}\selectfont {M}});
-(lettrine.sty)             reported on input line 58.
-LaTeX Font Info:    Try loading font information for T1+bch on input line 69.
+(lettrine.sty)             reported on input line 55.
+LaTeX Font Info:    Try loading font information for T1+bch on input line 66.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1bc
 h.fd"
 File: t1bch.fd 2004/10/18 font definitions for T1/bch.
 )
 LaTeX Font Info:    Font shape `T1/bch/bx/n' in size <85.35826> not available
-(Font)              Font shape `T1/bch/b/n' tried instead on input line 69.
+(Font)              Font shape `T1/bch/b/n' tried instead on input line 66.
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/microtype\m
 t-bch.cfg"
@@ -1864,42 +1864,42 @@ File: mt-bch.cfg 2007/03/03 v1.5 microtype config. file: Bitstream Charter (RS)
 
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 69.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 66.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 6.64998pt on input line 69.
+(Font)              scaled to size 6.64998pt on input line 66.
  [1{C:/Users/Stefan Radev/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 ]
-<figures/training.png, id=84, 843.15pt x 481.8pt>
+<figures/training.png, id=86, 843.15pt x 481.8pt>
 File: figures/training.png Graphic file (type png)
 <use figures/training.png>
-Package pdftex.def Info: figures/training.png  used on input line 81.
+Package pdftex.def Info: figures/training.png  used on input line 78.
 (pdftex.def)             Requested size: 247.79271pt x 141.5931pt.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 82.
-<figures/inference.png, id=85, 843.15pt x 481.8pt>
+(Font)              scaled to size 7.59998pt on input line 79.
+<figures/inference.png, id=87, 843.15pt x 481.8pt>
 File: figures/inference.png Graphic file (type png)
 <use figures/inference.png>
-Package pdftex.def Info: figures/inference.png  used on input line 86.
+Package pdftex.def Info: figures/inference.png  used on input line 83.
 (pdftex.def)             Requested size: 247.79271pt x 141.5931pt.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 94.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 91.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 6.64998pt on input line 94.
+(Font)              scaled to size 6.64998pt on input line 91.
  [2 <./figures/training.png> <./figures/inference.png>] [3]
-<figures/acb.png, id=150, 2313.8445pt x 897.3525pt>
+<figures/acb.png, id=153, 2313.8445pt x 897.3525pt>
 File: figures/acb.png Graphic file (type png)
 <use figures/acb.png>
-Package pdftex.def Info: figures/acb.png  used on input line 139.
+Package pdftex.def Info: figures/acb.png  used on input line 136.
 (pdftex.def)             Requested size: 247.79271pt x 96.09381pt.
-<figures/acbchain.png, id=152, 686.3241pt x 220.6644pt>
+<figures/acbchain.png, id=155, 686.3241pt x 220.6644pt>
 File: figures/acbchain.png Graphic file (type png)
 <use figures/acbchain.png>
-Package pdftex.def Info: figures/acbchain.png  used on input line 145.
+Package pdftex.def Info: figures/acbchain.png  used on input line 142.
 (pdftex.def)             Requested size: 247.79271pt x 79.66808pt.
  [4 <./figures/acb.png> <./figures/acbchain.png>]
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 181.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 178.
 
 
 ("C:\Users\Stefan Radev\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ts1lmr.f
@@ -1907,155 +1907,155 @@ d"
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 192.
+put line 189.
  [5]
-<figures/Regression_joint.png, id=196, 717.03885pt x 505.89pt>
+<figures/Regression_joint.png, id=200, 717.03885pt x 505.89pt>
 File: figures/Regression_joint.png Graphic file (type png)
 <use figures/Regression_joint.png>
-Package pdftex.def Info: figures/Regression_joint.png  used on input line 245.
+Package pdftex.def Info: figures/Regression_joint.png  used on input line 242.
 (pdftex.def)             Requested size: 247.79271pt x 174.82556pt.
-<figures/Regression_density.png, id=197, 578.16pt x 216.81pt>
+<figures/Regression_density.png, id=201, 578.16pt x 216.81pt>
 File: figures/Regression_density.png Graphic file (type png)
 <use figures/Regression_density.png>
-Package pdftex.def Info: figures/Regression_density.png  used on input line 251
+Package pdftex.def Info: figures/Regression_density.png  used on input line 248
 .
 (pdftex.def)             Requested size: 235.40231pt x 88.27402pt.
-<figures/Regression_scatter.png, id=198, 722.7pt x 216.81pt>
+<figures/Regression_scatter.png, id=202, 722.7pt x 216.81pt>
 File: figures/Regression_scatter.png Graphic file (type png)
 <use figures/Regression_scatter.png>
-Package pdftex.def Info: figures/Regression_scatter.png  used on input line 256
+Package pdftex.def Info: figures/Regression_scatter.png  used on input line 253
 .
 (pdftex.def)             Requested size: 235.40231pt x 70.6212pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 250--260
+Underfull \hbox (badness 10000) in paragraph at lines 247--257
 []$[]$
  []
 
-<figures/Regression_metrics.png, id=199, 707.0415pt x 195.8517pt>
+<figures/Regression_metrics.png, id=203, 707.0415pt x 195.8517pt>
 File: figures/Regression_metrics.png Graphic file (type png)
 <use figures/Regression_metrics.png>
-Package pdftex.def Info: figures/Regression_metrics.png  used on input line 262
+Package pdftex.def Info: figures/Regression_metrics.png  used on input line 259
 .
 (pdftex.def)             Requested size: 237.67667pt x 65.8356pt.
-<figures/Regression_variance.png, id=200, 779.3115pt x 197.2971pt>
+<figures/Regression_variance.png, id=204, 779.3115pt x 197.2971pt>
 File: figures/Regression_variance.png Graphic file (type png)
 <use figures/Regression_variance.png>
 Package pdftex.def Info: figures/Regression_variance.png  used on input line 26
-7.
+4.
 (pdftex.def)             Requested size: 262.96289pt x 66.57436pt.
 [6] [7 <./figures/Regression_joint.png> <./figures/Regression_density.png> <./f
 igures/Regression_scatter.png> <./figures/Regression_metrics.png> <./figures/Re
 gression_variance.png>]
-<figures/Ricker_scatter.png, id=253, 722.7pt x 289.08pt>
+<figures/Ricker_scatter.png, id=257, 722.7pt x 289.08pt>
 File: figures/Ricker_scatter.png Graphic file (type png)
 <use figures/Ricker_scatter.png>
-Package pdftex.def Info: figures/Ricker_scatter.png  used on input line 292.
+Package pdftex.def Info: figures/Ricker_scatter.png  used on input line 289.
 (pdftex.def)             Requested size: 247.79271pt x 99.11516pt.
-<figures/Ricker_density.png, id=254, 697.8873pt x 289.08pt>
+<figures/Ricker_density.png, id=258, 697.8873pt x 289.08pt>
 File: figures/Ricker_density.png Graphic file (type png)
 <use figures/Ricker_density.png>
-Package pdftex.def Info: figures/Ricker_density.png  used on input line 298.
+Package pdftex.def Info: figures/Ricker_density.png  used on input line 295.
 (pdftex.def)             Requested size: 247.79271pt x 102.63954pt.
-<figures/Ricker_metrics.png, id=255, 703.9098pt x 265.35135pt>
+<figures/Ricker_metrics.png, id=259, 703.9098pt x 265.35135pt>
 File: figures/Ricker_metrics.png Graphic file (type png)
 <use figures/Ricker_metrics.png>
-Package pdftex.def Info: figures/Ricker_metrics.png  used on input line 304.
+Package pdftex.def Info: figures/Ricker_metrics.png  used on input line 301.
 (pdftex.def)             Requested size: 247.79271pt x 93.40881pt.
-<figures/Ricker_sbc.png, id=256, 722.7pt x 289.08pt>
+<figures/Ricker_sbc.png, id=260, 722.7pt x 289.08pt>
 File: figures/Ricker_sbc.png Graphic file (type png)
 <use figures/Ricker_sbc.png>
-Package pdftex.def Info: figures/Ricker_sbc.png  used on input line 310.
+Package pdftex.def Info: figures/Ricker_sbc.png  used on input line 307.
 (pdftex.def)             Requested size: 247.79271pt x 99.11516pt.
  [8 <./figures/Ricker_scatter.png> <./figures/Ricker_density.png> <./figures/Ri
 cker_metrics.png> <./figures/Ricker_sbc.png>]
-<figures/Levy_scatter.png, id=276, 722.7pt x 433.62pt>
+<figures/Levy_scatter.png, id=280, 722.7pt x 433.62pt>
 File: figures/Levy_scatter.png Graphic file (type png)
 <use figures/Levy_scatter.png>
-Package pdftex.def Info: figures/Levy_scatter.png  used on input line 337.
+Package pdftex.def Info: figures/Levy_scatter.png  used on input line 334.
 (pdftex.def)             Requested size: 247.79271pt x 148.67274pt.
-<figures/Levy_density.png, id=277, 852.5451pt x 432.53595pt>
+<figures/Levy_density.png, id=281, 852.5451pt x 432.53595pt>
 File: figures/Levy_density.png Graphic file (type png)
 <use figures/Levy_density.png>
-Package pdftex.def Info: figures/Levy_density.png  used on input line 343.
+Package pdftex.def Info: figures/Levy_density.png  used on input line 340.
 (pdftex.def)             Requested size: 247.79271pt x 125.716pt.
-<figures/Levy_metrics.png, id=278, 851.3406pt x 416.2752pt>
+<figures/Levy_metrics.png, id=282, 851.3406pt x 416.2752pt>
 File: figures/Levy_metrics.png Graphic file (type png)
 <use figures/Levy_metrics.png>
-Package pdftex.def Info: figures/Levy_metrics.png  used on input line 349.
+Package pdftex.def Info: figures/Levy_metrics.png  used on input line 346.
 (pdftex.def)             Requested size: 247.79271pt x 121.16135pt.
-<figures/Levy_sbc.png, id=279, 867.24pt x 433.62pt>
+<figures/Levy_sbc.png, id=283, 867.24pt x 433.62pt>
 File: figures/Levy_sbc.png Graphic file (type png)
 <use figures/Levy_sbc.png>
-Package pdftex.def Info: figures/Levy_sbc.png  used on input line 355.
+Package pdftex.def Info: figures/Levy_sbc.png  used on input line 352.
 (pdftex.def)             Requested size: 247.79271pt x 123.89395pt.
  [9 <./figures/Levy_scatter.png> <./figures/Levy_density.png> <./figures/Levy_m
 etrics.png> <./figures/Levy_sbc.png>]
-<figures/SIR_plot.png, id=301, 433.62pt x 216.81pt>
+<figures/SIR_plot.png, id=305, 433.62pt x 216.81pt>
 File: figures/SIR_plot.png Graphic file (type png)
 <use figures/SIR_plot.png>
-Package pdftex.def Info: figures/SIR_plot.png  used on input line 380.
+Package pdftex.def Info: figures/SIR_plot.png  used on input line 377.
 (pdftex.def)             Requested size: 222.50647pt x 111.25313pt.
-<figures/SIR_states.png, id=302, 481.8pt x 144.54pt>
+<figures/SIR_states.png, id=306, 481.8pt x 144.54pt>
 File: figures/SIR_states.png Graphic file (type png)
 <use figures/SIR_states.png>
-Package pdftex.def Info: figures/SIR_states.png  used on input line 385.
+Package pdftex.def Info: figures/SIR_states.png  used on input line 382.
 (pdftex.def)             Requested size: 278.13309pt x 83.44287pt.
-<figures/SIR_scatter.png, id=303, 578.16pt x 289.08pt>
+<figures/SIR_scatter.png, id=307, 578.16pt x 289.08pt>
 File: figures/SIR_scatter.png Graphic file (type png)
 <use figures/SIR_scatter.png>
-Package pdftex.def Info: figures/SIR_scatter.png  used on input line 390.
+Package pdftex.def Info: figures/SIR_scatter.png  used on input line 387.
 (pdftex.def)             Requested size: 247.79271pt x 123.89615pt.
-<figures/SIR_metrics.png, id=304, 566.71725pt x 274.626pt>
+<figures/SIR_metrics.png, id=308, 566.71725pt x 274.626pt>
 File: figures/SIR_metrics.png Graphic file (type png)
 <use figures/SIR_metrics.png>
-Package pdftex.def Info: figures/SIR_metrics.png  used on input line 397.
+Package pdftex.def Info: figures/SIR_metrics.png  used on input line 394.
 (pdftex.def)             Requested size: 121.41978pt x 58.8381pt.
-<figures/SIR_variance.png, id=305, 566.71725pt x 275.95094pt>
+<figures/SIR_variance.png, id=309, 566.71725pt x 275.95094pt>
 File: figures/SIR_variance.png Graphic file (type png)
 <use figures/SIR_variance.png>
-Package pdftex.def Info: figures/SIR_variance.png  used on input line 402.
+Package pdftex.def Info: figures/SIR_variance.png  used on input line 399.
 (pdftex.def)             Requested size: 121.41978pt x 59.12196pt.
-<figures/SIR_density.png, id=306, 564.30824pt x 288.23685pt>
+<figures/SIR_density.png, id=310, 564.30824pt x 288.23685pt>
 File: figures/SIR_density.png Graphic file (type png)
 <use figures/SIR_density.png>
-Package pdftex.def Info: figures/SIR_density.png  used on input line 407.
+Package pdftex.def Info: figures/SIR_density.png  used on input line 404.
 (pdftex.def)             Requested size: 121.41978pt x 62.01808pt.
-<figures/SIR_sbc.png, id=307, 578.16pt x 289.08pt>
+<figures/SIR_sbc.png, id=311, 578.16pt x 289.08pt>
 File: figures/SIR_sbc.png Graphic file (type png)
 <use figures/SIR_sbc.png>
-Package pdftex.def Info: figures/SIR_sbc.png  used on input line 412.
+Package pdftex.def Info: figures/SIR_sbc.png  used on input line 409.
 (pdftex.def)             Requested size: 121.41978pt x 60.70859pt.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.12497pt on input line 427.
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 427.
+(Font)              scaled to size 7.12497pt on input line 424.
+LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 424.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7.5> on input line 427.
+(Font)              <7.5> on input line 424.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5.24997> on input line 427.
+(Font)              <5.24997> on input line 424.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <3.75> on input line 427.
+(Font)              <3.75> on input line 424.
  [10 <./figures/SIR_plot.png> <./figures/SIR_states.png> <./figures/SIR_scatter
 .png> <./figures/SIR_metrics.png> <./figures/SIR_variance.png> <./figures/SIR_d
 ensity.png> <./figures/SIR_sbc.png>]
-<figures/Splatter_plot.png, id=330, 963.6pt x 466.6233pt>
+<figures/Splatter_plot.png, id=334, 963.6pt x 466.6233pt>
 File: figures/Splatter_plot.png Graphic file (type png)
 <use figures/Splatter_plot.png>
-Package pdftex.def Info: figures/Splatter_plot.png  used on input line 449.
+Package pdftex.def Info: figures/Splatter_plot.png  used on input line 446.
 (pdftex.def)             Requested size: 247.79271pt x 119.98773pt.
-<figures/Splatter_scatter.png, id=333, 867.24pt x 433.62pt>
+<figures/Splatter_scatter.png, id=337, 867.24pt x 433.62pt>
 File: figures/Splatter_scatter.png Graphic file (type png)
 <use figures/Splatter_scatter.png>
-Package pdftex.def Info: figures/Splatter_scatter.png  used on input line 454.
+Package pdftex.def Info: figures/Splatter_scatter.png  used on input line 451.
 (pdftex.def)             Requested size: 247.79271pt x 123.89395pt.
-<figures/Splatter_sbc.png, id=334, 722.7pt x 289.08pt>
+<figures/Splatter_sbc.png, id=338, 722.7pt x 289.08pt>
 File: figures/Splatter_sbc.png Graphic file (type png)
 <use figures/Splatter_sbc.png>
-Package pdftex.def Info: figures/Splatter_sbc.png  used on input line 459.
+Package pdftex.def Info: figures/Splatter_sbc.png  used on input line 456.
 (pdftex.def)             Requested size: 247.79271pt x 99.11516pt.
-<figures/Splatter_density.png, id=335, 854.2314pt x 286.671pt>
+<figures/Splatter_density.png, id=339, 854.2314pt x 286.671pt>
 File: figures/Splatter_density.png Graphic file (type png)
 <use figures/Splatter_density.png>
-Package pdftex.def Info: figures/Splatter_density.png  used on input line 464.
+Package pdftex.def Info: figures/Splatter_density.png  used on input line 461.
 (pdftex.def)             Requested size: 247.79271pt x 83.15433pt.
 
 Underfull \vbox (badness 1248) has occurred while \output is active []
@@ -2070,25 +2070,21 @@ LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 
 AED: lastpage setting LastPage
 [13]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 499.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 499.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 496.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 496.
  (paper_main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 499.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 499.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 496.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 496.
 Package rerunfilecheck Info: File `paper_main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 499.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 496.
  ) 
 Here is how much of TeX's memory you used:
- 37283 strings out of 492895
- 707014 string characters out of 3120464
+ 37280 strings out of 492895
+ 707045 string characters out of 3120464
  810563 words of memory out of 3000000
- 40142 multiletter control sequences out of 15000+200000
- 677249 words of font info for 274 fonts, out of 3000000 for 9000
+ 40145 multiletter control sequences out of 15000+200000
+ 676817 words of font info for 270 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,16n,73p,1742b,1179s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
@@ -2127,9 +2123,9 @@ adev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/
 Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvr8a.pfb><C:/Users/Stefan Radev/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvro8a.pfb>
-Output written on paper_main.pdf (13 pages, 16683137 bytes).
+Output written on paper_main.pdf (13 pages, 16684290 bytes).
 PDF statistics:
- 492 PDF objects out of 1000 (max. 8388607)
- 110 named destinations out of 1000 (max. 500000)
+ 496 PDF objects out of 1000 (max. 8388607)
+ 111 named destinations out of 1000 (max. 500000)
  48281 words of extra memory for PDF output out of 51595 (max. 10000000)
 
