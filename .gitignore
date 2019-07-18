@@ -1,10 +1,14 @@
 models/
+latex/
 figures/
 __pycache__/
 .ipynb_checkpoints/
+.Rhistory
+seqRNA_Heteroscedastic_Example.ipynb
 playground/
 checkpoints/
 diffusion_api.h
 diffusion.cp36-win_amd64.pyd
 diffusion.c
 build
+metrics_Levy.p

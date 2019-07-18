@@ -1,6 +1,5 @@
 from numba import jit, prange
-import ctypes
-from numba.extending import get_cython_function_address
+
 import tensorflow as tf
 import numpy as np
 
@@ -79,3 +78,31 @@ def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2,
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
     return X_batch, theta_batch
+
+
+def plot_diffusion_multiple(n=1000, figsize=(20, 20), filename='levy'):
+    """Plots example datasets from the SIR model."""
+
+    X, theta = simulate_diffusion(25, n_points=n, to_tensor=False)
+    n = np.arange(1, n+1)
+
+    f, axarr = plt.subplots(5, 5, figsize=figsize)
+
+    for i, ax in enumerate(axarr.flat):
+
+        # Plot just a single condition
+        sns.distplot(X[i, :, 0], ax=ax, label='Upper threshold', rug=True, color="#4873b8")
+
+        if i == 0:
+            ax.set_xlabel(r'Number of trials ($n$)', fontsize=10)
+            ax.set_ylabel('Density', fontsize=10)
+            ax.legend(fontsize=10)
+        else:
+            ax.get_legend().remove()
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+    
+    f.tight_layout()
+
+    if filename is not None:
+        f.savefig("figures/{}_levy_multiple.png".format(filename), dpi=600, bbox_inches='tight')
