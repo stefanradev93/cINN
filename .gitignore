@@ -6,7 +6,6 @@ __pycache__/
 .Rhistory
 seqRNA_Heteroscedastic_Example.ipynb
 playground/
-checkpoints/
 diffusion_api.h
 diffusion.cp36-win_amd64.pyd
 diffusion.c
