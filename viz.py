@@ -106,7 +106,7 @@ def plot_losses(losses, figsize=(15, 5), show=True):
 def plot_metrics(metrics, ns, param_names, figsize=(12, 4), show=True, 
                  xlabel=r'$n$', filename=None, font_size=12):
     """
-    Plots the nrmse and r2 for all parameters
+    Plots the nrmse and r2 for all parameters and all time points.
     """
 
     # Plot settings
@@ -137,6 +137,59 @@ def plot_metrics(metrics, ns, param_names, figsize=(12, 4), show=True,
     if filename is not None:
         f.savefig("figures/{}_metrics.png".format(filename), dpi=600, bbox_inches='tight')
 
+
+def plot_metrics_params(model, X_test, theta_test, n_samples, n_chunks=None, show=True, font_size=12):
+    """Plots R2 and NRMSE side by side for all parameters over a test set."""
+    
+    # Plot initialization
+    plt.rcParams['font.size'] = font_size
+    f, axarr = plt.subplots(1, 2, figsize=(10, 4))
+
+    # Convert true parameters to numpy
+    theta_test = theta_test.numpy()
+    
+    # Compute posterior means (may need to do this in chunks, if parameter space is too big
+    # in order to avoid MemoryError)
+    
+    if n_chunks is None:
+        theta_approx_means = model.sample(X_test, n_samples, to_numpy=True).mean(axis=0)
+    else:
+        theta_approx_means = np.concatenate(
+                        [model.sample(X_test, n_samples // n_chunks, to_numpy=True)
+                         for _ in range(n_chunks)], axis=0).mean(axis=0)
+
+    # Compute NRMSE
+    rmse = np.sqrt( np.mean( (theta_approx_means - theta_test)**2, axis=0) )
+    nrmse = rmse / (theta_test.max(axis=0) - theta_test.min(axis=0))
+
+    # Compute R2
+    r2 = r2_score(theta_test, theta_approx_means, multioutput='raw_values')
+    
+    # Plot NRMSE
+    sns.lineplot(np.arange(theta_test.shape[1]) + 1, nrmse, 
+                 markers=True, dashes=False, ax=axarr[0])
+    # Plot R2
+    sns.lineplot(np.arange(theta_test.shape[1]) + 1, r2, 
+                 markers=True, dashes=False, ax=axarr[1])
+    
+    # Tweak plot of NRMSE
+    axarr[0].set_xlabel('Parameter #')
+    axarr[0].set_ylabel('NRMSE')
+    axarr[0].set_title('Test NRMSE')
+    axarr[0].spines['right'].set_visible(False)
+    axarr[0].spines['top'].set_visible(False)
+    
+    # Tweak plot of R2
+    axarr[1].set_xlabel('Parameter #')
+    axarr[1].set_ylabel('$R^2$')
+    axarr[1].set_title('Test $R^2$')
+    axarr[1].spines['right'].set_visible(False)
+    axarr[1].spines['top'].set_visible(False)
+    
+    f.tight_layout()
+        
+    if show:
+        plt.show()
 
 def plot_variance(variances, ns, param_names, figsize=(12, 4), show=True, 
                   xlabel=r'$n$', filename=None, tight=True, std=False, font_size=12):
