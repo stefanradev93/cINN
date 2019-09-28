@@ -11,8 +11,8 @@ def apply_gradients(optimizer, gradients, variables, global_step=None):
     optimizer.apply_gradients(zip(gradients, variables), global_step=global_step)
 
 
-def train_loop_active(model, optimizer, data_generator, iterations, batch_size, save_any=10000,
-               p_bar=None, clip_value=None, global_step=None, transform=None, n_smooth=100, ckpt_name='model'):
+def train_online_ml(model, optimizer, data_generator, iterations, batch_size,
+               p_bar=None, clip_value=None, global_step=None, transform=None, n_smooth=100):
     """
     Utility function to perform the # number of training loops given by the itertations argument.
     ---------
@@ -24,14 +24,12 @@ def train_loop_active(model, optimizer, data_generator, iterations, batch_size, 
     data_generator  : callable -- a function providing batches of X, theta (data, params)
     iterations      : int -- the number of training loops to perform
     batch_size      : int -- the batch_size used for training
-    save_any        : int -- save weights any save_any itertaions
     p_bar           : ProgressBar -- an instance for tracking the training progress
     clip_value      : float       -- the value used for clipping the gradients
     global_step     : tf.EagerVariavle -- a scalar tensor tracking the number of 
                                           steps and used for learning rate decay  
     transform       : callable ot None -- a function to transform X and theta, if given
     n_smooth        : int -- a value indicating how many values to use for computing the running ML loss
-    ckpt_name       : str -- the name for the model checkpoint
     ----------
 
     Returns:
@@ -79,10 +77,6 @@ def train_loop_active(model, optimizer, data_generator, iterations, batch_size, 
         p_bar.set_postfix_str("Iteration: {0},ML Loss: {1:.3f},Running ML Loss: {2:.3f},Regularization Loss: {3:.3f}"
         .format(it, ml_loss.numpy(), running_ml, decay.numpy()))
         p_bar.update(1)
-
-        # Save, if specified
-        if it % save_any == 0:
-            model.save_weights('models/{}_{}iter'.format(ckpt_name, it))
 
     return losses
 
