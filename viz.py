@@ -191,6 +191,7 @@ def plot_metrics_params(model, X_test, theta_test, n_samples, n_chunks=None, sho
     if show:
         plt.show()
 
+
 def plot_variance(variances, ns, param_names, figsize=(12, 4), show=True, 
                   xlabel=r'$n$', filename=None, tight=True, std=False, font_size=12):
     """

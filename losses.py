@@ -64,11 +64,37 @@ def maximum_mean_discrepancy_loss(source_samples, target_samples, weight=1.):
     return loss_value
 
 
-def kl_loss(z_mean, z_logvar):
-    """Computes the KL divergence."""
+def kullback_leibler_gaussian(z_mean, z_logvar, beta=1.):
+    """
+    Computes the KL divergence between a unit Gaussian and an arbitrary Gaussian.
+
+    Arguments:
+    z_mean   : tf.Tensor of shape (batch_size, z_dim) -- the means of the Gaussian which will be compared
+    z_logvar : tf.Tensor of shape (batch_size, z_dim) -- the log vars of the Gaussian to be compared
+    beta     : float -- the factor to weigh the KL divergence with
+
+    Output:
+    loss : tf.Tensor of shape (,)  -- a single scalar representing KL( N(z_mu, z_var | N(0, 1) )
+    """
+    
     loss = 1 + z_logvar - tf.square(z_mean) - tf.exp(z_logvar)
     loss = -0.5 * tf.reduce_sum(loss, axis=-1)
-    return tf.reduce_mean(loss)
+    return beta * tf.reduce_mean(loss)
+
+
+def mean_squared_error(y, y_hat):
+    """
+    Computes the mean squared error between two tensors.
+
+    Arguments:
+    z_mean   : tf.Tensor of shape (batch_size, z_dim) -- the means of the Gaussian which will be compared
+    z_logvar : tf.Tensor of shape (batch_size, z_dim) -- the log vars of the Gaussian to be compared
+
+    Output:
+    loss : tf.Tensor of shape (,)  -- the mean squared error
+    """
+
+    return tf.losses.mean_squared_error(y, y_hat)
 
 
 def gaussian_kernel_matrix(x, y, sigmas):
