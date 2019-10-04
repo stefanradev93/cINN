@@ -72,6 +72,7 @@ def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, 
               a batch or time series generated under a batch of Ricker parameters
     """
     
+
     # Sample t_obs, if None given
     if n_points is None:
         n_points = np.random.randint(low=t_obs_min, high=t_obs_max+1)
@@ -87,6 +88,23 @@ def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, 
         return tf.convert_to_tensor(X[:, :, np.newaxis], dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
     return X[:, :, np.newaxis], theta
 
+
+def simulate_ricker_elfi(r, sigma, phi, batch_size=1, n_points=500, to_tensor=True, random_state=None):
+    """
+    Simulates a batch of Ricker datasets conforming to the ELFI interface.
+    """
+
+    theta = np.stack([r, sigma, phi], axis=1)
+    X = np.zeros((batch_size, n_points))
+
+    # Simulate a batch from the Ricker model
+    simulate_ricker_batch(X, theta, batch_size, n_points)
+
+    if to_tensor:
+        return tf.convert_to_tensor(X[:, :, np.newaxis], dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
+    return X[:, :, np.newaxis], theta
+
+    
 
 def sir(u, beta, gamma, t, N=1000, dt=0.1, iota=0.5):
     """
@@ -194,6 +212,7 @@ def simulate_batch_diffusion_p(x, params):
             x[i, j, 1] = diffusion_trial(params[i, 1], params[i, 2], params[i, 3], 
                                          params[i, 4], params[i, 5], params[i, 6], 
                                          params[i, 7], params[i, 8], 0.001, 5000)
+
 
 def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2, 
                        to_tensor=True, cond_coding=False, n_trials_min=100, n_trials_max=1000):

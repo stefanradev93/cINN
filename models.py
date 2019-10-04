@@ -523,7 +523,7 @@ class AttentionNetwork(tf.keras.Model):
 
 class ConditionalVAE(tf.keras.Model):
     """Implements a conditional variational autoencoder."""
-    def __init__(self, meta, theta_dim, z_dim, summary=None):
+    def __init__(self, meta, theta_dim, z_dim, summary_net=None):
         """
         Creates a conditional variation autoencoder cVAE
         ----------
@@ -533,11 +533,11 @@ class ConditionalVAE(tf.keras.Model):
                                   keras.Dense layer
         theta_dim   : int  -- the dimensionality of the parameter space to be learned
         z_dim       : int  -- the dimensionality of the latent space
-        summary     : tf.keras.Model or None -- an optinal summary network for learning the sumstats of y
+        summary_net : tf.keras.Model or None -- an optinal summary network for learning the sumstats of y
         """
         super(ConditionalVAE, self).__init__()
         
-        self.summary = summary
+        self.summary_net = summary_net
         self.z_dim = z_dim
         
         # Encoder networks
@@ -589,8 +589,8 @@ class ConditionalVAE(tf.keras.Model):
         """
         
         # Compute summary, if summary net has been given
-        if self.summary is not None:
-            y = self.summary(y)
+        if self.summary_net is not None:
+            y = self.summary_net(y)
         
         # Encode
         z_mean, z_logvar = self.encode(x, y)
@@ -621,7 +621,7 @@ class ConditionalVAE(tf.keras.Model):
         x_rec = self.inference_net(x_rec)
         return x_rec
     
-    def sample(self, y, n_samples, to_numpy=False):
+    def sample(self, y, n_samples, to_numpy=False, training=False):
         """
         Samples from the decoder given a single instance y or a batch of instances.
         ----------
@@ -637,8 +637,8 @@ class ConditionalVAE(tf.keras.Model):
         """
         
         # Compute summary, if summary network given
-        if self.summary is not None:
-            y = self.summary(y)
+        if self.summary_net is not None:
+            y = self.summary_net(y, training=training)
         
         # Sample from unit Gaussian
         z = tf.random_normal(shape=(y.shape[0], n_samples, self.z_dim))
@@ -652,22 +652,196 @@ class ConditionalVAE(tf.keras.Model):
         return theta_samples
 
 
+class IAFConditionalVAE(tf.keras.Model):
+    """
+    Implements a conditional IAF-VAE according to Kingma et al. (2016).
+    """
+    
+    def __init__(self, meta, theta_dim, z_dim, n_iaf, summary_net=None):
+        """
+        Creates a conditional variation autoencoder cVAE with an inverse autoregressive flow (IAF)
+        ----------
+
+        Arguments:
+        meta        : list -- a list of dictionary, where each dictionary holds parameter - value pairs for a single
+                                  keras.Dense layer
+        theta_dim   : int  -- the dimensionality of the parameter space to be learned
+        z_dim       : int  -- the dimensionality of the latent space
+        n_iaf       : int  -- the number of autoregressive neural networks
+        summary_net : tf.keras.Model or None -- an optinal summary network for learning the sumstats of y
+        """
+        super(IAFConditionalVAE, self).__init__()
+        
+        self.summary_net = summary_net
+        self.z_dim = z_dim
+        
+        # Encoder networks
+        self.encoder = tf.keras.Sequential(
+            [tf.keras.layers.Dense(units,
+                                   activation=meta['activation'],
+                                   kernel_initializer=meta['initializer'],
+                                   kernel_regularizer=l2(meta['w_decay']))
+             for units in meta['n_units']]
+        )
+        self.z_h_mapper = tf.keras.layers.Dense(z_dim * 3,
+                                   activation=meta['activation'],
+                                   kernel_initializer=meta['initializer'],
+                                   kernel_regularizer=l2(meta['w_decay']))
+        
+        # Autoregressive networks
+        self.ar_nns = [tf.keras.Sequential(
+            [tf.keras.layers.Dense(units,
+                                   activation=meta['activation'],
+                                   kernel_initializer=tf.ones_initializer,
+                                   kernel_regularizer=l2(meta['w_decay']))
+             for units in meta['n_units']] + 
+            [
+            tf.keras.layers.Dense(z_dim * 2,
+                                  activation=meta['activation'],
+                                  kernel_initializer=tf.ones_initializer,
+                                  kernel_regularizer=l2(meta['w_decay']))
+            ])
+        for _ in range(n_iaf)
+        ]
+        
+        # Decoder networks
+        self.decoder = tf.keras.Sequential(
+            [tf.keras.layers.Dense(units,
+                                   activation=meta['activation'],
+                                   kernel_initializer=meta['initializer'],
+                                   kernel_regularizer=l2(meta['w_decay']))
+             for units in meta['n_units']]
+        )
+        
+        # Network to output the reconstructed parameters
+        self.inference_net = tf.keras.layers.Dense(
+            theta_dim, 
+            kernel_initializer=meta['initializer'],
+            kernel_regularizer=l2(meta['w_decay'])
+        )
+        
+    def call(self, x, y):
+        """
+        Computes a summary of h(y), concatenates x and h(y) and passes 
+        them through encoder ar nets and decoder. Computes log(q(z|x)) along the way.
+        
+        ----------
+        
+        Arguments:
+        x : tf.Tensor of shape (batch_size, inp_dim)     -- the parameters x ~ p(x|y) of interest
+        y : tf.Tensor of shape (batch_size, summary_dim) -- the conditional data of interest y = sum(y)
+        
+        ----------
+        
+        Output:
+        l        : tf.Tensor of shape (batch_size, ) -- the value of log(q(z|x))
+        x_rec    : tf.Tensor of shape (batch_size, theta_dim) -- the reconstructed parameters
+        """
+        
+        
+        # Compute summary, if summary net has been given
+        if self.summary_net is not None:
+            y = self.summary_net(y)
+        
+        # Encode x, and condition
+        z0_mean, z0_logsigma, h  = self.encode(x, y)
+        
+        # Sample epsilon and reparameterize to z
+        eps = tf.random_normal(shape=(z0_mean.shape[0], z0_mean.shape[1]))
+        z = z0_mean + eps * tf.exp(z0_logsigma)
+        
+        # Compute first step of l
+        l = -tf.reduce_sum(z0_logsigma + 0.5 * tf.square(eps) + 0.5 * tf.log(2 * np.pi), axis=-1)
+        
+        # Autoregressive step
+        for t, ar_nn in enumerate(self.ar_nns):
+            
+            # Reverse z every other step
+            if t % 2 != 0:
+                z = tf.reverse(z, [-1])
+            
+            # Concat z, y, and h as input to arnn and obtain real valued vectors m, s
+            z_h = tf.concat([z, y, h], axis=-1)
+            m, s = tf.split(ar_nn(z_h), 2, axis=-1)
+            
+            
+            # "Gating" step
+            sigma = tf.nn.sigmoid(s)
+            z = sigma * z + (1 - sigma) * m
+            
+            # Increment value of log(q(z|x))
+            l -= tf.reduce_sum(tf.log(sigma), axis=-1)
+            
+        # Decode final z^T
+        x_rec = self.decode(z, y)   
+        
+        return x_rec, z, l
+        
+    def encode(self, x, y):
+        """Encodes x given y into a latent mean and var."""
+        
+        x = tf.concat([x, y], axis=-1)
+        x = self.encoder(x)
+        x = self.z_h_mapper(x)
+        z0_mean, z0_logsigma, h = tf.split(x, 3, axis=-1)
+        return z0_mean, z0_logsigma, h
+        
+    
+    def decode(self, z, y):
+        """Decodes x from z given y."""
+        
+        z_c = tf.concat([z, y], axis=-1)
+        x_rec = self.decoder(z_c)
+        x_rec = self.inference_net(x_rec)
+        return x_rec
+    
+    def sample(self, y, n_samples, to_numpy=False, training=False):
+        """
+        Samples from the decoder given a single instance y or a batch of instances.
+        ----------
+        
+        Arguments:
+        y         : tf.Tensor of shape (batch_size, n_points) -- the conditional data of interest
+        n_samples : int -- number of samples to obtain from the approximate posterior
+        to_numpy  : bool -- flag indicating whether to return the samples as a np.array or a tf.Tensor
+        ----------
+
+        Returns:
+        theta_samples : 3D tf.Tensor or np.array of shape (n_samples, n_batch, theta_dim)
+        """
+        
+        # Compute summary, if summary network given
+        if self.summary_net is not None:
+            y = self.summary_net(y, training=training)
+        
+        # Sample from unit Gaussian
+        z = tf.random_normal(shape=(y.shape[0], n_samples, self.z_dim))
+     
+        # Concatenate z and conditionals and decode
+        theta_samples = self.decode(z, tf.stack([y] * n_samples, axis=1))
+        theta_samples = tf.transpose(theta_samples, [1, 0, 2])
+        
+        if to_numpy:
+            return theta_samples.numpy()
+        return theta_samples
+
+
 class HeteroscedasticModel(tf.keras.Model):
     """
     Creates a heteroscedastric regression model according to Kendall & Gal (2017).
     """
     
-    def __init__(self, meta, theta_dim, summary=None):
+    def __init__(self, meta, theta_dim, summary_net=None):
         """
         Creates a heteroscedastic model for parameter inference.
         Arguments:
         meta        : list -- a list of dictionary, where each dictionary holds parameter - value pairs for a single
                                   keras.Dense layer
         theta_dim   : int  -- the dimensionality of the parameter space on which to perform inference
-        summary     : tf.keras.Model or None -- an optinal summary network for learning the sumstats of y
+        summary_net : tf.keras.Model or None -- an optinal summary network for learning the sumstats of y
         """
         super(HeteroscedasticModel, self).__init__()
-        self.summary = summary
+        self.summary_net = summary_net
         self.inference_net = tf.keras.Sequential(
             [tf.keras.layers.Dense(units,
                                    activation=meta['activation'],
@@ -697,8 +871,8 @@ class HeteroscedasticModel(tf.keras.Model):
         """
         
         # Compute summary, if summary net has been given
-        if self.summary is not None:
-            y = self.summary(y)
+        if self.summary_net is not None:
+            y = self.summary_net(y)
         
         # Infer
         x = self.inference_net(y)
@@ -707,13 +881,13 @@ class HeteroscedasticModel(tf.keras.Model):
 
         return theta_means, theta_vars
     
-    def sample(self, y, n_samples, to_numpy=False):
+    def sample(self, y, n_samples, to_numpy=False, training=False):
         """
         Produces samples from the approximate Gaussian dsitro yielded by the inference net.
         """
         
-        if self.summary is not None:
-            y = self.summary(y)
+        if self.summary_net is not None:
+            y = self.summary_net(y, training=training)
         
         thetas = self.inference_net(y)
         theta_means, theta_vars = tf.split(thetas, 2, axis=-1)

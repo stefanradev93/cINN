@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
-from losses import maximum_likelihood_loss, kullback_leibler_gaussian, mean_squared_error, heteroscedastic_loss
+from losses import (maximum_likelihood_loss, kullback_leibler_gaussian, 
+                    mean_squared_error, heteroscedastic_loss, kullback_leibler_iaf)
 from sklearn.metrics import r2_score
 
 
@@ -82,7 +83,7 @@ def train_online_ml(model, optimizer, data_generator, iterations, batch_size,
 
 
 def train_online_kl(model, optimizer, data_generator, iterations, batch_size, beta, p_bar=None, 
-                    clip_value=None, global_step=None, transform=None, beta_step=250, beta_increment=0.01):
+                    clip_value=None, global_step=None, transform=None, beta_max=1.0, beta_step=250, beta_increment=0.01):
     """
     Utility function to perform the # number of training loops given by the itertations argument.
     ---------
@@ -148,7 +149,86 @@ def train_online_kl(model, optimizer, data_generator, iterations, batch_size, be
 
         # Increase beta every beta_step iterations
         if (global_step.numpy() + 1) % beta_step == 0:
-            tf.assign(beta, min(1.0, beta.numpy() + beta_increment))
+            tf.assign(beta, min(beta_max, beta.numpy() + beta_increment))
+
+        # Update progress bar
+        p_bar.set_postfix_str("Iteration: {0},Rec Loss: {1:.3f},KL Loss: {2:.3f},Regularization Loss: {3:.3f},Beta: {4:.2f}"
+        .format(it, rec.numpy(), kl.numpy(), decay.numpy(), beta.numpy()))
+        p_bar.update(1)
+
+    return losses
+
+
+def train_online_iaf(model, optimizer, data_generator, iterations, batch_size, beta, p_bar=None, 
+                     clip_value=None, global_step=None, transform=None, beta_max=1.0,
+                     beta_step=250, beta_increment=0.01):
+    """
+    Utility function to perform the # number of training loops given by the itertations argument.
+    ---------
+
+    Arguments:
+    model           : tf.keras.Model -- the invertible chaoin with an optional summary net
+                                        both models are jointly trained
+    optimizer       : tf.train.optimizers.Optimizer -- the optimizer used for backprop
+    data_generator  : callable -- a function providing batches of X, theta (data, params)
+    iterations      : int -- the number of training loops to perform
+    batch_size      : int -- the batch_size used for training
+    p_bar           : ProgressBar -- an instance for tracking the training progress
+    clip_value      : float       -- the value used for clipping the gradients
+    global_step     : tf.EagerVariavle -- a scalar tensor tracking the number of 
+                                          steps and used for learning rate decay  
+    transform       : callable ot None -- a function to transform X and theta, if given
+    n_smooth        : int -- a value indicating how many values to use for computing the running ML loss
+    ----------
+
+    Returns:
+    losses : dict -- a dictionary with the ml_loss and decay
+    """
+    
+    # Prepare a dictionary to track losses
+    losses = {
+        'kl_loss': [],
+        'rec_loss': [],
+        'decay': []
+    }
+    # Run training loop
+    for it in range(1, iterations+1):
+        with tf.GradientTape() as tape:
+            # Generate data and parameters
+            X_batch, theta_batch = data_generator(batch_size)
+            # Apply some transformation, if specified
+            if transform:
+                X_batch, theta_batch = transform(X_batch, theta_batch)
+
+            # Sanity check for non-empty tensors
+            if tf.equal(X_batch.shape[0], 0).numpy():
+                print('Iteration produced empty tensor, skipping...')
+                continue
+
+            # Forward pass
+            theta_hat, z, logqz_x = model(theta_batch, X_batch)
+            
+            
+            # Compute losses
+            kl = kullback_leibler_iaf(z, logqz_x, beta)
+            rec = mean_squared_error(theta_batch, theta_hat)
+            decay = tf.add_n(model.losses)
+            total_loss = kl + rec + decay 
+
+        # Store losses
+        losses['kl_loss'].append(kl.numpy())
+        losses['rec_loss'].append(rec.numpy())
+        losses['decay'].append(decay.numpy())
+
+        # One step backprop
+        gradients = tape.gradient(total_loss, model.trainable_variables)
+        if clip_value is not None:
+            gradients, _ = tf.clip_by_global_norm(gradients, clip_value)
+        apply_gradients(optimizer, gradients, model.trainable_variables, global_step)  
+
+        # Increase beta every beta_step iterations
+        if (global_step.numpy() + 1) % beta_step == 0:
+            tf.assign(beta, min(beta_max, beta.numpy() + beta_increment))
 
         # Update progress bar
         p_bar.set_postfix_str("Iteration: {0},Rec Loss: {1:.3f},KL Loss: {2:.3f},Regularization Loss: {3:.3f},Beta: {4:.2f}"

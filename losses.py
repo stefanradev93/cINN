@@ -1,5 +1,6 @@
 import tensorflow as tf
 from functools import partial
+import numpy as np
 
 
 def maximum_likelihood_loss(z, log_det_J):
@@ -80,6 +81,31 @@ def kullback_leibler_gaussian(z_mean, z_logvar, beta=1.):
     loss = 1 + z_logvar - tf.square(z_mean) - tf.exp(z_logvar)
     loss = -0.5 * tf.reduce_sum(loss, axis=-1)
     return beta * tf.reduce_mean(loss)
+
+
+def kullback_leibler_iaf(z, logqz_x, beta=1.):
+    """
+    Computes the KL loss for an iaf model.
+    """
+    
+    logpz = -tf.reduce_sum(0.5 * np.log(2*np.pi) + 0.5 * tf.square(z), axis=-1)
+    kl = beta * tf.reduce_mean(logqz_x - logpz)
+    return kl
+
+
+def mean_squared_error(y, y_hat):
+    """
+    Computes the mean squared error between two tensors.
+
+    Arguments:
+    z_mean   : tf.Tensor of shape (batch_size, theta_dim) -- the true values
+    z_logvar : tf.Tensor of shape (batch_size, theta_dim) -- the predicted values
+
+    Output:
+    loss : tf.Tensor of shape (,)  -- the mean squared error
+    """
+
+    return tf.losses.mean_squared_error(y, y_hat)
 
 
 def mean_squared_error(y, y_hat):
