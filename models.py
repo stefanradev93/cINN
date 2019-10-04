@@ -692,13 +692,13 @@ class IAFConditionalVAE(tf.keras.Model):
         self.ar_nns = [tf.keras.Sequential(
             [tf.keras.layers.Dense(units,
                                    activation=meta['activation'],
-                                   kernel_initializer=tf.ones_initializer,
+                                   kernel_initializer='ones',
                                    kernel_regularizer=l2(meta['w_decay']))
              for units in meta['n_units']] + 
             [
             tf.keras.layers.Dense(z_dim * 2,
                                   activation=meta['activation'],
-                                  kernel_initializer=tf.ones_initializer,
+                                  kernel_initializer='ones',
                                   kernel_regularizer=l2(meta['w_decay']))
             ])
         for _ in range(n_iaf)

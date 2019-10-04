@@ -9,13 +9,17 @@ import tensorflow as tf
 
 
 # Get a pointer to the C function diffusion.c
-addr_diffusion = get_cython_function_address("diffusion", "diffusion_trial")
-functype = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double, ctypes.c_double, 
-                            ctypes.c_double, ctypes.c_double, ctypes.c_double,
-                            ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double,
-                            ctypes.c_int)
+try:
+    addr_diffusion = get_cython_function_address("diffusion", "diffusion_trial")
+    functype = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double, ctypes.c_double, 
+                                ctypes.c_double, ctypes.c_double, ctypes.c_double,
+                                ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double,
+                                ctypes.c_int)
 
-diffusion_trial = functype(addr_diffusion)
+    diffusion_trial = functype(addr_diffusion)
+except ModuleNotFoundError:
+    print('Warning: You need to compile the diffusion.pyx file via Cython in order to simulate from the LFM model.')
+    pass
 
 
 @jit(nopython=True)
@@ -89,9 +93,9 @@ def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, 
     return X[:, :, np.newaxis], theta
 
 
-def simulate_ricker_elfi(r, sigma, phi, batch_size=1, n_points=500, to_tensor=True, random_state=None):
+def simulate_ricker_params(r, sigma, phi, batch_size=1, n_points=500, to_tensor=True):
     """
-    Simulates a batch of Ricker datasets conforming to the ELFI interface.
+    Simulates a batch of Ricker datasets given parameters.
     """
 
     theta = np.stack([r, sigma, phi], axis=1)
@@ -99,10 +103,11 @@ def simulate_ricker_elfi(r, sigma, phi, batch_size=1, n_points=500, to_tensor=Tr
 
     # Simulate a batch from the Ricker model
     simulate_ricker_batch(X, theta, batch_size, n_points)
-
+    X = X[:, :, np.newaxis]
+    
     if to_tensor:
-        return tf.convert_to_tensor(X[:, :, np.newaxis], dtype=tf.float32), tf.convert_to_tensor(theta, dtype=tf.float32)
-    return X[:, :, np.newaxis], theta
+        return tf.convert_to_tensor(X, dtype=tf.float32)
+    return X
 
     
 

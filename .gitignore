@@ -1,6 +1,7 @@
 models/
 latex/
 figures/
+sim_data/
 __pycache__/
 .ipynb_checkpoints/
 .Rhistory
