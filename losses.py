@@ -40,7 +40,7 @@ def heteroscedastic_loss(y_true, y_mean, y_var):
     return loss
 
 
-def maximum_mean_discrepancy_loss(source_samples, target_samples, weight=1.):
+def maximum_mean_discrepancy(source_samples, target_samples, weight=1., minimum=0.):
     """
     This Maximum Mean Discrepancy (MMD) loss is calculated with a number of
     different Gaussian kernels.
@@ -60,8 +60,8 @@ def maximum_mean_discrepancy_loss(source_samples, target_samples, weight=1.):
         1e3, 1e4, 1e5, 1e6
     ]
     gaussian_kernel = partial(gaussian_kernel_matrix, sigmas=sigmas)
-    loss_value = maximum_mean_discrepancy(source_samples, target_samples, kernel=gaussian_kernel)
-    loss_value = tf.maximum(1e-4, loss_value) * weight
+    loss_value = mmd_kernel(source_samples, target_samples, kernel=gaussian_kernel)
+    loss_value = tf.maximum(minimum, loss_value) * weight
     return loss_value
 
 
@@ -143,7 +143,7 @@ def gaussian_kernel_matrix(x, y, sigmas):
     return tf.reshape(tf.reduce_sum(tf.exp(-s), 0), tf.shape(dist))
     
 
-def maximum_mean_discrepancy(x, y, kernel=gaussian_kernel_matrix):
+def mmd_kernel(x, y, kernel=gaussian_kernel_matrix):
     """
     Computes the Maximum Mean Discrepancy (MMD) of two samples: x and y.
     Maximum Mean Discrepancy (MMD) is a distance-measure between the samples of

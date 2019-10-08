@@ -93,16 +93,18 @@ def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, 
     return X[:, :, np.newaxis], theta
 
 
-def simulate_ricker_params(r, sigma, phi, batch_size=1, n_points=500, to_tensor=True):
+def simulate_ricker_params(theta, n_points=500, to_tensor=True):
     """
     Simulates a batch of Ricker datasets given parameters.
     """
 
-    theta = np.stack([r, sigma, phi], axis=1)
-    X = np.zeros((batch_size, n_points))
+    
+    theta = np.atleast_2d(theta)
+    X = np.zeros((theta.shape[0], n_points))
 
     # Simulate a batch from the Ricker model
-    simulate_ricker_batch(X, theta, batch_size, n_points)
+    simulate_ricker_batch(X, theta, theta.shape[0], n_points)
+
     X = X[:, :, np.newaxis]
     
     if to_tensor:
