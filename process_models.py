@@ -373,3 +373,18 @@ def plot_diffusion_multiple(n=1000, figsize=(20, 20), filename='levy'):
 
     if filename is not None:
         f.savefig("figures/{}_multiple.png".format(filename), dpi=600, bbox_inches='tight')
+
+
+def load_test_ricker(to_tensor=True):
+    """
+    A utility for loading the Ricker test data.
+    """
+
+    X_test = np.load('sim_data/ricker_test500/ricker_X.npy')
+    theta_test = np.load('sim_data/ricker_test500/ricker_theta.npy')
+
+    if to_tensor:
+        X_test = tf.convert_to_tensor(X_test, dtype=tf.float32)
+        theta_test = tf.convert_to_tensor(theta_test, dtype=tf.float32)
+
+    return X_test, theta_test

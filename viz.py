@@ -304,6 +304,67 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
     if filename is not None:
         f.savefig("figures/{}_{}n_density.png".format(filename, X_test.shape[1]), dpi=600, bbox_inches='tight')
 
+def plot_true_est_posterior_samples(theta_samples, theta_test, param_names, figsize=(15, 20), 
+                                    tight=True, show=True, filename=None, font_size=12):
+    """
+    Plots approximate posteriors.
+    """
+
+    # Plot settings
+    plt.rcParams['font.size'] = font_size
+    
+    # Convert theta to numpy
+    theta_test = theta_test.numpy()
+    n_test = theta_test.shape[0]
+
+    # Initialize f
+    f, axarr = plt.subplots(n_test, len(param_names), figsize=figsize)
+    axarr = np.atleast_2d(axarr)
+
+    theta_samples_means  = np.mean(theta_samples, axis=0, keepdims=1)
+
+    # For each row 
+    for i in range(n_test):
+        for j in range(len(param_names)):
+            
+            
+            # Plot approximate posterior
+            if len(theta_samples.shape) == 3:
+                theta_samples_p = theta_samples[:, i, j]
+            else:
+                theta_samples_p = theta_samples[:, j]
+
+            sns.distplot(theta_samples_p, kde=True, hist=True, ax=axarr[i, j], 
+                            label='Estimated posterior', color='#5c92e8')
+            
+            # Plot lines for approximate mean, analytic mean and true data-generating value
+            axarr[i, j].axvline(theta_samples_means[i, j], color='#5c92e8', label='Estimated mean')
+            axarr[i, j].axvline(theta_test[i, j], color='#e55e5e', label='True')
+            axarr[i, j].spines['right'].set_visible(False)
+            axarr[i, j].spines['top'].set_visible(False)
+            axarr[i, j].xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+            axarr[i, j].get_yaxis().set_ticks([])
+            
+            
+            # Set title of first row
+            if i == 0:
+                axarr[i, j].set_title(param_names[j])       
+            
+            if i == 0 and j == 0:
+                f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.03), shadow=True, ncol=3, fontsize=10, borderaxespad=1)
+                #axarr[i, j].legend(fontsize=10)
+                
+    if tight:
+        f.tight_layout()
+    f.subplots_adjust(bottom=0.12)
+    # Show, if specified
+    if show:
+        plt.show()
+    
+    # Save if specified
+    if filename is not None:
+        f.savefig("figures/{}_{}n_density.png".format(filename, X_test.shape[1]), dpi=600, bbox_inches='tight')
+
 
 def plot_sbc(model, n_samples, X_test, theta_test, param_names, bins=None,
             figsize=(15, 5), show=True, filename=None, font_size=12):
