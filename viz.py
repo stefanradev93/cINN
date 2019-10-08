@@ -304,6 +304,7 @@ def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_gen
     if filename is not None:
         f.savefig("figures/{}_{}n_density.png".format(filename, X_test.shape[1]), dpi=600, bbox_inches='tight')
 
+
 def plot_true_est_posterior_samples(theta_samples, theta_test, param_names, figsize=(15, 20), 
                                     tight=True, show=True, filename=None, font_size=12):
     """
