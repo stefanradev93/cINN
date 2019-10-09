@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score
 
 
 def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names, 
-                          figsize=(20, 4), show=True, filename=None, font_size=12):
+                          figsize=(20, 4), theta_approx_means=None, show=True, filename=None, font_size=12):
     """Plots a scatter plot with abline of the estimated posterior means vs true values."""
 
 
@@ -29,8 +29,10 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names,
     f, axarr = plt.subplots(n_row, n_col, figsize=figsize)
     if n_row > 1:
         axarr = axarr.flat
-    # Initialize posterior means matrix
-    theta_approx_means = model.sample(X_test, n_samples, to_numpy=True).mean(axis=0)
+
+    # Initialize posterior means matrix, if nose specified
+    if theta_approx_means is None:
+        theta_approx_means = model.sample(X_test, n_samples, to_numpy=True).mean(axis=0)
         
     # --- Plot true vs estimated posterior means on a single row --- #
     for j in range(len(param_names)):
