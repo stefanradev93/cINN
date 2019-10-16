@@ -35,6 +35,10 @@ def simulate_ricker_single(t_obs, r, sigma, phi):
     phi   : float -- the phi (rho) parameter of the Ricker model          
     """
     
+    # Ensure sigma and phi are positive
+    phi = phi if phi >= 0 else 0
+    sigma = sigma if sigma >= 0 else 0
+
     x = np.zeros(t_obs)
     N = 10
     for t in range(t_obs):
