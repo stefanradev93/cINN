@@ -237,7 +237,7 @@ class DeepConditionalModel(tf.keras.Model):
         for cINN in self.cINNs:
             z, log_det_J = cINN(z, y)
             log_det_Js.append(log_det_J)
-        # Sum Jacobian determinants for all blocks to obtain total Jacobian.
+        # Sum Jacobian determinants for all blocks to obtain total log det(Jacobian).
         log_det_J = tf.add_n(log_det_Js)
         return z, log_det_J
 
