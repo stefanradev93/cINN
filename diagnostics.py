@@ -77,6 +77,12 @@ def rmse(theta_samples, theta_test, normalized=True):
     
     (n)rmse  : np.ndarray of shape (n_params, ) -- the (n)rmse per parameter
     """
+
+    # Convert tf.Tensors to numpy, if passed
+    if type(theta_samples) is not np.ndarray:
+        theta_samples = theta_samples.numpy() 
+    if type(theta_test) is not np.ndarray:
+        theta_test = theta_test.numpy()
     
     theta_approx_means = theta_samples.mean(0)
     rmse = np.sqrt( np.mean( (theta_approx_means - theta_test)**2, axis=0) )
@@ -103,6 +109,12 @@ def R2(theta_samples, theta_test):
     
     r2s  : np.ndarray of shape (n_params, ) -- the r2s per parameter
     """
+
+    # Convert tf.Tensors to numpy, if passed
+    if type(theta_samples) is not np.ndarray:
+        theta_samples = theta_samples.numpy() 
+    if type(theta_test) is not np.ndarray:
+        theta_test = theta_test.numpy()
     
     theta_approx_means = theta_samples.mean(0)
     return r2_score(theta_test, theta_approx_means, multioutput='raw_values')
@@ -127,6 +139,12 @@ def resimulation_error(theta_samples, theta_test, simulator, **sim_args):
     Returns:
     (n)rmse  : np.ndarray of shape (n_params, ) -- the (n)rmse per parameter
     """
+
+    # Convert tf.Tensors to numpy, if passed
+    if type(theta_samples) is not np.ndarray:
+        theta_samples = theta_samples.numpy() 
+    if type(theta_test) is not np.ndarray:
+        theta_test = theta_test.numpy()
     
     theta_approx_means = theta_samples.mean(0)
     n_test = theta_test.shape[0]

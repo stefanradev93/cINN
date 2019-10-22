@@ -41,10 +41,6 @@ preds_u = predict(rf, test_data, train_data)
 theta_hat = data.frame(r=preds_r$expectation, sigma=preds_sigma$expectation,
                        rho=preds_rho$expectation, u=preds_u$expectation)
 
-write.table(theta_hat, "./sim_data/ricker_results_rf/theta_means_rf.csv", sep=';')
+write.table(theta_hat, "./sim_data/ricker_results_rf/theta_means_rf.csv", sep=';', row.names=F)
 
-
-df = read.table("./sim_data/ricker_results_rf/theta_means_rf.csv", sep=';')
-
-write.table(df, "./sim_data/ricker_results_rf/theta_means_rf.csv", sep=';', row.names = F)
 
