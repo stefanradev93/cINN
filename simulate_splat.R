@@ -5,11 +5,12 @@ setwd("D:/seqRNA")
 
 
 
-simulate_batch = function(sim_id, n_sim=32, n_genes=20, n_cells=20, test=F, n_params=8) {
+simulate_batch = function(sim_id, n_sim=32, n_genes=20, n_cells=20, which='train', n_params=8) {
   # Simulates a batch of gene-cell matrices and save it to file
   
-  if (test) set.seed(42)
-  else set.seed(sim_id)
+  if (which=='test') set.seed(42)
+  else if (which == 'train') set.seed(43)
+  else if (which == 'sbc') set.seed(44)
     
   sim_data = array(0, c(n_sim, n_genes, n_cells))
   sim_params = array(0., c(n_sim, n_params))
@@ -46,12 +47,15 @@ simulate_batch = function(sim_id, n_sim=32, n_genes=20, n_cells=20, test=F, n_pa
   
   
   
-  if (test) {
+  if (which == 'test') {
     npySave("test/rna_data_test.npy", sim_data)
     npySave("test/rna_params_test.npy", sim_params)
-  } else {
+  } else if (which == 'train') {
     npySave(paste0("data/rna_data_", sim_id + offset, ".npy"), sim_data)
     npySave(paste0("params/rna_params_", sim_id + offset, ".npy"), sim_params)
+  } else {
+    npySave(paste0("sbc/rna_data_", sim_id + offset, ".npy"), sim_data)
+    npySave(paste0("sbc/rna_params_", sim_id + offset, ".npy"), sim_params)
   }
   
   
@@ -62,17 +66,22 @@ n_genes=100
 n_cells=40
 n_batches = 30
 n_sim_batch = 10000
-n_test = 300
+n_test = 500
+n_sbc = 5000
 
 
 ### Run simulation (For training)
 for (i in 1:n_batches) {
   
-  simulate_batch(i, n_sim=n_sim_batch, n_genes=n_genes, n_cells=n_cells)
+  simulate_batch(i, n_sim=n_sim_batch, n_genes=n_genes, which='train', n_cells=n_cells)
   print(paste('Simulated', i,  'batches...'))
 
   
 }
 
 ### Run simulation (for validation)
-simulate_batch(i+1, n_sim=n_test, test=T, n_genes=n_genes, n_cells=n_cells)
+simulate_batch(i+1, n_sim=n_test, n_genes=n_genes, which='test', n_cells=n_cells)
+
+
+### Run simulation (for SBC)
+simulate_batch(i+1, n_sim=n_sbc, n_genes=n_genes, which='sbc', n_cells=n_cells)

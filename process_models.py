@@ -286,13 +286,13 @@ def plot_sir(beta, gamma, n_points=500, figsize=(8, 4), N=1000, filename=None):
         f.savefig("figures/{}_plot_multiple.png".format(filename), dpi=600)
 
 
-def plot_ricker_multiple(T=500, figsize=(10, 10), filename='Ricker'):
+def plot_ricker_multiple(T=500, figsize=(8, 3), filename='Ricker'):
     """Plots example datasets from the Ricker model."""
 
-    X, theta = simulate_ricker(25, n_points=T, to_tensor=False)
+    X, theta = simulate_ricker(10, n_points=T, to_tensor=False)
     t = np.arange(1, T+1)
 
-    f, axarr = plt.subplots(5, 5, figsize=figsize)
+    f, axarr = plt.subplots(2, 5, figsize=figsize)
 
     for i, ax in enumerate(axarr.flat):
 
@@ -307,16 +307,16 @@ def plot_ricker_multiple(T=500, figsize=(10, 10), filename='Ricker'):
     f.tight_layout()
 
     if filename is not None:
-        f.savefig("figures/{}_plot_multiple.png".format(filename), dpi=600, bbox_inches='tight')
+        f.savefig("figures/{}_plot_multiple.png".format(filename), dpi=300, bbox_inches='tight')
 
 
-def plot_sir_multiple(T=500, figsize=(20, 20), filename='SIR'):
+def plot_sir_multiple(T=500, figsize=(10, 3), filename='SIR'):
     """Plots example datasets from the SIR model."""
 
-    X, theta = simulate_sir(25, n_points=T, to_tensor=False)
+    X, theta = simulate_sir(10, n_points=T, to_tensor=False)
     t = np.arange(1, T+1)
 
-    f, axarr = plt.subplots(5, 5, figsize=figsize)
+    f, axarr = plt.subplots(2, 5, figsize=figsize)
 
     for i, ax in enumerate(axarr.flat):
 
@@ -328,19 +328,19 @@ def plot_sir_multiple(T=500, figsize=(20, 20), filename='SIR'):
         if i == 0:
             ax.set_xlabel(r'Number of time points ($T$)', fontsize=10)
             ax.set_ylabel('Number of individuals', fontsize=10)
-            ax.legend(fontsize=10)
-        else:
-            ax.get_legend().remove()
+            f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.02), shadow=True, ncol=3, fontsize=6, borderaxespad=1)
+        ax.get_legend().remove()
+            
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
     
     f.tight_layout()
 
     if filename is not None:
-        f.savefig("figures/{}_plot_multiple.png".format(filename), dpi=600, bbox_inches='tight')
+        f.savefig("figures/{}_plot_multiple.png".format(filename), dpi=300, bbox_inches='tight')
 
 
-def plot_diffusion_multiple(n=1000, figsize=(20, 20), filename='levy'):
+def plot_diffusion_multiple(n=1000, figsize=(10, 3), filename='levy'):
     """Plots example datasets from the SIR model."""
 
     parameter_bounds = {
@@ -355,10 +355,10 @@ def plot_diffusion_multiple(n=1000, figsize=(20, 20), filename='levy'):
         'alpha': [1.0, 2.0],
     }
 
-    X, theta = simulate_diffusion(25, parameter_bounds, n_points=n, to_tensor=False)
+    X, theta = simulate_diffusion(10, parameter_bounds, n_points=n, to_tensor=False)
     n = np.arange(1, n+1)
 
-    f, axarr = plt.subplots(5, 5, figsize=figsize)
+    f, axarr = plt.subplots(2, 5, figsize=figsize)
 
     for i, ax in enumerate(axarr.flat):
 
@@ -371,14 +371,14 @@ def plot_diffusion_multiple(n=1000, figsize=(20, 20), filename='levy'):
         if i == 0:
             ax.set_xlabel(r'Number of trials ($n$)', fontsize=10)
             ax.set_ylabel('Density', fontsize=10)
-            ax.legend(fontsize=10)
+            f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.02), shadow=True, ncol=2, fontsize=6, borderaxespad=1)
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
     
     f.tight_layout()
 
     if filename is not None:
-        f.savefig("figures/{}_multiple.png".format(filename), dpi=600, bbox_inches='tight')
+        f.savefig("figures/{}_multiple.png".format(filename), dpi=300, bbox_inches='tight')
 
 
 def load_test_ricker(to_tensor=True):
@@ -394,3 +394,4 @@ def load_test_ricker(to_tensor=True):
         theta_test = tf.convert_to_tensor(theta_test, dtype=tf.float32)
 
     return X_test, theta_test
+
