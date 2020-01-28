@@ -1,6 +1,7 @@
 from numba import jit, prange
 import ctypes
 from numba.extending import get_cython_function_address
+from scipy import integrate
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -223,6 +224,55 @@ def simulate_batch_diffusion_p(x, params):
             x[i, j, 1] = diffusion_trial(params[i, 1], params[i, 2], params[i, 3], 
                                          params[i, 4], params[i, 5], params[i, 6], 
                                          params[i, 7], params[i, 8], 0.001, 5000)
+
+
+
+def lotka_volterra_forward(params, n_obs, T, x0, y0):
+    """Performs one forward simulation from the LV model"""
+
+    def dX_dt(X, t=0):
+        """Return the growth rate of fox and rabbit populations."""
+        return np.array([ a*X[0] -   b*X[0]*X[1], -c*X[1] + d*b*X[0]*X[1] ])
+
+    t = np.linspace(0, T,  n_obs)              
+    X0 = np.array([10, 5])                    
+    a, b, c, d = params
+    
+    # a - pray birth rate
+    # b - predation rate
+    # c - predator death rate
+    # d - predator birth rate
+    X = integrate.odeint(dX_dt, X0, t)
+    
+    # Clip inf (divergent sims)
+    X[np.isneginf(X)] = 0
+    X[np.isposinf(X)] = -1
+    return X
+
+def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0=10, y0=5, 
+                            T=15, to_tensor=True, n_min=200, n_max=1000):
+
+    """Simulates batch_size datasets from the LV model."""
+
+    # Sample number of trials, if None given
+    if n_points is None:
+        n_points = np.random.randint(n_min, n_max+1)
+
+    theta_batch = np.exp(np.random.uniform(low=p_lower, high=p_upper, size=(batch_size, 4)))
+    X_batch = np.zeros((batch_size, n_points, 2))
+
+    for j in range(batch_size):
+        X_batch[j] = lotka_volterra_forward(theta_batch[j], n_points, T, x0, y0)
+    
+    # Clip large and small values
+    X_batch = np.clip(X_batch, 0, 100000)
+
+    if to_tensor:
+        X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
+
+    return X_batch, theta_batch
+
+    
 
 
 def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2, 
