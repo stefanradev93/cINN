@@ -143,8 +143,13 @@ def train_online_kl(model, optimizer, data_generator, iterations, batch_size, be
 
         # One step backprop
         gradients = tape.gradient(total_loss, model.trainable_variables)
+
         if clip_value is not None:
-            gradients, _ = tf.clip_by_global_norm(gradients, clip_value)
+            try:
+                gradients, _ = tf.clip_by_global_norm(gradients, clip_value)
+            # Catch inf in global norm
+            except tf.errors.InvalidArgumentError:
+                gradients = [tf.clip_by_value(grad, -clip_value, clip_value) for grad in gradients if grad is not None]
         apply_gradients(optimizer, gradients, model.trainable_variables, global_step)  
 
         # Increase beta every beta_step iterations

@@ -250,7 +250,7 @@ def lotka_volterra_forward(params, n_obs, T, x0, y0):
     return X
 
 def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0=10, y0=5, 
-                            T=15, to_tensor=True, n_min=200, n_max=1000):
+                            T=15, to_tensor=True, n_min=200, n_max=1000, summary=False):
 
     """Simulates batch_size datasets from the LV model."""
 
@@ -258,22 +258,40 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
     if n_points is None:
         n_points = np.random.randint(n_min, n_max+1)
 
-    theta_batch = np.exp(np.random.uniform(low=p_lower, high=p_upper, size=(batch_size, 4)))
+    theta_batch = np.random.uniform(low=p_lower, high=p_upper, size=(batch_size, 4))
     X_batch = np.zeros((batch_size, n_points, 2))
 
     for j in range(batch_size):
-        X_batch[j] = lotka_volterra_forward(theta_batch[j], n_points, T, x0, y0)
+        X_batch[j] = lotka_volterra_forward(np.exp(theta_batch[j]), n_points, T, x0, y0)
     
     # Clip large and small values
     X_batch = np.clip(X_batch, 0, 100000)
+
+    if summary:
+        x = X_batch
+        lag1 = int(0.2 * (n_points / T))
+        lag2 = int(0.4 * (n_points / T))
+        # Means
+        x_means = np.mean(x, axis=1)
+        # Logvars
+        x_logvars = np.log1p(np.var(x, axis=1))
+        # Autocorrelations at lag 0.2 and 0.4 time units
+        x_auto = np.array([np.corrcoef(np.c_[x[i][:-lag1], x[i][lag1:]], rowvar=False) for i in range(x.shape[0])])
+        x_auto11_1 = x_auto[:, 0, 2]
+        x_auto12_2 = x_auto[:, 1, 3]
+        x_auto = np.array([np.corrcoef(np.c_[x[i][:-lag2], x[i][lag2:]], rowvar=False) for i in range(x.shape[0])])
+        x_auto21_1 = x_auto[:, 0, 2]
+        x_auto22_2 = x_auto[:, 1, 3]
+        # Cross-correlation
+        x[:, :, 0] = (x[:, :, 0] - np.mean(x[:, :, 0], axis=1)[:, np.newaxis]) / (np.std(x[:, :, 0], axis=1)[:, np.newaxis] * x.shape[1])
+        x[:, :, 1] = (x[:, :, 1] - np.mean(x[:, :, 1], axis=1)[:, np.newaxis]) / (np.std(x[:, :, 1], axis=1)[:, np.newaxis])
+        x_cross = np.array([np.correlate(x[i, :, 0] , x[i, :, 1]) for i in range(x.shape[0])])
+        X_batch = np.c_[x_means, x_logvars, x_auto11_1, x_auto12_2, x_auto21_1, x_auto22_2, x_cross]
 
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
 
     return X_batch, theta_batch
-
-    
-
 
 def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2, 
                        to_tensor=True, cond_coding=False, n_trials_min=100, n_trials_max=1000):
