@@ -252,17 +252,20 @@ def lotka_volterra_forward(params, n_obs, T, x0, y0):
 def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0=10, y0=5, 
                             T=15, to_tensor=True, n_min=200, n_max=1000, summary=False):
 
-    """Simulates batch_size datasets from the LV model."""
+    """
+    Simulates batch_size datasets from the LV model. Code inspired by:
+    https://scipy-cookbook.readthedocs.io/items/LoktaVolterraTutorial.html
+    """
 
     # Sample number of trials, if None given
     if n_points is None:
         n_points = np.random.randint(n_min, n_max+1)
 
-    theta_batch = np.random.uniform(low=p_lower, high=p_upper, size=(batch_size, 4))
+    theta_batch = np.exp(np.random.uniform(low=p_lower, high=p_upper, size=(batch_size, 4)))
     X_batch = np.zeros((batch_size, n_points, 2))
 
     for j in range(batch_size):
-        X_batch[j] = lotka_volterra_forward(np.exp(theta_batch[j]), n_points, T, x0, y0)
+        X_batch[j] = lotka_volterra_forward(theta_batch[j], n_points, T, x0, y0)
     
     # Clip large and small values
     X_batch = np.clip(X_batch, 0, 100000)
