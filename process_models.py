@@ -12,7 +12,7 @@ import tensorflow as tf
 # Get a pointer to the C function diffusion.c
 try:
     addr_diffusion = get_cython_function_address("diffusion", "diffusion_trial")
-    functype = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double, ctypes.c_double, 
+    functype = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double, ctypes.c_double,
                                 ctypes.c_double, ctypes.c_double, ctypes.c_double,
                                 ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double,
                                 ctypes.c_int)
@@ -26,16 +26,16 @@ except ModuleNotFoundError:
 @jit(nopython=True)
 def simulate_ricker_single(t_obs, r, sigma, phi):
     """
-    Simulate a dataset from the Ricker model 
+    Simulate a dataset from the Ricker model
     describing dynamics of the number of individuals over time.
 
     Arguments:
     t_obs : int -- length of the observed time-series
     r     : float -- the r parameter of the Ricker model
     sigma : float -- the sigma parameter of the Ricker model
-    phi   : float -- the phi (rho) parameter of the Ricker model          
+    phi   : float -- the phi (rho) parameter of the Ricker model
     """
-    
+
     # Ensure sigma and phi are positive
     phi = phi if phi >= 0 else 0
     sigma = sigma if sigma >= 0 else 0
@@ -55,9 +55,9 @@ def simulate_ricker_batch(X, params, n_batch, t_obs):
     """
     for i in prange(n_batch):
         X[i, :] = simulate_ricker_single(t_obs, params[i, 0], params[i, 1], params[i, 2])
-    
 
-def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90, 
+
+def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, low_r=1, high_r=90,
                     low_sigma=0.05, high_sigma=0.7, low_phi=0, high_phi=15, to_tensor=True):
     """
     Simulates and returns a batch of 1D timeseries obtained under the Ricker model.
@@ -80,14 +80,14 @@ def simulate_ricker(batch_size=64, n_points=None, t_obs_min=100, t_obs_max=500, 
               (tf.Tensor of shape (batch_size, t_obs, 1), tf.Tensor of shape (batch_size, 3)) --
               a batch or time series generated under a batch of Ricker parameters
     """
-    
+
 
     # Sample t_obs, if None given
     if n_points is None:
         n_points = np.random.randint(low=t_obs_min, high=t_obs_max+1)
 
     # Prepare placeholders
-    theta = np.random.uniform(low=[low_r, low_sigma, low_phi], 
+    theta = np.random.uniform(low=[low_r, low_sigma, low_phi],
                           high=[high_r, high_sigma, high_phi], size=(batch_size, 3))
     X = np.zeros((batch_size, n_points))
 
@@ -103,7 +103,7 @@ def simulate_ricker_params(theta, n_points=500, to_tensor=True):
     Simulates a batch of Ricker datasets given parameters.
     """
 
-    
+
     theta = np.atleast_2d(theta)
     X = np.zeros((theta.shape[0], n_points))
 
@@ -111,18 +111,18 @@ def simulate_ricker_params(theta, n_points=500, to_tensor=True):
     simulate_ricker_batch(X, theta, theta.shape[0], n_points)
 
     X = X[:, :, np.newaxis]
-    
+
     if to_tensor:
         return tf.convert_to_tensor(X, dtype=tf.float32)
     return X
 
-    
+
 
 def sir(u, beta, gamma, t, N=1000, dt=0.1, iota=0.5):
     """
     Implements the stochastic SIR equations.
     """
-    
+
     S, I, R = u
     lambd = beta *(I+iota)/N
     ifrac = 1.0 - np.exp(-lambd*dt)
@@ -137,7 +137,7 @@ def simulate_sir_single(beta, gamma, t_max=500, N=1000):
 
     tf = 200
     t = np.linspace(0, tf, t_max)
-    
+
     S = np.zeros(t_max)
     I = np.zeros(t_max)
     R = np.zeros(t_max)
@@ -149,7 +149,7 @@ def simulate_sir_single(beta, gamma, t_max=500, N=1000):
     return np.array([S, I, R]).T
 
 @jit
-def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gamma=0., 
+def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gamma=0.,
 
                  t_min=200, t_max=500, N=1000, normalize=True, to_tensor=True):
     """
@@ -175,13 +175,13 @@ def simulate_sir(batch_size, n_points=None, low_beta=0.01, high_beta=1., low_gam
     # Select T
     if n_points is None:
         n_points = np.random.randint(low=t_min, high=t_max+1)
-    
+
     # Prepare X and theta
     X = np.zeros((batch_size, n_points, 3))
     beta_samples = np.random.uniform(low=low_beta, high=high_beta, size=batch_size)
     gamma_samples = np.random.uniform(low=low_gamma, high=beta_samples)
     theta = np.c_[beta_samples, gamma_samples]
-    
+
     # Run the SIR simulator for # batch_size
     for j in prange(batch_size):
         X[j] = simulate_sir_single(theta[j, 0], theta[j, 1], t_max=n_points, N=N)
@@ -217,12 +217,12 @@ def simulate_batch_diffusion_p(x, params):
         # For each condition
         for j in prange(x.shape[1]):
             # First condition
-            x[i, j, 0] = diffusion_trial(params[i, 0], params[i, 2], params[i, 3], 
-                                         params[i, 4], params[i, 5], params[i, 6], 
+            x[i, j, 0] = diffusion_trial(params[i, 0], params[i, 2], params[i, 3],
+                                         params[i, 4], params[i, 5], params[i, 6],
                                          params[i, 7], params[i, 8], 0.001, 5000)
             # Second condition
-            x[i, j, 1] = diffusion_trial(params[i, 1], params[i, 2], params[i, 3], 
-                                         params[i, 4], params[i, 5], params[i, 6], 
+            x[i, j, 1] = diffusion_trial(params[i, 1], params[i, 2], params[i, 3],
+                                         params[i, 4], params[i, 5], params[i, 6],
                                          params[i, 7], params[i, 8], 0.001, 5000)
 
 
@@ -234,22 +234,22 @@ def lotka_volterra_forward(params, n_obs, T, x0, y0):
         """Return the growth rate of fox and rabbit populations."""
         return np.array([ a*X[0] -   b*X[0]*X[1], -c*X[1] + d*b*X[0]*X[1] ])
 
-    t = np.linspace(0, T,  n_obs)              
-    X0 = np.array([10, 5])                    
+    t = np.linspace(0, T,  n_obs)
+    X0 = np.array([10, 5])
     a, b, c, d = params
-    
+
     # a - pray birth rate
     # b - predation rate
     # c - predator death rate
     # d - predator birth rate
     X = integrate.odeint(dX_dt, X0, t)
-    
+
     # Clip inf (divergent sims)
     X[np.isneginf(X)] = 0
     X[np.isposinf(X)] = -1
     return X
 
-def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0=10, y0=5, 
+def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0=10, y0=5,
                             T=15, to_tensor=True, n_min=200, n_max=1000, summary=False):
 
     """
@@ -266,10 +266,14 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
 
     for j in range(batch_size):
         X_batch[j] = lotka_volterra_forward(theta_batch[j], n_points, T, x0, y0)
-    
-    # Clip large and small values
-    X_batch = np.clip(X_batch, 0, 100000)
 
+    # Clip large and small values
+    X_batch = np.clip(X_batch, 0., 100000.)
+    X_batch[np.isneginf(X_batch)] = -1.
+    X_batch[np.isposinf(X_batch)] = 100000.
+    X_batch[np.isnan(X_batch)] = -1.
+
+    # Compute summaries, if given
     if summary:
         x = X_batch
         lag1 = int(0.2 * (n_points / T))
@@ -296,10 +300,10 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
 
     return X_batch, theta_batch
 
-def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2, 
+def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2,
                        to_tensor=True, cond_coding=False, n_trials_min=100, n_trials_max=1000):
     """Simulates batch_size datasets from the full Ratcliff diffusion model."""
-    
+
     # Get number of parameters
     n_params = len(pbounds)
 
@@ -311,7 +315,7 @@ def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2,
     lower_bounds = [pbounds['v1'][0], pbounds['v2'][0], pbounds['sv'][0], pbounds['zr'][0],
                     pbounds['szr'][0], pbounds['a'][0], pbounds['ndt'][0], pbounds['sndt'][0],
                     pbounds['alpha'][0]]
-    
+
     upper_bounds = [pbounds['v1'][1], pbounds['v2'][1], pbounds['sv'][1], pbounds['zr'][1],
                     pbounds['szr'][1], pbounds['a'][1], pbounds['ndt'][1], pbounds['sndt'][1],
                     pbounds['alpha'][1]]
@@ -323,7 +327,7 @@ def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2,
 
     # Return in specified format (condition coding or just stack, tf.Tensor or np.array)
     if cond_coding:
-        X_batch = np.stack(([np.c_[X_batch[:, :, 0], X_batch[:, :, 1]], 
+        X_batch = np.stack(([np.c_[X_batch[:, :, 0], X_batch[:, :, 1]],
                              np.c_[np.zeros((batch_size, n_points)), np.ones((batch_size, n_points))]]), axis=-1)
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
@@ -374,7 +378,7 @@ def plot_ricker_multiple(T=500, figsize=(8, 3), filename='Ricker'):
             ax.set_ylabel("Number of individuals", fontsize=10)
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
-    
+
     f.tight_layout()
 
     if filename is not None:
@@ -401,10 +405,10 @@ def plot_sir_multiple(T=500, figsize=(10, 3), filename='SIR'):
             ax.set_ylabel('Number of individuals', fontsize=10)
             f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.02), shadow=True, ncol=3, fontsize=6, borderaxespad=1)
         ax.get_legend().remove()
-            
+
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
-    
+
     f.tight_layout()
 
     if filename is not None:
@@ -445,7 +449,7 @@ def plot_diffusion_multiple(n=1000, figsize=(10, 3), filename='levy'):
             f.legend(loc='lower center', bbox_to_anchor=(0.5, -0.02), shadow=True, ncol=2, fontsize=6, borderaxespad=1)
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
-    
+
     f.tight_layout()
 
     if filename is not None:
@@ -465,4 +469,3 @@ def load_test_ricker(to_tensor=True):
         theta_test = tf.convert_to_tensor(theta_test, dtype=tf.float32)
 
     return X_test, theta_test
-
