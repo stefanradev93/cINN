@@ -267,12 +267,6 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
     for j in range(batch_size):
         X_batch[j] = lotka_volterra_forward(theta_batch[j], n_points, T, x0, y0)
 
-    # Clip large and small values
-    X_batch = np.clip(X_batch, 0., 100000.)
-    X_batch[np.isneginf(X_batch)] = -1.
-    X_batch[np.isposinf(X_batch)] = 100000.
-    X_batch[np.isnan(X_batch)] = -1.
-
     # Compute summaries, if given
     if summary:
         x = X_batch
@@ -294,6 +288,12 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
         x[:, :, 1] = (x[:, :, 1] - np.mean(x[:, :, 1], axis=1)[:, np.newaxis]) / (np.std(x[:, :, 1], axis=1)[:, np.newaxis])
         x_cross = np.array([np.correlate(x[i, :, 0] , x[i, :, 1]) for i in range(x.shape[0])])
         X_batch = np.c_[x_means, x_logvars, x_auto11_1, x_auto12_2, x_auto21_1, x_auto22_2, x_cross]
+
+    # Clip large and small values
+    X_batch = np.clip(X_batch, 0., 100000.)
+    X_batch[np.isneginf(X_batch)] = -1.
+    X_batch[np.isposinf(X_batch)] = 100000.
+    X_batch[np.isnan(X_batch)] = -1.
 
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
