@@ -226,7 +226,6 @@ def simulate_batch_diffusion_p(x, params):
                                          params[i, 7], params[i, 8], 0.001, 5000)
 
 
-
 def lotka_volterra_forward(params, n_obs, T, x0, y0):
     """Performs one forward simulation from the LV model"""
 
@@ -249,6 +248,7 @@ def lotka_volterra_forward(params, n_obs, T, x0, y0):
     X[np.isposinf(X)] = -1
     return X
 
+
 def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0=10, y0=5,
                             T=15, to_tensor=True, n_min=200, n_max=1000, summary=False):
 
@@ -266,6 +266,12 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
 
     for j in range(batch_size):
         X_batch[j] = lotka_volterra_forward(theta_batch[j], n_points, T, x0, y0)
+
+    # Clip large and small values
+    X_batch = np.clip(X_batch, 0., 100000.)
+    X_batch[np.isneginf(X_batch)] = -1.
+    X_batch[np.isposinf(X_batch)] = 100000.
+    X_batch[np.isnan(X_batch)] = -1.
 
     # Compute summaries, if given
     if summary:
@@ -289,16 +295,26 @@ def simulate_lotka_volterra(batch_size, p_lower=-2, p_upper=2, n_points=None, x0
         x_cross = np.array([np.correlate(x[i, :, 0] , x[i, :, 1]) for i in range(x.shape[0])])
         X_batch = np.c_[x_means, x_logvars, x_auto11_1, x_auto12_2, x_auto21_1, x_auto22_2, x_cross]
 
-    # Clip large and small values
-    X_batch = np.clip(X_batch, 0., 100000.)
-    X_batch[np.isneginf(X_batch)] = -1.
-    X_batch[np.isposinf(X_batch)] = 100000.
-    X_batch[np.isnan(X_batch)] = -1.
-
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
 
     return X_batch, theta_batch
+
+def simulate_lv_params(theta, n_points=500, x0=10, y0=5, T=15, 
+                       to_tensor=True, n_min=200, n_max=1000, summary=False):
+    """
+    Simulates a batch of Ricker datasets given parameters.
+    """
+
+    theta = np.atleast_2d(theta)
+    X = np.zeros((theta.shape[0], n_points, 2))
+
+    for j in range(theta.shape[0]):
+        X[j] = lotka_volterra_forward(theta[j], n_points, T, x0, y0)
+
+    if to_tensor:
+        return tf.convert_to_tensor(X, dtype=tf.float32)
+    return X
 
 def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2,
                        to_tensor=True, cond_coding=False, n_trials_min=100, n_trials_max=1000):

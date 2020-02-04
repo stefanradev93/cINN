@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score
 
 
 
-def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names, 
+def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names, text=True, 
                           figsize=(20, 4), theta_approx_means=None, show=True, filename=None, font_size=12):
     """Plots a scatter plot with abline of the estimated posterior means vs true values."""
 
@@ -48,22 +48,23 @@ def plot_true_est_scatter(model, X_test, theta_test, n_samples, param_names,
         axarr[j].set_ylim((lower_lim, upper_lim))
         axarr[j].plot(axarr[j].get_xlim(), axarr[j].get_xlim(), '--', color='black')
         
-        # Compute NRMSE
-        rmse = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
-        nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
-        axarr[j].text(0.1, 0.9, 'NRMSE={:.3f}'.format(nrmse),
-                     horizontalalignment='left',
-                     verticalalignment='center',
-                     transform=axarr[j].transAxes,
-                     size=10)
-        
-        # Compute R2
-        r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
-        axarr[j].text(0.1, 0.8, '$R^2$={:.3f}'.format(r2),
-                     horizontalalignment='left',
-                     verticalalignment='center',
-                     transform=axarr[j].transAxes, 
-                     size=10)
+        if text:
+            # Compute NRMSE
+            rmse = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
+            nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
+            axarr[j].text(0.1, 0.9, 'NRMSE={:.3f}'.format(nrmse),
+                        horizontalalignment='left',
+                        verticalalignment='center',
+                        transform=axarr[j].transAxes,
+                        size=10)
+            
+            # Compute R2
+            r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
+            axarr[j].text(0.1, 0.8, '$R^2$={:.3f}'.format(r2),
+                        horizontalalignment='left',
+                        verticalalignment='center',
+                        transform=axarr[j].transAxes, 
+                        size=10)
         
         if j == 0:
             # Label plot
