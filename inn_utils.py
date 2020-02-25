@@ -3,6 +3,7 @@ import numpy as np
 from losses import (maximum_likelihood_loss, kullback_leibler_gaussian, 
                     mean_squared_error, heteroscedastic_loss, kullback_leibler_iaf)
 from sklearn.metrics import r2_score
+from tqdm import tqdm_notebook as tqdm
 
 
 def apply_gradients(optimizer, gradients, variables, global_step=None):
@@ -388,10 +389,10 @@ def train_loop_dataset(model, optimizer, dataset, batch_size, p_bar=None, clip_v
     return losses
 
 
-def compute_metrics(model, param_names, simulate_fun, n_test, n_samples_posterior, 
-                    p_bar=None, transform=None, n_min=100, n_max=1000):
+def compute_performance_metrics(model, n_points_grid, param_names, 
+                                simulate_fun, n_sim=20, n_test=300, n_samples=2000, transform=None):
     """
-    Plots a given metric for different numbers of datapoints.
+    Compute metrics for different numbers of datapoints.
     ---------
 
     Arguments:
@@ -400,52 +401,54 @@ def compute_metrics(model, param_names, simulate_fun, n_test, n_samples_posterio
     param_names     : list of strings -- the names of the parameters
     simulate_fun    : callable -- the simulate function
     n_test          : number of test datasets
-    n_samples_posterior : number of samples from the approximate posterior
+    n_samples       : number of samples from the approximate posterior
     transform       : callable ot None -- a function to transform X and theta, if given
-    n_min           : int -- the minimum number of data points for each dataset
-    n_max           : int -- the maximum number of data points for each dataset
     ----------
 
     Returns:
-    ns      : np.array -- the array with time points
     metrics : dict -- a dictionary with the metrics
     """
-    
-    #Plot NRMSE for all t
-    ns = np.arange(n_min, n_max+1)
+
     metrics = {
-        'nrmse': {k: [] for k in param_names},
-        'r2': {k: [] for k in param_names},
-        'var': {k: [] for k in param_names}
+        'rmse':  {k: np.zeros((n_points_grid.shape[0], n_sim)) for k in param_names},
+        'nrmse': {k: np.zeros((n_points_grid.shape[0], n_sim)) for k in param_names},
+        'r2':    {k: np.zeros((n_points_grid.shape[0], n_sim)) for k in param_names},
+        'std':   {k: np.zeros((n_points_grid.shape[0], n_sim)) for k in param_names}
     }
-    # For each possible number of data points
-    for n_points in ns:
-        # Generate data
-        X_test, theta_test = simulate_fun(n_test, n_points=n_points)
-        if transform is not None:
-            X_test, theta_test = transform(X_test, theta_test)
-        theta_test = theta_test.numpy()
+    
+    with tqdm(total=n_points_grid.shape[0]) as p_bar:
+        for n, n_points in enumerate(n_points_grid):
+            p_bar.set_postfix_str("Simulating with N={}".format(n_points))
+            for si in range(n_sim):
+                
+                # Simulate data 
+                X_test_s, theta_test_s = simulate_fun(n_test, n_points=n_points)
+                if transform is not None:
+                    X_test_s, theta_test_s = transform(X_test_s, theta_test_s)
+                theta_test_s = theta_test_s.numpy()
 
-        # Sample from approx posterior and compute posterior means
-        theta_approx = model.sample(X_test, n_samples_posterior, to_numpy=True)
-        theta_approx_means = np.mean(theta_approx, axis=0)
-        theta_approx_vars = np.var(theta_approx, axis=0, ddof=1)
-        
-        # --- Plot true vs estimated posterior means on a single row --- #
-        for j, name in enumerate(param_names):
+                # Sample from posterior and compute mean and variance
+                theta_samples = model.sample(X_test_s, n_samples=n_samples, to_numpy=True)
+                theta_test_hat = theta_samples.mean(0)
+                theta_test_std = theta_samples.std(axis=0, ddof=1)
 
-            # Compute NRMSE
-            rmse = np.sqrt(np.mean( (theta_approx_means[:, j] - theta_test[:, j])**2 ))
-            nrmse = rmse / (theta_test[:, j].max() - theta_test[:, j].min())
-            # Compute R2
-            r2 = r2_score(theta_test[:, j], theta_approx_means[:, j])
-            # Compute posterior variance
-            var = np.mean(theta_approx_vars[:, j])
-            # Add to dict
-            metrics['nrmse'][name].append(nrmse)
-            metrics['r2'][name].append(r2)
-            metrics['var'][name].append(var)
-            
-        if p_bar is not None:
+                # --- Plot true vs estimated posterior means on a single row --- #
+                for k, name in enumerate(param_names):
+
+                    # Compute NRMSE
+                    rmse = np.sqrt(np.mean( (theta_test_hat[:, k] - theta_test_s[:, k])**2 ))
+                    nrmse = rmse / (theta_test_s[:, k].max() - theta_test_s[:, k].min())
+
+                    # Compute R2
+                    r2 = r2_score(theta_test_s[:, k], theta_test_hat[:, k])
+
+                    # Extract mean posterior std
+                    std = np.mean(theta_test_std[:, k])
+
+                    # Add to dict
+                    metrics['rmse'][name][n, si] = rmse
+                    metrics['nrmse'][name][n, si] = nrmse
+                    metrics['r2'][name][n, si] = r2
+                    metrics['std'][name][n, si]  = std
             p_bar.update(1)
-    return ns, metrics
+        return metrics

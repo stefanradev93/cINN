@@ -107,34 +107,44 @@ def plot_losses(losses, figsize=(15, 5), show=True):
         plt.show()
 
 
-def plot_metrics(metrics, ns, param_names, figsize=(12, 4), show=True, 
-                 xlabel=r'$n$', filename=None, font_size=12):
-    """
-    Plots the nrmse and r2 for all parameters and all time points.
-    """
+def plot_performance_metrics(metrics, n_points_grid, param_names, figsize=(12, 4), show=True, 
+                             xlabel=r'$n$', filename=None, legend_loc=None, std_ci=2, font_size=12):
+    
+    """Plots specified metrics over ns."""
 
     # Plot settings
     plt.rcParams['font.size'] = font_size
-    
+
     # Initialize figure
     f, axarr = plt.subplots(1, 2, figsize=figsize)
 
     for i, metric in enumerate(['nrmse', 'r2']):
         for p in param_names:
-            sns.lineplot(ns, metrics[metric][p], label=p, markers=True, dashes=False, ax=axarr[i])
-            
+
+            metric_mean = metrics[metric][p].mean(axis=1)
+            metric_std = metrics[metric][p].std(axis=1, ddof=1)
+
+            axarr[i].plot(n_points_grid, metric_mean, label=p, lw=2)
+            axarr[i].fill_between(n_points_grid, 
+                            metric_mean-std_ci*metric_std, 
+                            metric_mean+std_ci*metric_std, 
+                            interpolate=True, alpha=0.2)
+
         if metric == 'nrmse':
             axarr[i].set_ylabel('NRMSE')
         elif metric == 'r2':
             axarr[i].set_ylabel(r'$R^{2}$')
         axarr[i].set_xlabel(xlabel)
-        
+
         axarr[i].spines['right'].set_visible(False)
         axarr[i].spines['top'].set_visible(False)
-        axarr[i].legend(fontsize=12)
-    
+        if legend_loc is not None:
+            axarr[i].legend(loc=legend_loc[i], fontsize=10)
+        else:
+            axarr[i].legend(fontsize=12)
+
     f.tight_layout()
-        
+    
     if show:
         plt.show()
     
@@ -196,8 +206,8 @@ def plot_metrics_params(model, X_test, theta_test, n_samples, n_chunks=None, sho
         plt.show()
 
 
-def plot_variance(variances, ns, param_names, figsize=(12, 4), show=True, 
-                  xlabel=r'$n$', filename=None, tight=True, std=False, font_size=12):
+def plot_contraction(variances, n_points_grid, param_names, figsize=(12, 4), show=True, 
+                     xlabel=r'$N$', font_size=12, tight=True, std_ci=1.98, filename=None):
     """
     Plots posterior variances of parameters as a function of the number of time points.
     """
@@ -205,7 +215,6 @@ def plot_variance(variances, ns, param_names, figsize=(12, 4), show=True,
     # Plot settings
     plt.rcParams['font.size'] = font_size
 
-    # Initialize figure
     # Determine figure layout
     if len(param_names) >= 6:
         n_col = int(np.ceil(len(param_names) / 2))
@@ -219,17 +228,20 @@ def plot_variance(variances, ns, param_names, figsize=(12, 4), show=True,
     if n_row > 1:
         axarr = axarr.flat
 
-
     for i, p in enumerate(param_names):
         
-        if std:
-            sns.lineplot(ns, np.sqrt(variances[p]), markers=True, dashes=False, ax=axarr[i])
-        else:
-            sns.lineplot(ns, variances[p], markers=True, dashes=False, ax=axarr[i])
+        var_mean = variances[p].mean(axis=1)
+        var_std = variances[p].std(axis=1, ddof=1)
+        
+        axarr[i].plot(n_points_grid, var_mean, label=p, lw=2)
+        axarr[i].fill_between(n_points_grid, 
+                              var_mean-std_ci*var_std, 
+                              var_mean+std_ci*var_std, 
+                              interpolate=True, alpha=0.2)
         
         if i == 0:
-            axarr[i].set_ylabel('Posterior variance')
-            axarr[i].set_xlabel(xlabel)
+            axarr[i].set_ylabel('Posterior contraction (stddev)')
+        axarr[i].set_xlabel(xlabel)
         axarr[i].set_title(p)
         axarr[i].spines['right'].set_visible(False)
         axarr[i].spines['top'].set_visible(False)
@@ -241,7 +253,7 @@ def plot_variance(variances, ns, param_names, figsize=(12, 4), show=True,
         plt.show()
     
     if filename is not None:
-        f.savefig("figures/{}_variance.png".format(filename), dpi=600, bbox_inches='tight')
+        f.savefig("figures/{}_contraction.png".format(filename), dpi=600, bbox_inches='tight')
 
 
 def plot_true_est_posterior(model, n_samples, param_names, n_test=None, data_generator=None, 
