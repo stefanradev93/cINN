@@ -214,7 +214,7 @@ def simulate_batch_diffusion_p(x, params):
 
     # For each batch
     for i in prange(x.shape[0]):
-        # For each condition
+        # For each trial
         for j in prange(x.shape[1]):
             # First condition
             x[i, j, 0] = diffusion_trial(params[i, 0], params[i, 2], params[i, 3],
@@ -348,6 +348,21 @@ def simulate_diffusion(batch_size, pbounds, n_points=None, n_cond=2,
     if to_tensor:
         X_batch, theta_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32), tf.convert_to_tensor(theta_batch, dtype=tf.float32)
     return X_batch, theta_batch
+
+def simulate_diffusion_params(params, n_cond=2, to_tensor=True, n_points=None, n_trials_min=100, n_trials_max=1000):
+    """Simulates batch_size datasets from the full Ratcliff diffusion model."""
+
+    # Sample number of trials, if None given
+    if n_points is None:
+        n_points = np.random.randint(n_trials_min, n_trials_max+1)
+
+    X_batch = np.zeros((1, n_points, n_cond), dtype=np.float32)
+    simulate_batch_diffusion_p(X_batch, params)
+
+    # Return in specified format (condition coding or just stack, tf.Tensor or np.array)
+    if to_tensor:
+        X_batch = tf.convert_to_tensor(X_batch, dtype=tf.float32)
+    return X_batch
 
 
 def plot_sir(beta, gamma, n_points=500, figsize=(8, 4), N=1000, filename=None):

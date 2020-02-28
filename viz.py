@@ -240,7 +240,7 @@ def plot_contraction(variances, n_points_grid, param_names, figsize=(12, 4), sho
                               interpolate=True, alpha=0.2)
         
         if i == 0:
-            axarr[i].set_ylabel('Posterior contraction (stddev)')
+            axarr[i].set_ylabel(r'Posterior $SD$')
         axarr[i].set_xlabel(xlabel)
         axarr[i].set_title(p)
         axarr[i].spines['right'].set_visible(False)
