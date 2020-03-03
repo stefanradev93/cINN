@@ -325,12 +325,70 @@ class InvariantModule(tf.keras.Model):
         x = tf.reduce_mean(x, axis=1)
         out = self.post_pooling_dense(x)
         return out
+
+
+class InvariantModuleLearnable(tf.keras.Model):
+    """Implements an invariant nn module as proposed by Bloem-Reddy and Teh (2019)."""
+
+    def __init__(self, h_dim, n_dense=3):
+        """
+        Creates an invariant function with mean pooling.
+        ----------
+
+        Arguments:
+        meta : dict -- a dictionary with hyperparameter name - values
+        """
+
+        super(InvariantModuleLearnable, self).__init__()
+
+
+        self.module = tf.keras.Sequential([
+            tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform') 
+            for _ in range(n_dense)
+        ])
+        self.weights_layer = tf.keras.Sequential([
+                tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform')
+                for _ in range(n_dense)
+            ] + 
+            [
+                tf.keras.layers.Dense(h_dim, kernel_initializer='glorot_uniform')
+            
+            ])
+        self.post_pooling_dense = tf.keras.Sequential([
+            tf.keras.layers.Dense(h_dim, activation='elu', kernel_initializer='glorot_uniform')
+            for _ in range(h_dim)
+        ])
+
+    def call(self, x):
+        """
+        Transofrms the input into an invariant representation.
+        ----------
+
+        Arguments:
+        x : tf.Tensor of shape (batch_size, n, m) - the input where n is the 'time' or 'samples' dimensions
+            over which pooling is performed and m is the input dimensionality
+        ----------
+
+        Returns:
+        out : tf.Tensor of shape (batch_size, h_dim) -- the pooled and invariant representation of the input
+        """
+
+        # Embed
+        x_emb = self.module(x)
+
+        # Compute weights
+        w = tf.nn.softmax(self.weights_layer(x), axis=1)
+        w_x = tf.reduce_sum(x_emb * w, axis=1)
+    
+        # Increase representational power
+        out = self.post_pooling_dense(w_x)
+        return out
     
 
 class EquivariantModule(tf.keras.Model):
     """Implements an equivariant nn module as proposed by Bloem-Reddy and Teh (2019)."""
 
-    def __init__(self, h_dim, n_dense=3):
+    def __init__(self, h_dim, n_dense=3, learnable_pooling=False, inv_xdim=False):
         """
         Creates an equivariant neural network consisting of a FC network with
         equal number of hidden units in each layer and an invariant module
@@ -349,7 +407,11 @@ class EquivariantModule(tf.keras.Model):
             for _ in range(n_dense)
         ])
         
-        self.invariant_module = InvariantModule(h_dim, n_dense)
+        if learnable_pooling:
+            self.invariant_module = InvariantModuleLearnable(h_dim, n_dense)
+        else:
+            self.invariant_module = InvariantModule(h_dim, n_dense)
+        
         
     def call(self, x):
         """
@@ -378,7 +440,7 @@ class InvariantNetwork(tf.keras.Model):
     permutationally invariant function according to Bloem-Reddy and Teh (2019).
     """
 
-    def __init__(self, h_dim, n_dense=3, n_equiv=2):
+    def __init__(self, h_dim, n_dense=3, n_equiv=2, learnable_pooling=False):
         """
         Creates a permutationally invariant network 
         consisting of two equivariant modules and one invariant module.
@@ -393,10 +455,14 @@ class InvariantNetwork(tf.keras.Model):
         super(InvariantNetwork, self).__init__()
         
         self.equiv = tf.keras.Sequential([
-            EquivariantModule(h_dim, n_dense)
+            EquivariantModule(h_dim, n_dense, learnable_pooling=learnable_pooling)
             for _ in range(n_equiv)
         ])
-        self.inv = InvariantModule(h_dim, n_dense)
+
+        if learnable_pooling:
+            self.inv = InvariantModuleLearnable(h_dim, n_dense)
+        else:
+            self.inv = InvariantModule(h_dim, n_dense)
         
     def call(self, x, **kwargs):
         """
