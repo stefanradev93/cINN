@@ -9,7 +9,7 @@ Data for the seqRNA example is available on demand.
 
 New examples and applications can apply the models by simply importing the ready-made models for and functions for online or offline learning. 
 
-<strong>NOTE<\strong>: A general and more modular version of the library has moved to https://github.com/stefanradev93/BayesFlow
+<strong>NOTE</strong>: A general and more modular version of the library has moved to https://github.com/stefanradev93/BayesFlow
 
 ## Requirements
 
