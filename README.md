@@ -1,5 +1,5 @@
 # General Information
-This repostiory contains the code for the manuscript:
+This repostiory contains the legacy code for the paper:
 
 <strong>"BayesFlow: Learning complex stochastic models with invertible neural networks"</strong>
 
